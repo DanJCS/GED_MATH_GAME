@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokémon Math Adventure - Final Version</title>
+    <title>Pokémon Math Adventure - GED Algebra</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
         :root {
-            /* REVISED: Tiers re-ordered to be intuitive. Tier 1 is highest. */
             --tier1-color: #9b59b6; /* Purple for Legendary */
             --tier2-color: #f1c40f; /* Gold for Rare */
             --tier3-color: #3498db; /* Blue for Uncommon */
@@ -39,7 +38,7 @@
         
         h1, h2, h3 {
             color: #f1c40f;
-            text-shadow: 2px 2px 2px #000;
+            text-shadow: 1px 1px 1px #000;
         }
 
         /* --- VIEWS --- */
@@ -62,7 +61,6 @@
             image-rendering: pixelated;
         }
         
-        /* REVISED: Class names now match the intuitive tier numbers */
         .tier-1-border { border-color: var(--tier1-color); }
         .tier-2-border { border-color: var(--tier2-color); }
         .tier-3-border { border-color: var(--tier3-color); }
@@ -228,138 +226,230 @@
 <div id="swap-modal" class="modal"><div class="modal-content"><h2>Team Full!</h2><p>Swap the newly caught Pokémon or let it go.</p><div><h3>Newly Caught</h3><img id="swap-new-pokemon-img" src=""><p id="swap-new-pokemon-name"></p><button id="let-go-btn">Let It Go</button></div><hr><h3>Your Team (Click to Swap)</h3><div id="swap-team-grid"></div></div></div>
 
 <script>
-    // --- DATA ---
-    const mathQuestions = [
-    // --- Section 1: Basic Algebra & Expressions ---
-    { question: "Solve for x: 2x + 5 = 17", answers: ["6", "8", "5", "7"], correct: "6" },
-    { question: "Solve for y: 3y - 8 = 16", answers: ["8", "6", "9", "7"], correct: "8" },
-    { question: "Simplify: 4a + 5 + 2a - 3", answers: ["6a + 2", "6a + 8", "2a + 2", "8a"], correct: "6a + 2" },
-    { question: "Evaluate 5c - 3 when c = 4.", answers: ["17", "23", "20", "15"], correct: "17" },
-    { question: "Solve for z: z/4 = 5", answers: ["20", "1", "9", "1.25"], correct: "20" },
-    { question: "Simplify: 3(x + 5)", answers: ["3x + 15", "3x + 5", "x + 15", "18x"], correct: "3x + 15" },
-    { question: "Solve: 5x = 3x + 10", answers: ["5", "2", "10", "1"], correct: "5" },
-    { question: "What is x if -4x = 24?", answers: ["-6", "6", "-8", "8"], correct: "-6" },
-    { question: "Translate to algebra: a number less 7", answers: ["x - 7", "7 - x", "7x", "x + 7"], correct: "x - 7" },
-    { question: "Translate to algebra: 5 times a number", answers: ["5x", "x + 5", "x/5", "x - 5"], correct: "5x" },
-    { question: "Solve for n: n/3 + 2 = 7", answers: ["15", "27", "9", "5"], correct: "15" },
-    { question: "Simplify: 5x - (2x - 4)", answers: ["3x + 4", "3x - 4", "7x + 4", "7x - 4"], correct: "3x + 4" },
-    { question: "Factor: 4x + 8", answers: ["4(x + 2)", "4(x + 8)", "2(2x + 8)", "8(x + 1)"], correct: "4(x + 2)" },
-    { question: "Solve the inequality: 2x > 10", answers: ["x > 5", "x < 5", "x > 20", "x < 20"], correct: "x > 5" },
-    { question: "Solve the inequality: x + 6 < 11", answers: ["x < 5", "x > 5", "x < 17", "x > 17"], correct: "x < 5" },
-    { question: "Solve for x: (x)(x) = 49", answers: ["7 or -7", "7", "-7", "49"], correct: "7 or -7" },
-    { question: "Solve for y: (y-2)(y+3) = 0", answers: ["2 and -3", "2 and 3", "-2 and 3", "-2 and -3"], correct: "2 and -3" },
-    { question: "Which expression is a trinomial?", answers: ["x² + 2x + 1", "5x + 2", "8y", "x/2"], correct: "x² + 2x + 1" },
-    { question: "Solve for p: 2(p + 1) = 18", answers: ["8", "9", "7", "10"], correct: "8" },
-    { question: "Evaluate 2a + 3b if a=4 and b=2.", answers: ["14", "10", "20", "9"], correct: "14" },
+// --- DATA ---
+// Questions are sorted into three distinct difficulty tiers.
 
-    // --- Section 2: Number Sense (Fractions, Decimals, Percents) ---
-    { question: "What is 50% of 80?", answers: ["40", "50", "80", "25"], correct: "40" },
-    { question: "Convert 0.75 to a fraction.", answers: ["3/4", "1/2", "4/5", "7/10"], correct: "3/4" },
-    { question: "1/2 + 1/4 = ?", answers: ["3/4", "1/6", "2/6", "1/3"], correct: "3/4" },
-    { question: "A shirt costs $20. It's on sale for 25% off. What is the sale price?", answers: ["$15", "$5", "$10", "$18"], correct: "$15" },
-    { question: "Convert 2/5 to a decimal.", answers: ["0.4", "0.2", "0.5", "2.5"], correct: "0.4" },
-    { question: "3/4 * 1/2 = ?", answers: ["3/8", "4/6", "3/6", "1"], correct: "3/8" },
-    { question: "What is 10% of 150?", answers: ["15", "10", "50", "1.5"], correct: "15" },
-    { question: "A meal costs $40. How much is a 15% tip?", answers: ["$6", "$4", "$5", "$10"], correct: "$6" },
-    { question: "Which is greater: 0.6 or 3/4?", answers: ["3/4", "0.6", "They are equal", "Cannot tell"], correct: "3/4" },
-    { question: "3/5 ÷ 1/2 = ?", answers: ["6/5", "3/10", "5/6", "2/5"], correct: "6/5" },
-    { question: "What is 0.5 as a percent?", answers: ["50%", "5%", "0.5%", "500%"], correct: "50%" },
-    { question: "Find the value of |-5|.", answers: ["5", "-5", "0", "1/5"], correct: "5" },
-    { question: "Find the value of |3 - 8|.", answers: ["5", "-5", "11", "-11"], correct: "5" },
-    { question: "What is the ratio of 6 apples to 9 oranges?", answers: ["2:3", "3:2", "6:9", "1:3"], correct: "2:3" },
-    { question: "Solve the proportion: x/4 = 9/12", answers: ["3", "4", "9", "12"], correct: "3" },
-    { question: "What is 5²?", answers: ["25", "10", "52", "7"], correct: "25" },
-    { question: "What is the square root of 64?", answers: ["8", "6", "4", "16"], correct: "8" },
-    { question: "What is 2³?", answers: ["8", "6", "9", "16"], correct: "8" },
-    { question: "(-3) * 5 = ?", answers: ["-15", "15", "2", "-8"], correct: "-15" },
-    { question: "(-12) / (-4) = ?", answers: ["3", "-3", "8", "-8"], correct: "3" },
+const easyQuestions = [
+    // --- Category: One & Two-Step Linear Equations ---
+    { question: "Solve for x: x + 7 = 15", answers: ["x = 8", "x = 22", "x = -8", "x = 105"], correct: "x = 8" },
+    { question: "Solve for y: y - 9 = 3", answers: ["y = -6", "y = 12", "y = 6", "y = 27"], correct: "y = 12" },
+    { question: "Solve for a: 4a = 28", answers: ["a = 24", "a = 32", "a = 7", "a = 112"], correct: "a = 7" },
+    { question: "Solve for b: b / 5 = 6", answers: ["b = 1.2", "b = 11", "b = 1", "b = 30"], correct: "b = 30" },
+    { question: "Solve for x: 2x + 5 = 19", answers: ["x = 12", "x = 7", "x = 48", "x = 9.5"], correct: "x = 7" },
+    { question: "Solve for y: 3y - 8 = 10", answers: ["y = 6", "y = 26/3", "y = 2", "y = -6"], correct: "y = 6" },
+    { question: "Solve for c: c / 3 + 1 = 5", answers: ["c = 18", "c = 12", "c = 2", "c = 6"], correct: "c = 12" },
+    { question: "Solve for x: 5x = 2x + 12", answers: ["x = 2", "x = 3", "x = 4", "x = 6"], correct: "x = 4" },
+    { question: "Solve for m: 7m - 4 = 3m + 16", answers: ["m = 5", "m = 2", "m = 1.2", "m = 20"], correct: "m = 5" },
+    { question: "Solve for p: 4(p + 2) = 20", answers: ["p = 3", "p = 4.5", "p = 8", "p = 14"], correct: "p = 3" },
+    { question: "Solve for k: k + 12 = 30", answers: ["k = 18", "k = 42", "k = -18", "k = 2.5"], correct: "k = 18" },
+    { question: "Solve for z: z - 11 = 6", answers: ["z = -5", "z = 17", "z = 5", "z = 66"], correct: "z = 17" },
+    { question: "Solve for n: 6n = 42", answers: ["n = 7", "n = 36", "n = 48", "n = 252"], correct: "n = 7" },
+    { question: "Solve for d: d / 7 = 4", answers: ["d = 28", "d = 11", "d = 0.57", "d = 3"], correct: "d = 28" },
+    { question: "Solve for r: 3r + 7 = 22", answers: ["r = 5", "r = 29/3", "r = 7", "r = 15"], correct: "r = 5" },
+    { question: "Solve for t: 5t - 9 = 16", answers: ["t = 5", "t = 25/5", "t = 2", "t = -5"], correct: "t = 5" },
+    { question: "Solve for w: w / 2 - 3 = 4", answers: ["w = 14", "w = 1", "w = 8", "w = 2"], correct: "w = 14" },
+    { question: "Solve for q: 8q = 3q + 25", answers: ["q = 5", "q = 3", "q = 8", "q = 2"], correct: "q = 5" },
+    { question: "Solve for s: 9s - 7 = 2s + 14", answers: ["s = 3", "s = 2", "s = 7/3", "s = 21"], correct: "s = 3" },
+    { question: "Solve for v: 2(v - 3) = 10", answers: ["v = 8", "v = 5", "v = 11", "v = 2.5"], correct: "v = 8" },
+    { question: "Solve for x: x + 1.5 = 4", answers: ["x = 2.5", "x = 5.5", "x = -2.5", "x = 6"], correct: "x = 2.5" },
+    { question: "Solve for y: y - 0.5 = 2.5", answers: ["y = 2", "y = 3", "y = -2", "y = 1.25"], correct: "y = 3" },
+    { question: "Solve for a: 2.5a = 10", answers: ["a = 4", "a = 25", "a = 0.25", "a = 7.5"], correct: "a = 4" },
+    { question: "Solve for b: b / 1.5 = 4", answers: ["b = 6", "b = 2.5", "b = 5.5", "b = 0.375"], correct: "b = 6" },
+    { question: "Solve for x: 0.5x + 2 = 7", answers: ["x = 10", "x = 2.5", "x = 5", "x = 9"], correct: "x = 10" },
+    { question: "Solve for y: 0.2y - 1 = 3", answers: ["y = 20", "y = 10", "y = 8", "y = 16"], correct: "y = 20" },
+    { question: "Solve for c: c / 0.5 + 3 = 9", answers: ["c = 3", "c = 6", "c = 12", "c = 1.5"], correct: "c = 3" },
+    { question: "Solve for x: 4x = x + 9", answers: ["x = 3", "x = 9", "x = 4", "x = 1"], correct: "x = 3" },
+    { question: "Solve for m: 6m - 10 = m + 15", answers: ["m = 5", "m = 2.5", "m = 3", "m = 1"], correct: "m = 5" },
+    { question: "Solve for p: 3(p - 1) = 12", answers: ["p = 5", "p = 4", "p = 15", "p = 3"], correct: "p = 5" },
+    // --- Category: Simplifying Expressions ---
+    { question: "Simplify: 5x + 3x - 2x", answers: ["10x", "6x", "5x", "x"], correct: "6x" },
+    { question: "Simplify: 8y + 4z - 3y + 2z", answers: ["5y + 6z", "11y + 6z", "5y + 2z", "12yz"], correct: "5y + 6z" },
+    { question: "Simplify: 10 + 2a - 5 + 3a", answers: ["5 + 5a", "15 + 5a", "5 - a", "10a"], correct: "5 + 5a" },
+    { question: "Use the distributive property: 5(x + 6)", answers: ["5x + 11", "11x", "5x + 30", "5x + 6"], correct: "5x + 30" },
+    { question: "Use the distributive property: 3(2y - 4)", answers: ["6y - 1", "5y - 4", "6y - 12", "6y - 7"], correct: "6y - 12" },
+    { question: "Use the distributive property: -4(a - 5)", answers: ["-4a - 20", "-4a + 20", "-4a - 9", "a - 20"], correct: "-4a + 20" },
+    { question: "Simplify: 2(x + 3) + 3x", answers: ["5x + 6", "5x + 3", "2x + 6", "8x"], correct: "5x + 6" },
+    { question: "Simplify: 6(y - 2) - 2y", answers: ["4y - 2", "4y - 12", "8y - 12", "6y - 4"], correct: "4y - 12" },
+    { question: "Simplify: 7a - 2a + 4a", answers: ["9a", "5a", "13a", "9"], correct: "9a" },
+    { question: "Simplify: 3x + 5 - x + 2", answers: ["2x + 7", "4x + 7", "2x + 3", "7x"], correct: "2x + 7" },
+    { question: "Simplify: 2(p + 4)", answers: ["2p + 4", "2p + 8", "p + 8", "6p"], correct: "2p + 8" },
+    { question: "Simplify: -3(k + 2)", answers: ["-3k + 2", "-3k - 6", "3k + 6", "-k - 6"], correct: "-3k - 6" },
+    { question: "Simplify: 5(2m - 1)", answers: ["10m - 1", "10m - 5", "7m - 5", "10m"], correct: "10m - 5" },
+    { question: "Simplify: 4x + 7 - x", answers: ["3x + 7", "5x + 7", "7x", "7 - 3x"], correct: "3x + 7" },
+    { question: "Simplify: 9 - 3y + 5y", answers: ["9 + 2y", "9 - 2y", "6y", "14y"], correct: "9 + 2y" },
+    { question: "Simplify: (a + 3) + (2a - 1)", answers: ["3a + 2", "3a - 2", "3a + 4", "a + 2"], correct: "3a + 2" },
+    { question: "Simplify: (5x - 2) - (2x + 3)", answers: ["3x + 1", "3x - 5", "7x - 5", "3x - 1"], correct: "3x - 5" },
+    { question: "Simplify: 2(x + 1) + 4(x - 1)", answers: ["6x", "6x + 2", "6x - 2", "6x - 4"], correct: "6x - 2" },
+    // --- Category: Basic Polynomial Operations ---
+    { question: "Add: (x² + 3x + 5) + (2x² - x + 2)", answers: ["3x² + 4x + 7", "2x² + 2x + 7", "3x² + 2x + 7", "3x⁴ + 2x² + 7"], correct: "3x² + 2x + 7" },
+    { question: "Subtract: (4y² - 2y + 8) - (y² + y - 3)", answers: ["3y² - 3y + 11", "3y² - y + 5", "3y² - 3y + 5", "5y² - y + 11"], correct: "3y² - 3y + 11" },
+    { question: "Multiply: x(3x + 7)", answers: ["3x² + 7", "3x + 7x", "3x² + 7x", "10x²"], correct: "3x² + 7x" },
+    { question: "Multiply (FOIL): (x + 2)(x + 3)", answers: ["x² + 6", "x² + 5x + 6", "2x + 5", "x² + 6x + 5"], correct: "x² + 5x + 6" },
+    { question: "Multiply (FOIL): (y - 5)(y + 4)", answers: ["y² - 20", "y² - y - 20", "y² + y - 20", "2y - 1"], correct: "y² - y - 20" },
+    { question: "Multiply (FOIL): (a - 6)(a - 3)", answers: ["a² - 9a + 18", "a² + 9a + 18", "a² - 9", "a² - 3a - 18"], correct: "a² - 9a + 18" },
+    { question: "Multiply (FOIL): (2x + 1)(x + 5)", answers: ["2x² + 6", "3x + 6", "2x² + 10x + 5", "2x² + 11x + 5"], correct: "2x² + 11x + 5" },
+    { question: "Add: (3x² - 2x + 1) + (x² + 5x - 4)", answers: ["4x² + 3x - 3", "2x² + 7x - 5", "4x² - 7x + 5", "4x² + 3x + 3"], correct: "4x² + 3x - 3" },
+    { question: "Subtract: (5a² + a - 7) - (2a² - 3a + 1)", answers: ["3a² - 2a - 8", "3a² + 4a - 8", "7a² - 2a - 6", "3a² + 4a - 6"], correct: "3a² + 4a - 8" },
+    { question: "Multiply: 2y(y² - 4y + 6)", answers: ["2y³ - 8y² + 12y", "2y² - 8y + 12", "y³ - 4y² + 6y", "2y³ - 8y + 6"], correct: "2y³ - 8y² + 12y" },
+    { question: "Multiply (FOIL): (x + 4)(x - 1)", answers: ["x² + 3x - 4", "x² + 5x - 4", "x² - 3x - 4", "x² - 4"], correct: "x² + 3x - 4" },
+    { question: "Multiply (FOIL): (3b - 2)(b + 3)", answers: ["3b² + 7b - 6", "3b² + 11b - 6", "3b² - 7b - 6", "3b² - 6"], correct: "3b² + 7b - 6" },
+    { question: "Multiply (FOIL): (4k + 5)(k - 2)", answers: ["4k² - 3k - 10", "4k² + 13k - 10", "4k² + 3k - 10", "4k² - 10"], correct: "4k² - 3k - 10" },
+    { question: "Multiply (FOIL): (c - 7)(c + 7)", answers: ["c² + 49", "c² - 49", "c² + 14c - 49", "c² - 14c - 49"], correct: "c² - 49" },
+    { question: "Add: (5m + 3) + (2m - 7)", answers: ["7m + 10", "7m - 4", "3m - 4", "7m + 4"], correct: "7m - 4" },
+    { question: "Subtract: (8p - 1) - (3p + 5)", answers: ["5p + 4", "5p - 6", "11p - 6", "5p + 6"], correct: "5p - 6" },
+    { question: "Multiply: 5(x² + 2x - 3)", answers: ["5x² + 10x - 3", "5x² + 2x - 15", "5x² + 10x - 15", "x² + 10x - 15"], correct: "5x² + 10x - 15" },
+    { question: "Multiply (FOIL): (x - 3)(x - 8)", answers: ["x² - 11x + 24", "x² + 11x + 24", "x² - 5x + 24", "x² + 24"], correct: "x² - 11x + 24" },
+    // --- Category: Introductory Factoring & Inequalities ---
+    { question: "Factor out the GCF: 4x + 12", answers: ["4(x + 3)", "2(2x + 6)", "4(x + 12)", "x(4 + 12)"], correct: "4(x + 3)" },
+    { question: "Factor out the GCF: 6y² - 9y", answers: ["3(2y² - 3y)", "y(6y - 9)", "3y(2y - 3)", "6y(y - 1.5)"], correct: "3y(2y - 3)" },
+    { question: "Factor the trinomial: x² + 7x + 10", answers: ["(x + 1)(x + 10)", "(x + 2)(x + 5)", "(x - 2)(x - 5)", "(x + 7)(x + 10)"], correct: "(x + 2)(x + 5)" },
+    { question: "Factor the trinomial: a² - 5a + 6", answers: ["(a - 2)(a - 3)", "(a - 1)(a - 6)", "(a + 2)(a + 3)", "(a - 5)(a + 1)"], correct: "(a - 2)(a - 3)" },
+    { question: "Solve the inequality: x + 5 > 10", answers: ["x > 15", "x < 5", "x > 5", "x < 15"], correct: "x > 5" },
+    { question: "Factor out the GCF: 10a - 25", answers: ["5(2a - 5)", "10(a - 2.5)", "a(10 - 25)", "5a(2 - 5)"], correct: "5(2a - 5)" },
+    { question: "Factor out the GCF: 14x³ + 7x²", answers: ["7x(2x² + x)", "7x²(2x + 1)", "7(2x³ + x²)", "x²(14x + 7)"], correct: "7x²(2x + 1)" },
+    { question: "Factor the trinomial: y² + 9y + 14", answers: ["(y + 1)(y + 14)", "(y + 2)(y + 7)", "(y - 2)(y - 7)", "(y + 9)(y + 14)"], correct: "(y + 2)(y + 7)" },
+    { question: "Factor the trinomial: b² - 8b + 12", answers: ["(b - 2)(b - 6)", "(b - 3)(b - 4)", "(b + 2)(b + 6)", "(b - 1)(b - 12)"], correct: "(b - 2)(b - 6)" },
+    { question: "Solve the inequality: y - 3 < 7", answers: ["y < 4", "y > 10", "y < 10", "y > 4"], correct: "y < 10" },
+    { question: "Solve the inequality: 2x >= 12", answers: ["x >= 6", "x <= 6", "x >= 24", "x >= 10"], correct: "x >= 6" },
+    { question: "Solve the inequality: -3x < 15", answers: ["x < -5", "x > -5", "x < 5", "x > 5"], correct: "x > -5" },
+    { question: "Factor the trinomial: x² + 11x + 30", answers: ["(x + 3)(x + 10)", "(x + 5)(x + 6)", "(x + 2)(x + 15)", "(x - 5)(x - 6)"], correct: "(x + 5)(x + 6)" },
+    { question: "Factor the trinomial: c² - 10c + 21", answers: ["(c - 3)(c - 7)", "(c - 1)(c - 21)", "(c + 3)(c + 7)", "(c - 2)(c - 10.5)"], correct: "(c - 3)(c - 7)" },
+    { question: "Factor out the GCF: 18mn + 27m", answers: ["9m(2n + 3)", "9(2mn + 3m)", "3m(6n + 9)", "m(18n + 27)"], correct: "9m(2n + 3)" },
+    { question: "Factor the trinomial: k² + 2k - 15", answers: ["(k + 3)(k - 5)", "(k - 3)(k + 5)", "(k + 1)(k - 15)", "(k - 1)(k + 15)"], correct: "(k - 3)(k + 5)" },
+    { question: "Factor the trinomial: d² - d - 12", answers: ["(d - 3)(d + 4)", "(d + 3)(d - 4)", "(d - 2)(d - 6)", "(d + 1)(d - 12)"], correct: "(d + 3)(d - 4)" },
+    { question: "Solve the inequality: 4x + 1 <= 9", answers: ["x <= 2", "x >= 2", "x <= 8", "x <= 10/4"], correct: "x <= 2" },
+    { question: "Solve the inequality: 2(x + 3) > 14", answers: ["x > 4", "x > 10", "x > 8", "x < 4"], correct: "x > 4" },
+    { question: "Factor the trinomial: x² - 13x + 40", answers: ["(x - 5)(x - 8)", "(x + 5)(x + 8)", "(x - 4)(x - 10)", "(x - 1)(x - 40)"], correct: "(x - 5)(x - 8)" }
+];
 
-    // --- Section 3: Geometry ---
-    { question: "Perimeter of a square with side 5 cm?", answers: ["20 cm", "25 cm", "10 cm", "15 cm"], correct: "20 cm" },
-    { question: "Area of a square with side 6 inches?", answers: ["36 sq in", "24 sq in", "12 sq in", "60 sq in"], correct: "36 sq in" },
-    { question: "Area of a rectangle L=8, W=4?", answers: ["32", "24", "12", "16"], correct: "32" },
-    { question: "A triangle has base=10 and height=5. Area?", answers: ["25", "50", "15", "100"], correct: "25" },
-    { question: "Circumference of a circle with radius 5? (Use π=3.14)", answers: ["31.4", "78.5", "15.7", "25"], correct: "31.4" },
-    { question: "Area of a circle with radius 10? (Use π=3.14)", answers: ["314", "31.4", "62.8", "100"], correct: "314" },
-    { question: "Volume of a cube with side 3?", answers: ["27", "9", "18", "12"], correct: "27" },
-    { question: "Pythagorean theorem: a=3, b=4, c=?", answers: ["5", "6", "7", "25"], correct: "5" },
-    { question: "A triangle has angles 40° and 60°. What is the third angle?", answers: ["80°", "100°", "260°", "90°"], correct: "80°" },
-    { question: "Volume of a cylinder: r=2, h=10. (V=πr²h, use π=3.14)", answers: ["125.6", "62.8", "31.4", "200"], correct: "125.6" },
-    { question: "Perimeter of a rectangle L=7, W=3?", answers: ["20", "21", "10", "14"], correct: "20" },
-    { question: "Pythagorean theorem: a=5, c=13, b=?", answers: ["12", "18", "8", "10"], correct: "12" },
-    { question: "What shape has 4 equal sides and 4 right angles?", answers: ["Square", "Rectangle", "Rhombus", "Triangle"], correct: "Square" },
-    { question: "The sum of angles in a quadrilateral is:", answers: ["360°", "180°", "90°", "540°"], correct: "360°" },
-    { question: "Volume of a box with L=5, W=2, H=3?", answers: ["30", "10", "15", "25"], correct: "30" },
-    { question: "The diameter of a circle is 12. What is the radius?", answers: ["6", "12", "24", "3"], correct: "6" },
-    { question: "Area of a triangle with base 6 and height 8?", answers: ["24", "48", "14", "30"], correct: "24" },
-    { question: "A right angle measures:", answers: ["90°", "180°", "45°", "0°"], correct: "90°" },
-    { question: "How many sides does a hexagon have?", answers: ["6", "5", "7", "8"], correct: "6" },
-    { question: "An isosceles triangle has how many equal sides?", answers: ["2", "3", "0", "1"], correct: "2" },
+const mediumQuestions = [
+    { question: "The formula to convert Celsius (C) to Fahrenheit (F) is F = (9/5)C + 32. If the temperature is 50°F, what is it in Celsius?", answers: ["90°C", "122°C", "10°C", "18°C"], correct: "10°C" },
+    { question: "The perimeter of a rectangle is 54 cm. Its length is 3 cm more than its width. What is the width?", answers: ["15 cm", "12 cm", "24 cm", "27 cm"], correct: "12 cm" },
+    { question: "The sum of two consecutive odd integers is 88. What is the smaller integer?", answers: ["41", "43", "45", "47"], correct: "43" },
+    { question: "Solve for x: 5(x + 3) = 2x + 21", answers: ["x = 12", "x = 4", "x = 2", "x = 3"], correct: "x = 2" },
+    { question: "A taxi service charges a $3.50 flat fee plus $2.00 per mile. If a trip costs $27.50, how many miles was it?", answers: ["10 miles", "12 miles", "13.75 miles", "15.5 miles"], correct: "12 miles" },
+    { question: "Factor completely: x² - 49", answers: ["(x - 7)(x - 7)", "(x + 7)(x - 7)", "(x - 49)(x + 1)", "Cannot be factored"], correct: "(x + 7)(x - 7)" },
+    { question: "The area of a rectangle is given by x² + 8x + 15. What are the possible expressions for its length and width?", answers: ["(x+1)(x+15)", "(x+3)(x+5)", "(x-3)(x-5)", "(x+2)(x+6)"], correct: "(x+3)(x+5)" },
+    { question: "Solve the inequality: 3x - 7 > 11", answers: ["x > 6", "x < 6", "x > 18", "x > 4/3"], correct: "x > 6" },
+    { question: "You need an average of at least 85 on four exams. You scored 78, 90, and 82 on the first three. What is the lowest score you can get on the fourth exam?", answers: ["85", "88", "90", "92"], correct: "90" },
+    { question: "Expand the expression: (3x - 2)(x + 4)", answers: ["3x² - 8", "3x² + 10x - 8", "3x² + 14x - 8", "4x + 2"], correct: "3x² + 10x - 8" },
+    { question: "Two angles are supplementary (add to 180°). One angle is 30° more than the other. What is the measure of the smaller angle?", answers: ["60°", "75°", "90°", "105°"], correct: "75°" },
+    { question: "Solve the system of equations: x + y = 10 and x - y = 4", answers: ["x=7, y=3", "x=3, y=7", "x=10, y=4", "x=5, y=5"], correct: "x=7, y=3" },
+    { question: "A company's cost is C = 10x + 500. Its revenue is R = 30x. How many items must be sold to break even (R=C)?", answers: ["20 items", "25 items", "50 items", "80 items"], correct: "25 items" },
+    { question: "Factor completely: a² - 10a + 24", answers: ["(a-2)(a-12)", "(a-4)(a-6)", "(a+4)(a+6)", "(a-10)(a-14)"], correct: "(a-4)(a-6)" },
+    { question: "The product of two consecutive positive integers is 110. What is the larger integer?", answers: ["10", "11", "12", "110"], correct: "11" },
+    { question: "Solve for y: (y / 4) - 5 = -2", answers: ["y = 12", "y = 28", "y = 3", "y = -28"], correct: "y = 12" },
+    { question: "A phone plan costs $25/month plus $0.10/text. Which equation models the cost, C, for t texts?", answers: ["C = 25t + 0.10", "C = 0.10t + 25", "C = 25.10t", "t = 25C + 0.10"], correct: "C = 0.10t + 25" },
+    { question: "Factor completely: 2x² + 12x + 16", answers: ["(2x+4)(x+4)", "2(x+2)(x+4)", "2(x²+6x+8)", "(x+2)(x+8)"], correct: "2(x+2)(x+4)" },
+    { question: "Find the slope of the line that passes through the points (2, 3) and (4, 11).", answers: ["1/4", "8", "2", "4"], correct: "4" },
+    { question: "The square of a number, increased by twice the number, is 48. Which equation matches this?", answers: ["n² + 2 = 48", "n + 2n = 48", "n² + 2n = 48", "2n + 2n = 48"], correct: "n² + 2n = 48" },
+    { question: "Solve for b: 8b + 5 = 2(3b + 4)", answers: ["b = 1.5", "b = -1.5", "b = 2", "b = 6.5"], correct: "b = 1.5" },
+    { question: "The sum of three consecutive integers is 72. What is the middle integer?", answers: ["23", "24", "25", "26"], correct: "24" },
+    { question: "Expand the expression: (x + 5)²", answers: ["x² + 25", "x² + 10", "x² + 10x + 25", "2x + 10"], correct: "x² + 10x + 25" },
+    { question: "A salesperson earns $300/week plus 6% commission. How much must they sell to earn at least $900?", answers: ["$600", "$6000", "$10000", "$15000"], correct: "$10000" },
+    { question: "The area of a square is 64 in². What is the length of its diagonal?", answers: ["8 in", "16 in", "8√2 in", "12 in"], correct: "8√2 in" },
+    { question: "Solve for x: (2x + 1) / 3 = 5", answers: ["x = 7", "x = 2", "x = 7.5", "x = 14"], correct: "x = 7" },
+    { question: "Factor completely: y² - y - 20", answers: ["(y-10)(y+2)", "(y-5)(y+4)", "(y+5)(y-4)", "(y-20)(y+1)"], correct: "(y-5)(y+4)" },
+    { question: "The cost of 2 apples and 3 bananas is $4.30. The cost of 2 apples and 1 banana is $2.70. What is the cost of one banana?", answers: ["$0.80", "$1.00", "$1.15", "$1.60"], correct: "$0.80" },
+    { question: "A line has the equation y = -3x + 8. What are its slope and y-intercept?", answers: ["slope=3, y-int=-8", "slope=-3, y-int=8", "slope=8, y-int=-3", "slope=1/3, y-int=8"], correct: "slope=-3, y-int=8" },
+    { question: "The area of a circle is A = πr². If a circle has an area of 25π, what is its radius r?", answers: ["r = 5", "r = 25", "r = 12.5", "r = 5π"], correct: "r = 5" },
+    { question: "Simplify the expression: (4x² + 2x) / (2x)", answers: ["2x + 1", "2x", "4x + 1", "4x"], correct: "2x + 1" },
+    { question: "Solve the system of equations: 2x + y = 7 and x - y = 2", answers: ["x=3, y=1", "x=2, y=3", "x=4, y=-1", "x=1, y=5"], correct: "x=3, y=1" },
+    { question: "A car rental company charges $40 a day plus $0.25 per mile. If a one-day rental cost $70, how many miles were driven?", answers: ["100 miles", "120 miles", "150 miles", "180 miles"], correct: "120 miles" },
+    { question: "Factor completely: 3x² - 12", answers: ["3(x² - 4)", "3(x - 2)(x + 2)", "(3x - 6)(x + 2)", "3(x - 2)²"], correct: "3(x - 2)(x + 2)" },
+    { question: "The sum of three consecutive even integers is 66. What is the largest integer?", answers: ["20", "22", "24", "26"], correct: "24" },
+    { question: "Solve for k: (k / 5) + 3 = 8", answers: ["k = 25", "k = 5", "k = 40", "k = 11"], correct: "k = 25" },
+    { question: "If y varies directly with x, and y = 12 when x = 3, what is y when x = 5?", answers: ["4", "15", "20", "36"], correct: "20" },
+    { question: "The length of a rectangular garden is twice its width. If the perimeter is 60 feet, what is the length?", answers: ["10 feet", "15 feet", "20 feet", "25 feet"], correct: "20 feet" },
+    { question: "Solve the inequality: -2x + 5 <= 1", answers: ["x <= 2", "x >= 2", "x <= -2", "x >= -2"], correct: "x >= 2" },
+    { question: "Expand the expression: (2a - 3)²", answers: ["4a² + 9", "4a² - 12a + 9", "4a² - 9", "4a² - 6a + 9"], correct: "4a² - 12a + 9" },
+    { question: "A recipe calls for 2 cups of sugar for every 3 cups of flour. If you use 8 cups of flour, how much sugar do you need?", answers: ["4 cups", "5 cups", "5.33 cups", "12 cups"], correct: "5.33 cups" },
+    { question: "Find the x-intercept of the line 3x - 4y = 12.", answers: ["(0, -3)", "(4, 0)", "(0, 4)", "(-3, 0)"], correct: "(4, 0)" },
+    { question: "Factor completely: x² + x - 6", answers: ["(x + 2)(x - 3)", "(x - 2)(x + 3)", "(x + 1)(x - 6)", "(x - 1)(x + 6)"], correct: "(x - 2)(x + 3)" },
+    { question: "The sum of the digits of a two-digit number is 9. If the digits are reversed, the new number is 27 greater than the original. What is the original number?", answers: ["27", "36", "45", "63"], correct: "36" },
+    { question: "Solve for x: (x / 2) + (x / 3) = 10", answers: ["x = 12", "x = 6", "x = 5", "x = 30"], correct: "x = 12" },
+    { question: "A store is having a 20% off sale. If an item is on sale for $40, what was its original price?", answers: ["$32", "$48", "$50", "$60"], correct: "$50" },
+    { question: "Factor completely: 4y² + 12y + 9", answers: ["(2y + 3)(2y + 3)", "(4y + 3)(y + 3)", "(2y - 3)(2y - 3)", "(4y + 9)(y + 1)"], correct: "(2y + 3)(2y + 3)" },
+    { question: "What is the equation of the line with a slope of -2 and a y-intercept of 5?", answers: ["y = 2x + 5", "y = -2x - 5", "y = -2x + 5", "y = 5x - 2"], correct: "y = -2x + 5" },
+    { question: "The cost of a field trip is $150 plus $5 per student. If the total cost was $300, how many students went?", answers: ["20", "30", "40", "50"], correct: "30" },
+    { question: "Solve for a: 3(a - 4) = a + 8", answers: ["a = 10", "a = 6", "a = 4", "a = 2"], correct: "a = 10" }
+];
 
-    // --- Section 4: Graphs, Functions, & Data Analysis ---
-    { question: "Find the mean of 2, 4, 6.", answers: ["4", "6", "12", "3"], correct: "4" },
-    { question: "Find the median of 3, 8, 5.", answers: ["5", "8", "3", "5.3"], correct: "5" },
-    { question: "Find the mode of 2, 5, 5, 8.", answers: ["5", "8", "2", "No mode"], correct: "5" },
-    { question: "Find the range of 10, 2, 8.", answers: ["8", "10", "20", "6"], correct: "8" },
-    { question: "Find the slope of a line through (1,2) and (3,6).", answers: ["2", "1/2", "4", "1"], correct: "2" },
-    { question: "In y = 3x + 5, what is the slope?", answers: ["3", "5", "1", "8"], correct: "3" },
-    { question: "If f(x) = 2x + 1, find f(3).", answers: ["7", "6", "5", "8"], correct: "7" },
-    { question: "A coin is flipped. What is the probability of heads?", answers: ["1/2", "1", "0", "1/4"], correct: "1/2" },
-    { question: "In y = -4x - 2, what is the y-intercept?", answers: ["-2", "-4", "2", "4"], correct: "-2" },
-    { question: "Find the slope of a line through (0,0) and (2,4).", answers: ["2", "4", "0", "1/2"], correct: "2" },
-    { question: "Find the mean of 10, 20, 30.", answers: ["20", "30", "60", "15"], correct: "20" },
-    { question: "Find the median of 1, 9, 4, 6.", answers: ["5", "4.5", "6", "5.5"], correct: "5" },
-    { question: "A die is rolled. What is the probability of rolling a 4?", answers: ["1/6", "1/3", "1/2", "4/6"], correct: "1/6" },
-    { question: "If f(x) = x² + 1, find f(4).", answers: ["17", "9", "16", "8"], correct: "17" },
-    { question: "What is the slope of a horizontal line?", answers: ["0", "1", "-1", "Undefined"], correct: "0" },
-    { question: "What is the slope of a vertical line?", answers: ["Undefined", "0", "1", "-1"], correct: "Undefined" },
-    { question: "Find the mode of: 1, 2, 3, 4, 5", answers: ["No mode", "3", "1", "5"], correct: "No mode" },
-    { question: "Find the range of: 5, 5, 5, 5.", answers: ["0", "5", "1", "20"], correct: "0" },
-    { question: "If f(x) = 5x, find f(-2).", answers: ["-10", "10", "3", "-7"], correct: "-10" },
-    { question: "Find the slope of the line y = 7.", answers: ["0", "7", "1", "Undefined"], correct: "0" },
-    
-    // --- Section 5: Mixed Review & Word Problems ---
-    { question: "A car travels 120 miles in 2 hours. What is its speed?", answers: ["60 mph", "120 mph", "240 mph", "30 mph"], correct: "60 mph" },
-    { question: "You buy 3 items at $4 each. What is the total cost?", answers: ["$12", "$7", "$1", "$9"], correct: "$12" },
-    { question: "A recipe needs 2 cups of flour for 12 cookies. How much for 24 cookies?", answers: ["4 cups", "2 cups", "6 cups", "3 cups"], correct: "4 cups" },
-    { question: "If x + y = 10 and x = 3, what is y?", answers: ["7", "3", "13", "30"], correct: "7" },
-    { question: "Order from least to greatest: 0.5, 1/4, 0.8", answers: ["1/4, 0.5, 0.8", "0.5, 1/4, 0.8", "0.8, 0.5, 1/4", "1/4, 0.8, 0.5"], correct: "1/4, 0.5, 0.8" },
-    { question: "Twice a number is 18. What is the number?", answers: ["9", "36", "16", "20"], correct: "9" },
-    { question: "What is the next number: 5, 10, 15, 20, ...?", answers: ["25", "30", "22", "24"], correct: "25" },
-    { question: "A movie starts at 2:15 PM and lasts 90 minutes. When does it end?", answers: ["3:45 PM", "3:15 PM", "4:00 PM", "3:30 PM"], correct: "3:45 PM" },
-    { question: "How many inches are in 3 feet?", answers: ["36", "12", "24", "30"], correct: "36" },
-    { question: "A number plus 8 is 15. What is the number?", answers: ["7", "23", "120", "5"], correct: "7" }
+const hardQuestions = [
+    { question: "Company A rents a truck for $50/day + $0.15/mile. Company B charges $35/day + $0.20/mile. For how many miles will the cost be the same?", answers: ["150 miles", "200 miles", "300 miles", "500 miles"], correct: "300 miles" },
+    { question: "A chemist needs 200 mL of a 28% acid solution by mixing 10% and 40% solutions. How much of the 40% solution is needed?", answers: ["80 mL", "100 mL", "120 mL", "140 mL"], correct: "120 mL" },
+    { question: "The height of a rocket is h = -16t² + 128t. How many seconds after launch will it hit the ground?", answers: ["4 seconds", "8 seconds", "16 seconds", "128 seconds"], correct: "8 seconds" },
+    { question: "A rectangular garden has a length 4 ft longer than its width. Its area is 96 sq ft. What is its length?", answers: ["8 ft", "12 ft", "16 ft", "24 ft"], correct: "12 ft" },
+    { question: "Factor completely: 3x² - 10x - 8", answers: ["(3x+2)(x-4)", "(3x-2)(x+4)", "(3x-4)(x+2)", "(3x+4)(x-2)"], correct: "(3x+2)(x-4)" },
+    { question: "A theater sold 300 tickets for $2,800. Adult tickets cost $10 and student tickets cost $7. How many adult tickets were sold?", answers: ["160", "180", "233", "140"], correct: "233" },
+    { question: "Solve the quadratic equation: 2x² - 5x = 3", answers: ["x=-3, x=1/2", "x=3/2, x=1", "x=3, x=-1/2", "x=-3, x=-1/2"], correct: "x=3, x=-1/2" },
+    { question: "A father is 24 years older than his daughter. In 4 years, he will be three times as old. How old is the father now?", answers: ["28", "32", "36", "40"], correct: "32" },
+    { question: "Simplify the expression: (x² - 9) / (x² + 5x + 6)", answers: ["(x - 3) / (x + 2)", "(x + 3) / (x + 2)", "-3/2", "x - 3/2"], correct: "(x - 3) / (x + 2)" },
+    { question: "The sum of the squares of two consecutive positive even integers is 100. What are the two integers?", answers: ["4 and 6", "6 and 8", "8 and 10", "10 and 12"], correct: "6 and 8" },
+    { question: "A boat travels 36 miles downstream in 2 hours. The return trip upstream takes 3 hours. What is the speed of the boat in still water?", answers: ["12 mph", "15 mph", "18 mph", "24 mph"], correct: "15 mph" },
+    { question: "A crew of 3 people can pave a driveway in 8 hours. How long would it take a crew of 4 people, assuming they work at the same rate?", answers: ["4 hours", "6 hours", "9 hours", "10.7 hours"], correct: "6 hours" },
+    { question: "Factor completely: 50a² - 2b²", answers: ["2(25a² - b²)", "(10a-2b)(5a+b)", "2(5a - b)(5a + b)", "50(a-b)(a+b)"], correct: "2(5a - b)(5a + b)" },
+    { question: "A square frame has side (2x+5). The square opening has side (x+2). Find the area of the mat (the border).", answers: ["x²+3", "3x²+16x+21", "x²+8x+9", "3x²+21"], correct: "3x²+16x+21" },
+    { question: "A company's profit is P(x) = -x² + 40x - 300. How many units (x) must be sold to maximize profit?", answers: ["10 units", "20 units", "30 units", "40 units"], correct: "20 units" },
+    { question: "A population of bacteria doubles every 3 hours. If the initial population is 500, how many bacteria will there be after 12 hours?", answers: ["2000", "4000", "6000", "8000"], correct: "8000" },
+    { question: "Solve the inequality: |2x - 5| > 9", answers: ["x > 7 or x < -2", "x > 7", "x < -2", "-2 < x < 7"], correct: "x > 7 or x < -2" },
+    { question: "Factor completely: x³ + 2x² - 9x - 18", answers: ["(x+2)(x-3)(x+3)", "(x-2)(x-3)(x+3)", "(x²+9)(x-2)", "(x²-9)(x-2)"], correct: "(x+2)(x-3)(x+3)" },
+    { question: "Two trains leave a station at the same time, one east and one west. The eastbound train is 10 mph faster. After 3 hours, they are 450 miles apart. Find the speed of the eastbound train.", answers: ["70 mph", "75 mph", "80 mph", "85 mph"], correct: "80 mph" },
+    { question: "Find the equation of a line perpendicular to y = (1/3)x + 2 that passes through the point (2, 5).", answers: ["y = 3x - 1", "y = -3x + 11", "y = (1/3)x + 13/3", "y = -3x + 1"], correct: "y = -3x + 11" },
+    { question: "A tank's volume is V = 5√(t+4). How many minutes (t) will it take to hold 20 gallons?", answers: ["8 min", "12 min", "16 min", "20 min"], correct: "12 min" },
+    { question: "The difference between two numbers is 8. The sum of their squares is 274. What are the two positive numbers?", answers: ["7 and 15", "8 and 16", "9 and 17", "5 and 13"], correct: "9 and 17" },
+    { question: "Solve for x: (x - 1) / 3 = 12 / (x + 1)", answers: ["x=5", "x=±6", "x=±√35", "x=±√37"], correct: "x=±√37" },
+    { question: "Simplify: (3x²y⁵)⁻²", answers: ["-9x⁴y¹⁰", "1 / (9x⁴y¹⁰)", "1 / (6x⁴y¹⁰)", "-6x⁻⁴y⁻¹⁰"], correct: "1 / (9x⁴y¹⁰)" },
+    { question: "A box has a volume of x³ + 6x² + 8x. If the height is x, what are the length and width?", answers: ["(x+2) and (x+4)", "(x+1) and (x+8)", "(x+6) and (x+8)", "x and (x+6)"], correct: "(x+2) and (x+4)" },
+    { question: "Sarah invested $3,000, part at 4% and the rest at 7%. Her annual interest was $180. How much did she invest at 7%?", answers: ["$1000", "$1500", "$2000", "$2500"], correct: "$2000" },
+    { question: "The perimeter of a right triangle is 30 inches. The hypotenuse is 13 inches. Find the lengths of the other two sides.", answers: ["5 in and 12 in", "6 in and 11 in", "7 in and 10 in", "8 in and 9 in"], correct: "5 in and 12 in" },
+    { question: "A ball is dropped from 144 ft. Its height is h(t) = 144 - 16t². How long does it take to hit the ground?", answers: ["3 seconds", "4 seconds", "9 seconds", "16 seconds"], correct: "3 seconds" },
+    { question: "The length of a rectangle is (√10 + 2) and the width is (√10 - 2). What is the area?", answers: ["6", "8", "√10 - 4", "14"], correct: "6" },
+    { question: "Solve for x: 2(x - 3)² - 5 = 27", answers: ["x = 7, x = -1", "x = 4, x = -4", "x = 1, x = 5", "x = 19, x = -19"], correct: "x = 7, x = -1" },
+    { question: "Simplify the radical expression: √72", answers: ["6√2", "36√2", "2√6", "9√8"], correct: "6√2" },
+    { question: "Solve the equation: √(x + 7) = 4", answers: ["x = 9", "x = 16", "x = 2", "x = -3"], correct: "x = 9" },
+    { question: "The population of a town grows according to P(t) = 1000 * (1.05)^t, where t is years. What is the population after 2 years?", answers: ["1050", "1100", "1102.5", "1150"], correct: "1102.5" },
+    { question: "A quadratic equation has roots at x = 3 and x = -5. Which equation represents this?", answers: ["(x-3)(x-5)=0", "(x+3)(x-5)=0", "(x-3)(x+5)=0", "(x+3)(x+5)=0"], correct: "(x-3)(x+5)=0" },
+    { question: "If the area of a circle is 36π, what is its circumference?", answers: ["6π", "12π", "18π", "36π"], correct: "12π" },
+    { question: "Solve for x: (x / (x + 1)) + 2 = 5", answers: ["x = -1/2", "x = 1/2", "x = 1", "x = -2/3"], correct: "x = -1/2" },
+    { question: "A certain radioactive substance decays at a rate of 10% per hour. If you start with 200g, how much is left after 2 hours?", answers: ["160g", "162g", "180g", "190g"], correct: "162g" },
+    { question: "Find the intersection point of y = 2x + 1 and y = -x + 4.", answers: ["(1, 3)", "(3, 1)", "(0, 1)", "(4, 0)"], correct: "(1, 3)" },
+    { question: "The length of a hypotenuse of a right triangle is 10. If one leg is 6, what is the length of the other leg?", answers: ["4", "8", "√64", "√136"], correct: "8" },
+    { question: "If a polynomial function f(x) has a root at x = 2, which of the following is a factor of f(x)?", answers: ["(x+2)", "(x-2)", "(2x)", "(x/2)"], correct: "(x-2)" },
+    { question: "Solve for y: (y + 2) / (y - 3) = 4", answers: ["y = 14/3", "y = 5", "y = 3", "y = -10"], correct: "y = 14/3" },
+    { question: "The sum of the reciprocals of two consecutive integers is 11/30. What is the smaller integer?", answers: ["3", "5", "6", "10"], correct: "5" },
+    { question: "A ladder 25 feet long is leaning against a wall. The base of the ladder is 7 feet from the wall. How high up the wall does the ladder reach?", answers: ["18 ft", "24 ft", "26 ft", "32 ft"], correct: "24 ft" },
+    { question: "Factor the sum of cubes: x³ + 8", answers: ["(x+2)(x²-2x+4)", "(x+2)(x²+2x+4)", "(x+2)³", "(x+4)(x²+2)"], correct: "(x+2)(x²-2x+4)" },
+    { question: "A function is defined by f(x) = x² - 3x + 2. What is f(-1)?", answers: ["0", "-4", "6", "4"], correct: "6" },
+    { question: "The ratio of boys to girls in a class is 3:5. If there are 24 students in total, how many girls are there?", answers: ["9", "10", "15", "16"], correct: "15" },
+    { question: "Solve for x: 3^(2x-1) = 27", answers: ["x=1", "x=2", "x=3", "x=4"], correct: "x=2" },
+    { question: "Simplify: (x² + 6x + 9) / (x + 3)", answers: ["x + 3", "x - 3", "x² + 9", "x + 6"], correct: "x + 3" },
+    { question: "A cylindrical tank has a radius of 3 ft and a height of 10 ft. What is its volume (V = πr²h)?", answers: ["30π ft³", "60π ft³", "90π ft³", "100π ft³"], correct: "90π ft³" },
+    { question: "Find the vertex of the parabola y = x² - 4x + 3.", answers: ["(2, -1)", "(-2, 15)", "(4, 3)", "(0, 3)"], correct: "(2, -1)" }
 ];
 
     const pokemonTiers = {
-        // REVISED: Tiers are now in logical order. Tier 1 is highest rarity.
         tier1: [ // Legendary
             {id: 144, name: 'Articuno'}, {id: 145, name: 'Zapdos'}, {id: 146, name: 'Moltres'}, {id: 149, name: 'Dragonite'}, {id: 150, name: 'Mewtwo'}, {id: 151, name: 'Mew'}
         ],
         tier2: [ // Rare
             {id: 3, name: 'Venusaur'}, {id: 6, name: 'Charizard'}, {id: 9, name: 'Blastoise'}, {id: 31, name: 'Nidoqueen'}, {id: 34, name: 'Nidoking'},
             {id: 36, name: 'Clefable'}, {id: 38, name: 'Ninetales'}, {id: 45, name: 'Vileplume'}, {id: 59, name: 'Arcanine'}, {id: 62, name: 'Poliwrath'},
-            {id: 64, name: 'Kadabra'}, {id: 65, name: 'Alakazam'}, {id: 67, name: 'Machoke'}, {id: 68, name: 'Machamp'}, {id: 71, name: 'Victreebel'},
-            {id: 73, name: 'Tentacruel'}, {id: 76, name: 'Golem'}, {id: 78, name: 'Rapidash'}, {id: 80, name: 'Slowbro'}, {id: 82, name: 'Magneton'},
-            {id: 83, name: 'Farfetch\'d'}, {id: 85, name: 'Dodrio'}, {id: 87, name: 'Dewgong'}, {id: 89, name: 'Muk'}, {id: 91, name: 'Cloyster'},
-            {id: 93, name: 'Haunter'}, {id: 94, name: 'Gengar'}, {id: 95, name: 'Onix'}, {id: 97, name: 'Hypno'}, {id: 99, name: 'Kingler'},
-            {id: 101, name: 'Electrode'}, {id: 103, name: 'Exeggutor'}, {id: 105, name: 'Marowak'}, {id: 106, name: 'Hitmonlee'}, {id: 107, name: 'Hitmonchan'},
-            {id: 110, name: 'Weezing'}, {id: 112, name: 'Rhydon'}, {id: 113, name: 'Chansey'}, {id: 115, name: 'Kangaskhan'}, {id: 117, name: 'Seadra'},
-            {id: 119, name: 'Seaking'}, {id: 121, name: 'Starmie'}, {id: 123, name: 'Scyther'}, {id: 124, name: 'Jynx'}, {id: 125, name: 'Electabuzz'},
-            {id: 126, name: 'Magmar'}, {id: 130, name: 'Gyarados'}, {id: 131, name: 'Lapras'}, {id: 132, name: 'Ditto'}, {id: 134, name: 'Vaporeon'},
-            {id: 135, name: 'Jolteon'}, {id: 136, name: 'Flareon'}, {id: 138, name: 'Omanyte'}, {id: 140, name: 'Kabuto'}, {id: 142, name: 'Aerodactyl'},
-            {id: 143, name: 'Snorlax'}, {id: 147, name: 'Dratini'}, {id: 148, name: 'Dragonair'}, {id: 139, name: 'Omastar'}, {id: 141, name: 'Kabutops'}
+            {id: 65, name: 'Alakazam'}, {id: 68, name: 'Machamp'}, {id: 71, name: 'Victreebel'}, {id: 73, name: 'Tentacruel'},
+            {id: 76, name: 'Golem'}, {id: 78, name: 'Rapidash'}, {id: 80, name: 'Slowbro'}, {id: 82, name: 'Magneton'}, {id: 94, name: 'Gengar'},
+            {id: 103, name: 'Exeggutor'}, {id: 106, name: 'Hitmonlee'}, {id: 107, name: 'Hitmonchan'}, {id: 110, name: 'Weezing'}, {id: 112, name: 'Rhydon'},
+            {id: 113, name: 'Chansey'}, {id: 115, name: 'Kangaskhan'}, {id: 121, name: 'Starmie'}, {id: 123, name: 'Scyther'}, {id: 124, name: 'Jynx'},
+            {id: 125, name: 'Electabuzz'}, {id: 126, name: 'Magmar'}, {id: 130, name: 'Gyarados'}, {id: 131, name: 'Lapras'}, {id: 134, name: 'Vaporeon'},
+            {id: 135, name: 'Jolteon'}, {id: 136, name: 'Flareon'}, {id: 142, name: 'Aerodactyl'}, {id: 143, name: 'Snorlax'}, {id: 148, name: 'Dragonair'}
         ],
         tier3: [ // Uncommon
             {id: 2, name: 'Ivysaur'}, {id: 5, name: 'Charmeleon'}, {id: 8, name: 'Wartortle'}, {id: 12, name: 'Butterfree'}, {id: 15, name: 'Beedrill'},
             {id: 18, name: 'Pidgeot'}, {id: 22, name: 'Fearow'}, {id: 24, name: 'Arbok'}, {id: 25, name: 'Pikachu'}, {id: 26, name: 'Raichu'},
-            {id: 28, name: 'Sandslash'}, {id: 30, name: 'Nidorina'}, {id: 33, name: 'Nidorino'}, {id: 35, name: 'Clefairy'}, {id: 37, name: 'Vulpix'},
-            {id: 40, name: 'Wigglytuff'}, {id: 42, name: 'Golbat'}, {id: 44, name: 'Gloom'}, {id: 47, name: 'Parasect'}, {id: 49, name: 'Venomoth'},
-            {id: 51, name: 'Dugtrio'}, {id: 52, name: 'Meowth'}, {id: 53, name: 'Persian'}, {id: 55, name: 'Golduck'}, {id: 57, name: 'Primeape'},
-            {id: 58, name: 'Growlithe'}, {id: 61, name: 'Poliwhirl'}, {id: 63, name: 'Abra'}, {id: 66, name: 'Machop'}, {id: 70, name: 'Weepinbell'},
-            {id: 75, name: 'Graveler'}, {id: 77, name: 'Ponyta'}, {id: 79, name: 'Slowpoke'}, {id: 81, name: 'Magnemite'}, {id: 92, name: 'Gastly'},
-            {id: 102, name: 'Exeggcute'}, {id: 104, name: 'Cubone'}, {id: 108, name: 'Lickitung'}, {id: 111, name: 'Rhyhorn'}, {id: 114, name: 'Tangela'},
-            {id: 122, name: 'Mr. Mime'}, {id: 127, name: 'Pinsir'}, {id: 128, name: 'Tauros'}, {id: 133, name: 'Eevee'}, {id: 137, name: 'Porygon'}
+            {id: 28, name: 'Sandslash'}, {id: 40, name: 'Wigglytuff'}, {id: 42, name: 'Golbat'}, {id: 49, name: 'Venomoth'},
+            {id: 51, name: 'Dugtrio'}, {id: 53, name: 'Persian'}, {id: 55, name: 'Golduck'}, {id: 57, name: 'Primeape'}, {id: 64, name: 'Kadabra'},
+            {id: 67, name: 'Machoke'}, {id: 75, 'name': 'Graveler'}, {id: 93, name: 'Haunter'}, {id: 95, name: 'Onix'}, {id: 97, name: 'Hypno'},
+            {id: 101, name: 'Electrode'}, {id: 105, name: 'Marowak'}, {id: 108, name: 'Lickitung'}, {id: 114, name: 'Tangela'}, {id: 122, name: 'Mr. Mime'},
+            {id: 127, name: 'Pinsir'}, {id: 128, name: 'Tauros'}, {id: 137, name: 'Porygon'}
         ],
         tier4: [ // Common
             {id: 1, name: 'Bulbasaur'}, {id: 4, name: 'Charmander'}, {id: 7, name: 'Squirtle'}, {id: 10, name: 'Caterpie'}, {id: 11, name: 'Metapod'},
@@ -367,17 +457,26 @@
             {id: 20, name: 'Raticate'}, {id: 21, name: 'Spearow'}, {id: 23, name: 'Ekans'}, {id: 27, name: 'Sandshrew'}, {id: 29, name: 'Nidoran♀'},
             {id: 32, name: 'Nidoran♂'}, {id: 39, name: 'Jigglypuff'}, {id: 41, name: 'Zubat'}, {id: 43, name: 'Oddish'}, {id: 46, name: 'Paras'},
             {id: 48, name: 'Venonat'}, {id: 50, name: 'Diglett'}, {id: 54, name: 'Psyduck'}, {id: 56, name: 'Mankey'}, {id: 60, name: 'Poliwag'},
-            {id: 69, name: 'Bellsprout'}, {id: 72, name: 'Tentacool'}, {id: 74, name: 'Geodude'}, {id: 84, name: 'Doduo'}, {id: 86, name: 'Seel'},
-            {id: 88, name: 'Grimer'}, {id: 90, name: 'Shellder'}, {id: 96, name: 'Drowzee'}, {id: 98, name: 'Krabby'}, {id: 100, name: 'Voltorb'},
-            {id: 109, name: 'Koffing'}, {id: 116, name: 'Horsea'}, {id: 118, name: 'Goldeen'}, {id: 120, name: 'Staryu'}, {id: 129, name: 'Magikarp'}
+            {id: 69, name: 'Bellsprout'}, {id: 72, name: 'Tentacool'}, {id: 74, name: 'Geodude'}, {id: 86, name: 'Seel'}, {id: 88, name: 'Grimer'},
+            {id: 90, name: 'Shellder'}, {id: 96, name: 'Drowzee'}, {id: 98, name: 'Krabby'}, {id: 100, name: 'Voltorb'}, {id: 118, name: 'Goldeen'},
+            {id: 129, name: 'Magikarp'}
         ]
     };
 
     // --- GAME STATE ---
     let playerTeam = [];
-    // REVISED: Team capacity changed to 6
-    const TEAM_CAPACITY = 7;
-    const gameState = { currentEncounter: null, currentTier: 4, requiredStreak: 0, currentStreak: 0, lastQuestionIndex: -1, };
+    // UPDATED: Team capacity is now 6, the standard for a Pokémon team.
+    const TEAM_CAPACITY = 6;
+    const gameState = {
+        currentEncounter: null,
+        currentTier: 4,
+        requiredStreak: 0,
+        currentStreak: 0,
+        // NEW: Track last question index for each difficulty tier to avoid repeats
+        lastEasyIndex: -1,
+        lastMediumIndex: -1,
+        lastHardIndex: -1,
+    };
 
     // --- HTML ELEMENTS ---
     const gameContainer = document.getElementById('game-container');
@@ -408,19 +507,24 @@
     function startEncounter(tier = null) {
         if (tier === null) {
             const randomChance = Math.random();
-            // REVISED: Encounter rates rebalanced for 4 tiers
             if (randomChance < 0.05) gameState.currentTier = 1;      // 5% chance for Legendary
-            else if (randomChance < 0.20) gameState.currentTier = 2; // 15% chance for Rare
-            else if (randomChance < 0.50) gameState.currentTier = 3; // 30% chance for Uncommon
-            else gameState.currentTier = 4;                          // 50% chance for Common
+            else if (randomChance < 0.25) gameState.currentTier = 2; // 20% chance for Rare
+            else if (randomChance < 0.60) gameState.currentTier = 3; // 35% chance for Uncommon
+            else gameState.currentTier = 4;                          // 40% chance for Common
         } else {
             gameState.currentTier = tier; 
         }
 
         const tierPokemons = pokemonTiers[`tier${gameState.currentTier}`];
         gameState.currentEncounter = tierPokemons[Math.floor(Math.random() * tierPokemons.length)];
-        // REVISED: Required streak calculation now works correctly with the new tier order
-        gameState.requiredStreak = 5 - gameState.currentTier;
+        
+        // NEW: Set required streak based on tier difficulty rules
+        if (gameState.currentTier === 1) { // Legendary Pokémon require 2 correct Hard questions
+            gameState.requiredStreak = 2;
+        } else { // All other tiers require 1 correct question
+            gameState.requiredStreak = 1;
+        }
+        
         gameState.currentStreak = 0; 
         streakInfoText.innerText = `Current Streak: 0`;
 
@@ -434,19 +538,46 @@
         encounterImg.className = '';
         encounterImg.classList.add(`tier-${gameState.currentTier}-border`);
         encounterName.innerText = name;
-        catchRequirementText.innerText = `Answer ${gameState.requiredStreak} question(s) correctly to catch!`;
+        
+        // NEW: Dynamic catch requirement text that specifies difficulty
+        let difficultyText = '';
+        if (gameState.currentTier === 4) difficultyText = 'Easy';
+        else if (gameState.currentTier === 3) difficultyText = 'Medium';
+        else difficultyText = 'Hard';
+    
+        const plural = gameState.requiredStreak > 1 ? 's' : '';
+        catchRequirementText.innerText = `Answer ${gameState.requiredStreak} ${difficultyText} question${plural} correctly to catch!`;
     }
 
     function loadMathQuestion() {
+        let questionPool;
+        let lastIndexKey;
+
+        // NEW: Select question pool and index tracker based on the Pokémon's tier
+        if (gameState.currentTier === 4) {
+            questionPool = easyQuestions;
+            lastIndexKey = 'lastEasyIndex';
+        } else if (gameState.currentTier === 3) {
+            questionPool = mediumQuestions;
+            lastIndexKey = 'lastMediumIndex';
+        } else { // Tiers 1 and 2 both use Hard questions
+            questionPool = hardQuestions;
+            lastIndexKey = 'lastHardIndex';
+        }
+
         let questionIndex;
+        // Ensure the same question isn't asked twice in a row from the same pool
         do {
-            questionIndex = Math.floor(Math.random() * mathQuestions.length);
-        } while (questionIndex === gameState.lastQuestionIndex && mathQuestions.length > 1);
+            questionIndex = Math.floor(Math.random() * questionPool.length);
+        } while (questionIndex === gameState[lastIndexKey] && questionPool.length > 1);
         
-        gameState.lastQuestionIndex = questionIndex;
-        const currentQuestion = mathQuestions[questionIndex];
+        gameState[lastIndexKey] = questionIndex; // Update the specific index tracker
+        
+        const currentQuestion = questionPool[questionIndex];
         questionText.innerText = currentQuestion.question;
         answersContainer.innerHTML = '';
+        
+        // Randomize the order of the answer buttons
         const shuffledAnswers = [...currentQuestion.answers].sort(() => Math.random() - 0.5);
         shuffledAnswers.forEach(answer => {
             const button = document.createElement('button');
@@ -464,13 +595,15 @@
             if (gameState.currentStreak >= gameState.requiredStreak) {
                 setTimeout(catchPokemon, 500);
             } else {
-                setTimeout(loadMathQuestion, 500);
+                setTimeout(loadMathQuestion, 500); // Load the next question for the streak
             }
         } else {
             playVisualEffect('incorrect');
             const fledPokemon = gameState.currentEncounter.name;
             setTimeout(() => {
                 showGenericMessage('Wrong Answer!', `The wild ${fledPokemon} fled!`);
+                // When an answer is wrong, the encounter resets, but stays on the same tier
+                // so the user can try to catch another Pokémon of similar rarity.
                 startEncounter(gameState.currentTier);
             }, 500);
         }
