@@ -3,50 +3,477 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GED Math Grove</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <title>Pokémon Math Adventure</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        :root {
+            --tier1-color: #f1c40f; /* Gold */
+            --tier2-color: #3498db; /* Blue */
+            --tier3-color: #95a5a6; /* Grey */
+            --correct-color: #2ecc71; /* Green */
+            --incorrect-color: #e74c3c; /* Red */
+        }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            margin: 0;
+            padding: 15px;
+        }
+
+        #game-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #34495e;
+            padding: 20px;
+            border-radius: 15px;
+            border: 3px solid #ecf0f1;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.2s;
+        }
+        
+        h1, h2, h3 {
+            color: #f1c40f;
+            text-shadow: 2px 2px 2px #000;
+        }
+
+        /* --- VIEWS --- */
+        #encounter-view, #quiz-view {
+            padding: 15px;
+            border: 2px solid #7f8c8d;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        #pokemon-to-catch-img {
+            width: 150px;
+            height: 150px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            /* FIX: Set width and style, but not color. Make it thicker. */
+            border-width: 8px;
+            border-style: solid;
+            image-rendering: pixelated;
+        }
+
+        .tier-1-border { border-color: var(--tier1-color); }
+        .tier-2-border { border-color: var(--tier2-color); }
+        .tier-3-border { border-color: var(--tier3-color); }
+
+        #streak-info {
+            font-size: 0.9em;
+            color: #bdc3c7;
+            min-height: 1.2em;
+        }
+        
+        .answers button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            background-color: #e67e22;
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .answers button:hover {
+            background-color: #d35400;
+            transform: translateY(-2px);
+        }
+
+        #team-controls {
+            margin-top: 20px;
+        }
+        
+        #view-team-btn {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        /* --- MODALS --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #34495e;
+            padding: 30px;
+            border: 5px solid #f1c40f;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+        }
+        
+        #team-grid, #swap-team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .team-slot {
+            background-color: rgba(0,0,0,0.2);
+            border: 2px dashed #7f8c8d;
+            border-radius: 10px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-size: 0.7em;
+            padding: 5px;
+        }
+        
+        .team-slot img {
+            width: 70px;
+            height: 70px;
+            image-rendering: pixelated;
+        }
+
+        .swappable:hover {
+            background-color: #2980b9;
+            cursor: pointer;
+            border-style: solid;
+        }
+
+        .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        #catch-modal-img, #swap-new-pokemon-img {
+            width: 120px;
+            height: 120px;
+        }
+        
+        .modal button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-family: 'Press Start 2P', cursive;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.8em;
+        }
+
+        /* --- VISUAL EFFECTS --- */
+        .correct-flash { animation: flash-green 0.5s ease-out; }
+        .incorrect-flash { animation: flash-red 0.5s ease-out; }
+
+        @keyframes flash-green {
+            50% { background-color: var(--correct-color); }
+        }
+        @keyframes flash-red {
+            50% { background-color: var(--incorrect-color); }
+        }
+
+    </style>
 </head>
 <body>
 
-    <div class="game-container">
-        <header>
-            <h1>Welcome to your Math Grove!</h1>
-            <p>Answer the questions correctly to help your tree grow. You've got this!</p>
-        </header>
-
-        <div class="progress-container">
-            <div id="tree-container">
-                <!-- The tree will be dynamically inserted here by JavaScript -->
-                <img id="tree-image" src="https://raw.githubusercontent.com/google/material-design-icons/master/src/social/psychology_alt/materialicons/24px.svg" alt="A growing tree">
-            </div>
-            <div id="progress-text">
-                <p>Score: <span id="score">0</span></p>
-                <p>Tree Level: <span id="tree-level">1</span></p>
-            </div>
-        </div>
-
-        <div class="quiz-container">
-            <div id="question-area">
-                <p id="question-text">Loading question...</p>
-            </div>
-            <div id="answer-area">
-                <input type="text" id="answer-input" placeholder="Type your answer here">
-                <button id="submit-btn">Submit</button>
-            </div>
-            <p id="feedback-text"></p>
-        </div>
-
-        <div id="completion-screen" class="hidden">
-            <h2>Congratulations!</h2>
-            <p>Your tree is fully grown! You've mastered this set of problems.</p>
-            <button id="restart-btn">Play Again</button>
-        </div>
-
+<div id="game-container">
+    <h1>Pokémon Math Adventure</h1>
+    <div id="encounter-view">
+        <h3>A wild Pokémon appears!</h3>
+        <img id="pokemon-to-catch-img" src="" alt="Wild Pokémon">
+        <h2 id="pokemon-to-catch-name"></h2>
+        <p id="catch-requirement"></p>
+        <p id="streak-info">Current Streak: 0</p>
     </div>
+    <div id="quiz-view">
+        <h3 id="question"></h3>
+        <div class="answers" id="answers"></div>
+    </div>
+    <div id="team-controls">
+        <button id="view-team-btn">View Team</button>
+    </div>
+</div>
 
-    <script src="script.js"></script>
+<!-- Modals -->
+<div id="team-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="team-close-btn">&times;</span>
+        <h2>Your Team</h2>
+        <div id="team-grid"></div>
+    </div>
+</div>
+
+<div id="catch-modal" class="modal">
+    <div class="modal-content">
+        <h2 id="catch-modal-title">Gotcha!</h2>
+        <img id="catch-modal-img" src="">
+        <p id="catch-modal-text"></p>
+        <button id="catch-ok-btn">Awesome!</button>
+    </div>
+</div>
+
+<div id="message-modal" class="modal">
+    <div class="modal-content">
+        <h2 id="message-title">Oh no!</h2>
+        <p id="message-text"></p>
+        <button id="message-ok-btn">Try Again</button>
+    </div>
+</div>
+
+<div id="swap-modal" class="modal">
+    <div class="modal-content">
+        <h2>Team Full!</h2>
+        <p>Swap the newly caught Pokémon or let it go.</p>
+        <div>
+            <h3>Newly Caught</h3>
+            <img id="swap-new-pokemon-img" src="">
+            <p id="swap-new-pokemon-name"></p>
+            <button id="let-go-btn">Let It Go</button>
+        </div>
+        <hr>
+        <h3>Your Team (Click to Swap)</h3>
+        <div id="swap-team-grid"></div>
+    </div>
+</div>
+
+
+<script>
+    // --- DATA ---
+    const mathQuestions = [
+        { question: "Solve for x: 2x + 5 = 17", answers: ["6", "8", "5", "7"], correct: "6" },
+        { question: "Area of a circle with radius 5? (π≈3.14)", answers: ["78.5", "31.4", "15.7", "25"], correct: "78.5" },
+        { question: "Prob. of picking a blue marble from 3 red & 2 blue?", answers: ["2/5", "3/5", "1/2", "2/3"], correct: "2/5" },
+        { question: "What is the next prime number after 13?", answers: ["15", "17", "16", "19"], correct: "17" },
+        { question: "Square root of 144?", answers: ["12", "11", "13", "14"], correct: "12" },
+        { question: "Calculate 15% of 200.", answers: ["15", "20", "30", "40"], correct: "30" },
+        { question: "Third angle of a triangle with angles 90° & 40°?", answers: ["50°", "60°", "40°", "130°"], correct: "50°" }
+    ];
+
+    const pokemonTiers = {
+        tier3: [{ id: 10, name: 'Caterpie' }, { id: 13, name: 'Weedle' }, { id: 16, name: 'Pidgey' }, { id: 19, name: 'Rattata' }, { id: 41, name: 'Zubat' }, { id: 129, name: 'Magikarp' }],
+        tier2: [{ id: 25, name: 'Pikachu' }, { id: 37, name: 'Vulpix' }, { id: 58, name: 'Growlithe' }, { id: 63, name: 'Abra' }, { id: 66, name: 'Machop' }, { id: 77, name: 'Ponyta' }],
+        tier1: [{ id: 131, name: 'Lapras' }, { id: 143, name: 'Snorlax' }, { id: 123, name: 'Scyther' }, { id: 147, name: 'Dratini' }, { id: 138, name: 'Omanyte' }, { id: 151, name: 'Mew' }]
+    };
+
+    // --- GAME STATE ---
+    let playerTeam = [];
+    const TEAM_CAPACITY = 10;
+    const gameState = { currentEncounter: null, currentTier: 3, requiredStreak: 0, currentStreak: 0, lastQuestionIndex: -1, };
+
+    // --- HTML ELEMENTS ---
+    const gameContainer = document.getElementById('game-container');
+    const encounterImg = document.getElementById('pokemon-to-catch-img');
+    const encounterName = document.getElementById('pokemon-to-catch-name');
+    const catchRequirementText = document.getElementById('catch-requirement');
+    const streakInfoText = document.getElementById('streak-info');
+    const questionText = document.getElementById('question');
+    const answersContainer = document.getElementById('answers');
+    // Modals
+    const teamModal = document.getElementById('team-modal');
+    const catchModal = document.getElementById('catch-modal');
+    const messageModal = document.getElementById('message-modal');
+    const swapModal = document.getElementById('swap-modal');
+    // Modal Content
+    const teamGrid = document.getElementById('team-grid');
+    const catchModalImg = document.getElementById('catch-modal-img');
+    const catchModalText = document.getElementById('catch-modal-text');
+    const messageText = document.getElementById('message-text');
+    const swapNewPokemonImg = document.getElementById('swap-new-pokemon-img');
+    const swapNewPokemonName = document.getElementById('swap-new-pokemon-name');
+    const swapTeamGrid = document.getElementById('swap-team-grid');
+    // Modal Buttons
+    const viewTeamBtn = document.getElementById('view-team-btn');
+    const teamCloseBtn = document.getElementById('team-close-btn');
+    const catchOkBtn = document.getElementById('catch-ok-btn');
+    const messageOkBtn = document.getElementById('message-ok-btn');
+    const letGoBtn = document.getElementById('let-go-btn');
+
+    // --- FUNCTIONS ---
+    function startEncounter(tier = null) {
+        if (tier === null) {
+            const randomChance = Math.random();
+            if (randomChance < 0.1) gameState.currentTier = 1;      
+            else if (randomChance < 0.4) gameState.currentTier = 2; 
+            else gameState.currentTier = 3;                         
+        } else {
+            gameState.currentTier = tier; 
+        }
+
+        const tierPokemons = pokemonTiers[`tier${gameState.currentTier}`];
+        gameState.currentEncounter = tierPokemons[Math.floor(Math.random() * tierPokemons.length)];
+        gameState.requiredStreak = 4 - gameState.currentTier;
+        gameState.currentStreak = 0; 
+        streakInfoText.innerText = `Current Streak: 0`;
+
+        updateEncounterUI();
+        loadMathQuestion();
+    }
+
+    function updateEncounterUI() {
+        const { name, id } = gameState.currentEncounter;
+        encounterImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+        encounterImg.className = ''; // Clear previous classes
+        encounterImg.classList.add(`tier-${gameState.currentTier}-border`);
+        encounterName.innerText = name;
+        catchRequirementText.innerText = `Answer ${gameState.requiredStreak} question(s) correctly to catch!`;
+    }
+
+    function loadMathQuestion() {
+        let questionIndex;
+        do {
+            questionIndex = Math.floor(Math.random() * mathQuestions.length);
+        } while (questionIndex === gameState.lastQuestionIndex && mathQuestions.length > 1);
+        
+        gameState.lastQuestionIndex = questionIndex;
+        const currentQuestion = mathQuestions[questionIndex];
+        questionText.innerText = currentQuestion.question;
+        answersContainer.innerHTML = '';
+        const shuffledAnswers = [...currentQuestion.answers].sort(() => Math.random() - 0.5);
+        shuffledAnswers.forEach(answer => {
+            const button = document.createElement('button');
+            button.innerText = answer;
+            button.onclick = () => handleAnswer(answer, currentQuestion.correct);
+            answersContainer.appendChild(button);
+        });
+    }
+
+    function handleAnswer(selectedAnswer, correctAnswer) {
+        if (selectedAnswer === correctAnswer) {
+            gameState.currentStreak++;
+            streakInfoText.innerText = `Correct! Streak: ${gameState.currentStreak}`;
+            playVisualEffect('correct');
+            if (gameState.currentStreak >= gameState.requiredStreak) {
+                setTimeout(catchPokemon, 500);
+            } else {
+                setTimeout(loadMathQuestion, 500);
+            }
+        } else {
+            playVisualEffect('incorrect');
+            const fledPokemon = gameState.currentEncounter.name;
+            setTimeout(() => {
+                showGenericMessage('Wrong Answer!', `The wild ${fledPokemon} fled!`);
+                startEncounter(gameState.currentTier);
+            }, 500);
+        }
+    }
+
+    function catchPokemon() {
+        const caughtPokemon = gameState.currentEncounter;
+        if (playerTeam.length < TEAM_CAPACITY) {
+            playerTeam.push(caughtPokemon);
+            showCatchMessage(caughtPokemon);
+            updateTeamView();
+        } else {
+            showSwapModal(caughtPokemon);
+        }
+    }
+    
+    function showCatchMessage(pokemon) {
+        catchModal.style.display = 'flex';
+        catchModalImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
+        catchModalText.innerText = `${pokemon.name} was caught and added to your team!`;
+    }
+    
+    function showGenericMessage(title, text) {
+        messageModal.style.display = 'flex';
+        document.getElementById('message-title').innerText = title;
+        messageText.innerText = text;
+    }
+
+    function showSwapModal(newPokemon) {
+        swapModal.style.display = 'flex';
+        swapNewPokemonImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${newPokemon.id}.png`;
+        swapNewPokemonName.innerText = newPokemon.name;
+        
+        swapTeamGrid.innerHTML = '';
+        playerTeam.forEach((pokemon, index) => {
+            const slot = document.createElement('div');
+            slot.className = 'team-slot swappable';
+            slot.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}"><span>${pokemon.name}</span>`;
+            slot.onclick = () => {
+                playerTeam[index] = newPokemon; // Perform the swap
+                swapModal.style.display = 'none';
+                updateTeamView();
+                startEncounter();
+            };
+            swapTeamGrid.appendChild(slot);
+        });
+    }
+
+    function playVisualEffect(type) {
+        const className = type === 'correct' ? 'correct-flash' : 'incorrect-flash';
+        gameContainer.classList.add(className);
+        setTimeout(() => gameContainer.classList.remove(className), 500);
+    }
+
+    function updateTeamView() {
+        teamGrid.innerHTML = '';
+        for (let i = 0; i < TEAM_CAPACITY; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'team-slot';
+            if (playerTeam[i]) {
+                slot.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${playerTeam[i].id}.png" alt="${playerTeam[i].name}"><span>${playerTeam[i].name}</span>`;
+            }
+            teamGrid.appendChild(slot);
+        }
+    }
+
+    // --- EVENT LISTENERS ---
+    viewTeamBtn.onclick = () => { teamModal.style.display = 'flex'; };
+    teamCloseBtn.onclick = () => { teamModal.style.display = 'none'; };
+    
+    catchOkBtn.onclick = () => {
+        catchModal.style.display = 'none';
+        startEncounter();
+    };
+    
+    messageOkBtn.onclick = () => {
+        messageModal.style.display = 'none';
+    };
+
+    letGoBtn.onclick = () => {
+        swapModal.style.display = 'none';
+        startEncounter();
+    };
+
+    window.onclick = (event) => {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
+        }
+    };
+
+    // --- INITIALIZE GAME ---
+    updateTeamView();
+    startEncounter();
+</script>
+
 </body>
 </html>
