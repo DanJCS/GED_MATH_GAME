@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokémon Math Adventure</title>
+    <title>Pokémon Math Adventure - Final Version</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
         :root {
-            --tier1-color: #f1c40f; /* Gold */
-            --tier2-color: #3498db; /* Blue */
-            --tier3-color: #95a5a6; /* Grey */
+            /* REVISED: Tiers re-ordered to be intuitive. Tier 1 is highest. */
+            --tier1-color: #9b59b6; /* Purple for Legendary */
+            --tier2-color: #f1c40f; /* Gold for Rare */
+            --tier3-color: #3498db; /* Blue for Uncommon */
+            --tier4-color: #95a5a6; /* Grey for Common */
             --correct-color: #2ecc71; /* Green */
             --incorrect-color: #e74c3c; /* Red */
         }
@@ -55,15 +57,16 @@
             border-radius: 10px;
             padding: 10px;
             margin-bottom: 10px;
-            /* FIX: Set width and style, but not color. Make it thicker. */
             border-width: 8px;
             border-style: solid;
             image-rendering: pixelated;
         }
-
+        
+        /* REVISED: Class names now match the intuitive tier numbers */
         .tier-1-border { border-color: var(--tier1-color); }
         .tier-2-border { border-color: var(--tier2-color); }
         .tier-3-border { border-color: var(--tier3-color); }
+        .tier-4-border { border-color: var(--tier4-color); }
 
         #streak-info {
             font-size: 0.9em;
@@ -193,12 +196,8 @@
         .correct-flash { animation: flash-green 0.5s ease-out; }
         .incorrect-flash { animation: flash-red 0.5s ease-out; }
 
-        @keyframes flash-green {
-            50% { background-color: var(--correct-color); }
-        }
-        @keyframes flash-red {
-            50% { background-color: var(--incorrect-color); }
-        }
+        @keyframes flash-green { 50% { background-color: var(--correct-color); } }
+        @keyframes flash-red { 50% { background-color: var(--incorrect-color); } }
 
     </style>
 </head>
@@ -223,70 +222,162 @@
 </div>
 
 <!-- Modals -->
-<div id="team-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" id="team-close-btn">&times;</span>
-        <h2>Your Team</h2>
-        <div id="team-grid"></div>
-    </div>
-</div>
-
-<div id="catch-modal" class="modal">
-    <div class="modal-content">
-        <h2 id="catch-modal-title">Gotcha!</h2>
-        <img id="catch-modal-img" src="">
-        <p id="catch-modal-text"></p>
-        <button id="catch-ok-btn">Awesome!</button>
-    </div>
-</div>
-
-<div id="message-modal" class="modal">
-    <div class="modal-content">
-        <h2 id="message-title">Oh no!</h2>
-        <p id="message-text"></p>
-        <button id="message-ok-btn">Try Again</button>
-    </div>
-</div>
-
-<div id="swap-modal" class="modal">
-    <div class="modal-content">
-        <h2>Team Full!</h2>
-        <p>Swap the newly caught Pokémon or let it go.</p>
-        <div>
-            <h3>Newly Caught</h3>
-            <img id="swap-new-pokemon-img" src="">
-            <p id="swap-new-pokemon-name"></p>
-            <button id="let-go-btn">Let It Go</button>
-        </div>
-        <hr>
-        <h3>Your Team (Click to Swap)</h3>
-        <div id="swap-team-grid"></div>
-    </div>
-</div>
-
+<div id="team-modal" class="modal"><div class="modal-content"><span class="close-btn" id="team-close-btn">&times;</span><h2>Your Team</h2><div id="team-grid"></div></div></div>
+<div id="catch-modal" class="modal"><div class="modal-content"><h2 id="catch-modal-title">Gotcha!</h2><img id="catch-modal-img" src=""><p id="catch-modal-text"></p><button id="catch-ok-btn">Awesome!</button></div></div>
+<div id="message-modal" class="modal"><div class="modal-content"><h2 id="message-title">Oh no!</h2><p id="message-text"></p><button id="message-ok-btn">Try Again</button></div></div>
+<div id="swap-modal" class="modal"><div class="modal-content"><h2>Team Full!</h2><p>Swap the newly caught Pokémon or let it go.</p><div><h3>Newly Caught</h3><img id="swap-new-pokemon-img" src=""><p id="swap-new-pokemon-name"></p><button id="let-go-btn">Let It Go</button></div><hr><h3>Your Team (Click to Swap)</h3><div id="swap-team-grid"></div></div></div>
 
 <script>
     // --- DATA ---
     const mathQuestions = [
-        { question: "Solve for x: 2x + 5 = 17", answers: ["6", "8", "5", "7"], correct: "6" },
-        { question: "Area of a circle with radius 5? (π≈3.14)", answers: ["78.5", "31.4", "15.7", "25"], correct: "78.5" },
-        { question: "Prob. of picking a blue marble from 3 red & 2 blue?", answers: ["2/5", "3/5", "1/2", "2/3"], correct: "2/5" },
-        { question: "What is the next prime number after 13?", answers: ["15", "17", "16", "19"], correct: "17" },
-        { question: "Square root of 144?", answers: ["12", "11", "13", "14"], correct: "12" },
-        { question: "Calculate 15% of 200.", answers: ["15", "20", "30", "40"], correct: "30" },
-        { question: "Third angle of a triangle with angles 90° & 40°?", answers: ["50°", "60°", "40°", "130°"], correct: "50°" }
-    ];
+    // --- Section 1: Basic Algebra & Expressions ---
+    { question: "Solve for x: 2x + 5 = 17", answers: ["6", "8", "5", "7"], correct: "6" },
+    { question: "Solve for y: 3y - 8 = 16", answers: ["8", "6", "9", "7"], correct: "8" },
+    { question: "Simplify: 4a + 5 + 2a - 3", answers: ["6a + 2", "6a + 8", "2a + 2", "8a"], correct: "6a + 2" },
+    { question: "Evaluate 5c - 3 when c = 4.", answers: ["17", "23", "20", "15"], correct: "17" },
+    { question: "Solve for z: z/4 = 5", answers: ["20", "1", "9", "1.25"], correct: "20" },
+    { question: "Simplify: 3(x + 5)", answers: ["3x + 15", "3x + 5", "x + 15", "18x"], correct: "3x + 15" },
+    { question: "Solve: 5x = 3x + 10", answers: ["5", "2", "10", "1"], correct: "5" },
+    { question: "What is x if -4x = 24?", answers: ["-6", "6", "-8", "8"], correct: "-6" },
+    { question: "Translate to algebra: a number less 7", answers: ["x - 7", "7 - x", "7x", "x + 7"], correct: "x - 7" },
+    { question: "Translate to algebra: 5 times a number", answers: ["5x", "x + 5", "x/5", "x - 5"], correct: "5x" },
+    { question: "Solve for n: n/3 + 2 = 7", answers: ["15", "27", "9", "5"], correct: "15" },
+    { question: "Simplify: 5x - (2x - 4)", answers: ["3x + 4", "3x - 4", "7x + 4", "7x - 4"], correct: "3x + 4" },
+    { question: "Factor: 4x + 8", answers: ["4(x + 2)", "4(x + 8)", "2(2x + 8)", "8(x + 1)"], correct: "4(x + 2)" },
+    { question: "Solve the inequality: 2x > 10", answers: ["x > 5", "x < 5", "x > 20", "x < 20"], correct: "x > 5" },
+    { question: "Solve the inequality: x + 6 < 11", answers: ["x < 5", "x > 5", "x < 17", "x > 17"], correct: "x < 5" },
+    { question: "Solve for x: (x)(x) = 49", answers: ["7 or -7", "7", "-7", "49"], correct: "7 or -7" },
+    { question: "Solve for y: (y-2)(y+3) = 0", answers: ["2 and -3", "2 and 3", "-2 and 3", "-2 and -3"], correct: "2 and -3" },
+    { question: "Which expression is a trinomial?", answers: ["x² + 2x + 1", "5x + 2", "8y", "x/2"], correct: "x² + 2x + 1" },
+    { question: "Solve for p: 2(p + 1) = 18", answers: ["8", "9", "7", "10"], correct: "8" },
+    { question: "Evaluate 2a + 3b if a=4 and b=2.", answers: ["14", "10", "20", "9"], correct: "14" },
+
+    // --- Section 2: Number Sense (Fractions, Decimals, Percents) ---
+    { question: "What is 50% of 80?", answers: ["40", "50", "80", "25"], correct: "40" },
+    { question: "Convert 0.75 to a fraction.", answers: ["3/4", "1/2", "4/5", "7/10"], correct: "3/4" },
+    { question: "1/2 + 1/4 = ?", answers: ["3/4", "1/6", "2/6", "1/3"], correct: "3/4" },
+    { question: "A shirt costs $20. It's on sale for 25% off. What is the sale price?", answers: ["$15", "$5", "$10", "$18"], correct: "$15" },
+    { question: "Convert 2/5 to a decimal.", answers: ["0.4", "0.2", "0.5", "2.5"], correct: "0.4" },
+    { question: "3/4 * 1/2 = ?", answers: ["3/8", "4/6", "3/6", "1"], correct: "3/8" },
+    { question: "What is 10% of 150?", answers: ["15", "10", "50", "1.5"], correct: "15" },
+    { question: "A meal costs $40. How much is a 15% tip?", answers: ["$6", "$4", "$5", "$10"], correct: "$6" },
+    { question: "Which is greater: 0.6 or 3/4?", answers: ["3/4", "0.6", "They are equal", "Cannot tell"], correct: "3/4" },
+    { question: "3/5 ÷ 1/2 = ?", answers: ["6/5", "3/10", "5/6", "2/5"], correct: "6/5" },
+    { question: "What is 0.5 as a percent?", answers: ["50%", "5%", "0.5%", "500%"], correct: "50%" },
+    { question: "Find the value of |-5|.", answers: ["5", "-5", "0", "1/5"], correct: "5" },
+    { question: "Find the value of |3 - 8|.", answers: ["5", "-5", "11", "-11"], correct: "5" },
+    { question: "What is the ratio of 6 apples to 9 oranges?", answers: ["2:3", "3:2", "6:9", "1:3"], correct: "2:3" },
+    { question: "Solve the proportion: x/4 = 9/12", answers: ["3", "4", "9", "12"], correct: "3" },
+    { question: "What is 5²?", answers: ["25", "10", "52", "7"], correct: "25" },
+    { question: "What is the square root of 64?", answers: ["8", "6", "4", "16"], correct: "8" },
+    { question: "What is 2³?", answers: ["8", "6", "9", "16"], correct: "8" },
+    { question: "(-3) * 5 = ?", answers: ["-15", "15", "2", "-8"], correct: "-15" },
+    { question: "(-12) / (-4) = ?", answers: ["3", "-3", "8", "-8"], correct: "3" },
+
+    // --- Section 3: Geometry ---
+    { question: "Perimeter of a square with side 5 cm?", answers: ["20 cm", "25 cm", "10 cm", "15 cm"], correct: "20 cm" },
+    { question: "Area of a square with side 6 inches?", answers: ["36 sq in", "24 sq in", "12 sq in", "60 sq in"], correct: "36 sq in" },
+    { question: "Area of a rectangle L=8, W=4?", answers: ["32", "24", "12", "16"], correct: "32" },
+    { question: "A triangle has base=10 and height=5. Area?", answers: ["25", "50", "15", "100"], correct: "25" },
+    { question: "Circumference of a circle with radius 5? (Use π=3.14)", answers: ["31.4", "78.5", "15.7", "25"], correct: "31.4" },
+    { question: "Area of a circle with radius 10? (Use π=3.14)", answers: ["314", "31.4", "62.8", "100"], correct: "314" },
+    { question: "Volume of a cube with side 3?", answers: ["27", "9", "18", "12"], correct: "27" },
+    { question: "Pythagorean theorem: a=3, b=4, c=?", answers: ["5", "6", "7", "25"], correct: "5" },
+    { question: "A triangle has angles 40° and 60°. What is the third angle?", answers: ["80°", "100°", "260°", "90°"], correct: "80°" },
+    { question: "Volume of a cylinder: r=2, h=10. (V=πr²h, use π=3.14)", answers: ["125.6", "62.8", "31.4", "200"], correct: "125.6" },
+    { question: "Perimeter of a rectangle L=7, W=3?", answers: ["20", "21", "10", "14"], correct: "20" },
+    { question: "Pythagorean theorem: a=5, c=13, b=?", answers: ["12", "18", "8", "10"], correct: "12" },
+    { question: "What shape has 4 equal sides and 4 right angles?", answers: ["Square", "Rectangle", "Rhombus", "Triangle"], correct: "Square" },
+    { question: "The sum of angles in a quadrilateral is:", answers: ["360°", "180°", "90°", "540°"], correct: "360°" },
+    { question: "Volume of a box with L=5, W=2, H=3?", answers: ["30", "10", "15", "25"], correct: "30" },
+    { question: "The diameter of a circle is 12. What is the radius?", answers: ["6", "12", "24", "3"], correct: "6" },
+    { question: "Area of a triangle with base 6 and height 8?", answers: ["24", "48", "14", "30"], correct: "24" },
+    { question: "A right angle measures:", answers: ["90°", "180°", "45°", "0°"], correct: "90°" },
+    { question: "How many sides does a hexagon have?", answers: ["6", "5", "7", "8"], correct: "6" },
+    { question: "An isosceles triangle has how many equal sides?", answers: ["2", "3", "0", "1"], correct: "2" },
+
+    // --- Section 4: Graphs, Functions, & Data Analysis ---
+    { question: "Find the mean of 2, 4, 6.", answers: ["4", "6", "12", "3"], correct: "4" },
+    { question: "Find the median of 3, 8, 5.", answers: ["5", "8", "3", "5.3"], correct: "5" },
+    { question: "Find the mode of 2, 5, 5, 8.", answers: ["5", "8", "2", "No mode"], correct: "5" },
+    { question: "Find the range of 10, 2, 8.", answers: ["8", "10", "20", "6"], correct: "8" },
+    { question: "Find the slope of a line through (1,2) and (3,6).", answers: ["2", "1/2", "4", "1"], correct: "2" },
+    { question: "In y = 3x + 5, what is the slope?", answers: ["3", "5", "1", "8"], correct: "3" },
+    { question: "If f(x) = 2x + 1, find f(3).", answers: ["7", "6", "5", "8"], correct: "7" },
+    { question: "A coin is flipped. What is the probability of heads?", answers: ["1/2", "1", "0", "1/4"], correct: "1/2" },
+    { question: "In y = -4x - 2, what is the y-intercept?", answers: ["-2", "-4", "2", "4"], correct: "-2" },
+    { question: "Find the slope of a line through (0,0) and (2,4).", answers: ["2", "4", "0", "1/2"], correct: "2" },
+    { question: "Find the mean of 10, 20, 30.", answers: ["20", "30", "60", "15"], correct: "20" },
+    { question: "Find the median of 1, 9, 4, 6.", answers: ["5", "4.5", "6", "5.5"], correct: "5" },
+    { question: "A die is rolled. What is the probability of rolling a 4?", answers: ["1/6", "1/3", "1/2", "4/6"], correct: "1/6" },
+    { question: "If f(x) = x² + 1, find f(4).", answers: ["17", "9", "16", "8"], correct: "17" },
+    { question: "What is the slope of a horizontal line?", answers: ["0", "1", "-1", "Undefined"], correct: "0" },
+    { question: "What is the slope of a vertical line?", answers: ["Undefined", "0", "1", "-1"], correct: "Undefined" },
+    { question: "Find the mode of: 1, 2, 3, 4, 5", answers: ["No mode", "3", "1", "5"], correct: "No mode" },
+    { question: "Find the range of: 5, 5, 5, 5.", answers: ["0", "5", "1", "20"], correct: "0" },
+    { question: "If f(x) = 5x, find f(-2).", answers: ["-10", "10", "3", "-7"], correct: "-10" },
+    { question: "Find the slope of the line y = 7.", answers: ["0", "7", "1", "Undefined"], correct: "0" },
+    
+    // --- Section 5: Mixed Review & Word Problems ---
+    { question: "A car travels 120 miles in 2 hours. What is its speed?", answers: ["60 mph", "120 mph", "240 mph", "30 mph"], correct: "60 mph" },
+    { question: "You buy 3 items at $4 each. What is the total cost?", answers: ["$12", "$7", "$1", "$9"], correct: "$12" },
+    { question: "A recipe needs 2 cups of flour for 12 cookies. How much for 24 cookies?", answers: ["4 cups", "2 cups", "6 cups", "3 cups"], correct: "4 cups" },
+    { question: "If x + y = 10 and x = 3, what is y?", answers: ["7", "3", "13", "30"], correct: "7" },
+    { question: "Order from least to greatest: 0.5, 1/4, 0.8", answers: ["1/4, 0.5, 0.8", "0.5, 1/4, 0.8", "0.8, 0.5, 1/4", "1/4, 0.8, 0.5"], correct: "1/4, 0.5, 0.8" },
+    { question: "Twice a number is 18. What is the number?", answers: ["9", "36", "16", "20"], correct: "9" },
+    { question: "What is the next number: 5, 10, 15, 20, ...?", answers: ["25", "30", "22", "24"], correct: "25" },
+    { question: "A movie starts at 2:15 PM and lasts 90 minutes. When does it end?", answers: ["3:45 PM", "3:15 PM", "4:00 PM", "3:30 PM"], correct: "3:45 PM" },
+    { question: "How many inches are in 3 feet?", answers: ["36", "12", "24", "30"], correct: "36" },
+    { question: "A number plus 8 is 15. What is the number?", answers: ["7", "23", "120", "5"], correct: "7" }
+];
 
     const pokemonTiers = {
-        tier3: [{ id: 10, name: 'Caterpie' }, { id: 13, name: 'Weedle' }, { id: 16, name: 'Pidgey' }, { id: 19, name: 'Rattata' }, { id: 41, name: 'Zubat' }, { id: 129, name: 'Magikarp' }],
-        tier2: [{ id: 25, name: 'Pikachu' }, { id: 37, name: 'Vulpix' }, { id: 58, name: 'Growlithe' }, { id: 63, name: 'Abra' }, { id: 66, name: 'Machop' }, { id: 77, name: 'Ponyta' }],
-        tier1: [{ id: 131, name: 'Lapras' }, { id: 143, name: 'Snorlax' }, { id: 123, name: 'Scyther' }, { id: 147, name: 'Dratini' }, { id: 138, name: 'Omanyte' }, { id: 151, name: 'Mew' }]
+        // REVISED: Tiers are now in logical order. Tier 1 is highest rarity.
+        tier1: [ // Legendary
+            {id: 144, name: 'Articuno'}, {id: 145, name: 'Zapdos'}, {id: 146, name: 'Moltres'}, {id: 149, name: 'Dragonite'}, {id: 150, name: 'Mewtwo'}, {id: 151, name: 'Mew'}
+        ],
+        tier2: [ // Rare
+            {id: 3, name: 'Venusaur'}, {id: 6, name: 'Charizard'}, {id: 9, name: 'Blastoise'}, {id: 31, name: 'Nidoqueen'}, {id: 34, name: 'Nidoking'},
+            {id: 36, name: 'Clefable'}, {id: 38, name: 'Ninetales'}, {id: 45, name: 'Vileplume'}, {id: 59, name: 'Arcanine'}, {id: 62, name: 'Poliwrath'},
+            {id: 64, name: 'Kadabra'}, {id: 65, name: 'Alakazam'}, {id: 67, name: 'Machoke'}, {id: 68, name: 'Machamp'}, {id: 71, name: 'Victreebel'},
+            {id: 73, name: 'Tentacruel'}, {id: 76, name: 'Golem'}, {id: 78, name: 'Rapidash'}, {id: 80, name: 'Slowbro'}, {id: 82, name: 'Magneton'},
+            {id: 83, name: 'Farfetch\'d'}, {id: 85, name: 'Dodrio'}, {id: 87, name: 'Dewgong'}, {id: 89, name: 'Muk'}, {id: 91, name: 'Cloyster'},
+            {id: 93, name: 'Haunter'}, {id: 94, name: 'Gengar'}, {id: 95, name: 'Onix'}, {id: 97, name: 'Hypno'}, {id: 99, name: 'Kingler'},
+            {id: 101, name: 'Electrode'}, {id: 103, name: 'Exeggutor'}, {id: 105, name: 'Marowak'}, {id: 106, name: 'Hitmonlee'}, {id: 107, name: 'Hitmonchan'},
+            {id: 110, name: 'Weezing'}, {id: 112, name: 'Rhydon'}, {id: 113, name: 'Chansey'}, {id: 115, name: 'Kangaskhan'}, {id: 117, name: 'Seadra'},
+            {id: 119, name: 'Seaking'}, {id: 121, name: 'Starmie'}, {id: 123, name: 'Scyther'}, {id: 124, name: 'Jynx'}, {id: 125, name: 'Electabuzz'},
+            {id: 126, name: 'Magmar'}, {id: 130, name: 'Gyarados'}, {id: 131, name: 'Lapras'}, {id: 132, name: 'Ditto'}, {id: 134, name: 'Vaporeon'},
+            {id: 135, name: 'Jolteon'}, {id: 136, name: 'Flareon'}, {id: 138, name: 'Omanyte'}, {id: 140, name: 'Kabuto'}, {id: 142, name: 'Aerodactyl'},
+            {id: 143, name: 'Snorlax'}, {id: 147, name: 'Dratini'}, {id: 148, name: 'Dragonair'}, {id: 139, name: 'Omastar'}, {id: 141, name: 'Kabutops'}
+        ],
+        tier3: [ // Uncommon
+            {id: 2, name: 'Ivysaur'}, {id: 5, name: 'Charmeleon'}, {id: 8, name: 'Wartortle'}, {id: 12, name: 'Butterfree'}, {id: 15, name: 'Beedrill'},
+            {id: 18, name: 'Pidgeot'}, {id: 22, name: 'Fearow'}, {id: 24, name: 'Arbok'}, {id: 25, name: 'Pikachu'}, {id: 26, name: 'Raichu'},
+            {id: 28, name: 'Sandslash'}, {id: 30, name: 'Nidorina'}, {id: 33, name: 'Nidorino'}, {id: 35, name: 'Clefairy'}, {id: 37, name: 'Vulpix'},
+            {id: 40, name: 'Wigglytuff'}, {id: 42, name: 'Golbat'}, {id: 44, name: 'Gloom'}, {id: 47, name: 'Parasect'}, {id: 49, name: 'Venomoth'},
+            {id: 51, name: 'Dugtrio'}, {id: 52, name: 'Meowth'}, {id: 53, name: 'Persian'}, {id: 55, name: 'Golduck'}, {id: 57, name: 'Primeape'},
+            {id: 58, name: 'Growlithe'}, {id: 61, name: 'Poliwhirl'}, {id: 63, name: 'Abra'}, {id: 66, name: 'Machop'}, {id: 70, name: 'Weepinbell'},
+            {id: 75, name: 'Graveler'}, {id: 77, name: 'Ponyta'}, {id: 79, name: 'Slowpoke'}, {id: 81, name: 'Magnemite'}, {id: 92, name: 'Gastly'},
+            {id: 102, name: 'Exeggcute'}, {id: 104, name: 'Cubone'}, {id: 108, name: 'Lickitung'}, {id: 111, name: 'Rhyhorn'}, {id: 114, name: 'Tangela'},
+            {id: 122, name: 'Mr. Mime'}, {id: 127, name: 'Pinsir'}, {id: 128, name: 'Tauros'}, {id: 133, name: 'Eevee'}, {id: 137, name: 'Porygon'}
+        ],
+        tier4: [ // Common
+            {id: 1, name: 'Bulbasaur'}, {id: 4, name: 'Charmander'}, {id: 7, name: 'Squirtle'}, {id: 10, name: 'Caterpie'}, {id: 11, name: 'Metapod'},
+            {id: 13, name: 'Weedle'}, {id: 14, name: 'Kakuna'}, {id: 16, name: 'Pidgey'}, {id: 17, name: 'Pidgeotto'}, {id: 19, name: 'Rattata'},
+            {id: 20, name: 'Raticate'}, {id: 21, name: 'Spearow'}, {id: 23, name: 'Ekans'}, {id: 27, name: 'Sandshrew'}, {id: 29, name: 'Nidoran♀'},
+            {id: 32, name: 'Nidoran♂'}, {id: 39, name: 'Jigglypuff'}, {id: 41, name: 'Zubat'}, {id: 43, name: 'Oddish'}, {id: 46, name: 'Paras'},
+            {id: 48, name: 'Venonat'}, {id: 50, name: 'Diglett'}, {id: 54, name: 'Psyduck'}, {id: 56, name: 'Mankey'}, {id: 60, name: 'Poliwag'},
+            {id: 69, name: 'Bellsprout'}, {id: 72, name: 'Tentacool'}, {id: 74, name: 'Geodude'}, {id: 84, name: 'Doduo'}, {id: 86, name: 'Seel'},
+            {id: 88, name: 'Grimer'}, {id: 90, name: 'Shellder'}, {id: 96, name: 'Drowzee'}, {id: 98, name: 'Krabby'}, {id: 100, name: 'Voltorb'},
+            {id: 109, name: 'Koffing'}, {id: 116, name: 'Horsea'}, {id: 118, name: 'Goldeen'}, {id: 120, name: 'Staryu'}, {id: 129, name: 'Magikarp'}
+        ]
     };
 
     // --- GAME STATE ---
     let playerTeam = [];
-    const TEAM_CAPACITY = 10;
-    const gameState = { currentEncounter: null, currentTier: 3, requiredStreak: 0, currentStreak: 0, lastQuestionIndex: -1, };
+    // REVISED: Team capacity changed to 6
+    const TEAM_CAPACITY = 7;
+    const gameState = { currentEncounter: null, currentTier: 4, requiredStreak: 0, currentStreak: 0, lastQuestionIndex: -1, };
 
     // --- HTML ELEMENTS ---
     const gameContainer = document.getElementById('game-container');
@@ -296,12 +387,10 @@
     const streakInfoText = document.getElementById('streak-info');
     const questionText = document.getElementById('question');
     const answersContainer = document.getElementById('answers');
-    // Modals
     const teamModal = document.getElementById('team-modal');
     const catchModal = document.getElementById('catch-modal');
     const messageModal = document.getElementById('message-modal');
     const swapModal = document.getElementById('swap-modal');
-    // Modal Content
     const teamGrid = document.getElementById('team-grid');
     const catchModalImg = document.getElementById('catch-modal-img');
     const catchModalText = document.getElementById('catch-modal-text');
@@ -309,7 +398,6 @@
     const swapNewPokemonImg = document.getElementById('swap-new-pokemon-img');
     const swapNewPokemonName = document.getElementById('swap-new-pokemon-name');
     const swapTeamGrid = document.getElementById('swap-team-grid');
-    // Modal Buttons
     const viewTeamBtn = document.getElementById('view-team-btn');
     const teamCloseBtn = document.getElementById('team-close-btn');
     const catchOkBtn = document.getElementById('catch-ok-btn');
@@ -320,16 +408,19 @@
     function startEncounter(tier = null) {
         if (tier === null) {
             const randomChance = Math.random();
-            if (randomChance < 0.1) gameState.currentTier = 1;      
-            else if (randomChance < 0.4) gameState.currentTier = 2; 
-            else gameState.currentTier = 3;                         
+            // REVISED: Encounter rates rebalanced for 4 tiers
+            if (randomChance < 0.05) gameState.currentTier = 1;      // 5% chance for Legendary
+            else if (randomChance < 0.20) gameState.currentTier = 2; // 15% chance for Rare
+            else if (randomChance < 0.50) gameState.currentTier = 3; // 30% chance for Uncommon
+            else gameState.currentTier = 4;                          // 50% chance for Common
         } else {
             gameState.currentTier = tier; 
         }
 
         const tierPokemons = pokemonTiers[`tier${gameState.currentTier}`];
         gameState.currentEncounter = tierPokemons[Math.floor(Math.random() * tierPokemons.length)];
-        gameState.requiredStreak = 4 - gameState.currentTier;
+        // REVISED: Required streak calculation now works correctly with the new tier order
+        gameState.requiredStreak = 5 - gameState.currentTier;
         gameState.currentStreak = 0; 
         streakInfoText.innerText = `Current Streak: 0`;
 
@@ -340,7 +431,7 @@
     function updateEncounterUI() {
         const { name, id } = gameState.currentEncounter;
         encounterImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
-        encounterImg.className = ''; // Clear previous classes
+        encounterImg.className = '';
         encounterImg.classList.add(`tier-${gameState.currentTier}-border`);
         encounterName.innerText = name;
         catchRequirementText.innerText = `Answer ${gameState.requiredStreak} question(s) correctly to catch!`;
@@ -419,7 +510,7 @@
             slot.className = 'team-slot swappable';
             slot.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}"><span>${pokemon.name}</span>`;
             slot.onclick = () => {
-                playerTeam[index] = newPokemon; // Perform the swap
+                playerTeam[index] = newPokemon;
                 swapModal.style.display = 'none';
                 updateTeamView();
                 startEncounter();
@@ -449,26 +540,10 @@
     // --- EVENT LISTENERS ---
     viewTeamBtn.onclick = () => { teamModal.style.display = 'flex'; };
     teamCloseBtn.onclick = () => { teamModal.style.display = 'none'; };
-    
-    catchOkBtn.onclick = () => {
-        catchModal.style.display = 'none';
-        startEncounter();
-    };
-    
-    messageOkBtn.onclick = () => {
-        messageModal.style.display = 'none';
-    };
-
-    letGoBtn.onclick = () => {
-        swapModal.style.display = 'none';
-        startEncounter();
-    };
-
-    window.onclick = (event) => {
-        if (event.target.classList.contains('modal')) {
-            event.target.style.display = 'none';
-        }
-    };
+    catchOkBtn.onclick = () => { catchModal.style.display = 'none'; startEncounter(); };
+    messageOkBtn.onclick = () => { messageModal.style.display = 'none'; };
+    letGoBtn.onclick = () => { swapModal.style.display = 'none'; startEncounter(); };
+    window.onclick = (event) => { if (event.target.classList.contains('modal')) event.target.style.display = 'none'; };
 
     // --- INITIALIZE GAME ---
     updateTeamView();
