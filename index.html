@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GED Math Quest: Equation Explorer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>GED Math Quest: Equation Explorer</h1>
+        <p class="tagline">Sharpen your algebra skills and conquer word problems!</p>
+
+        <div id="start-screen" class="screen active">
+            <p>Welcome, future math whiz! In this quest, you'll translate tricky word problems into powerful equations and solve them. Get ready to explore the world of algebra!</p>
+            <button id="start-button">Start Your Quest!</button>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <div class="score-display">Score: <span id="score">0</span> / <span id="total-questions">0</span></div>
+            <div class="question-container">
+                <p id="question-text"></p>
+                <div id="answer-area">
+                    <!-- Dynamic content for multiple choice or text input -->
+                </div>
+                <p id="feedback-message" class="feedback"></p>
+            </div>
+            <div class="controls">
+                <button id="submit-button">Submit Answer</button>
+                <button id="next-button" class="hidden">Next Question</button>
+            </div>
+        </div>
+
+        <div id="end-screen" class="screen">
+            <h2>Quest Complete!</h2>
+            <p>You've done a fantastic job!</p>
+            <p>Your final score: <span id="final-score">0</span> / <span id="final-total-questions">0</span></p>
+            <p>Keep practicing, and you'll master these concepts in no time!</p>
+            <button id="play-again-button">Play Again</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
