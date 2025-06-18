@@ -3,42 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GED Math Quest: Equation Explorer</title>
+    <title>GED Math Grove</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>GED Math Quest: Equation Explorer</h1>
-        <p class="tagline">Sharpen your algebra skills and conquer word problems!</p>
 
-        <div id="start-screen" class="screen active">
-            <p>Welcome, future math whiz! In this quest, you'll translate tricky word problems into powerful equations and solve them. Get ready to explore the world of algebra!</p>
-            <button id="start-button">Start Your Quest!</button>
-        </div>
+    <div class="game-container">
+        <header>
+            <h1>Welcome to your Math Grove!</h1>
+            <p>Answer the questions correctly to help your tree grow. You've got this!</p>
+        </header>
 
-        <div id="game-screen" class="screen">
-            <div class="score-display">Score: <span id="score">0</span> / <span id="total-questions">0</span></div>
-            <div class="question-container">
-                <p id="question-text"></p>
-                <div id="answer-area">
-                    <!-- Dynamic content for multiple choice or text input -->
-                </div>
-                <p id="feedback-message" class="feedback"></p>
+        <div class="progress-container">
+            <div id="tree-container">
+                <!-- The tree will be dynamically inserted here by JavaScript -->
+                <img id="tree-image" src="https://raw.githubusercontent.com/google/material-design-icons/master/src/social/psychology_alt/materialicons/24px.svg" alt="A growing tree">
             </div>
-            <div class="controls">
-                <button id="submit-button">Submit Answer</button>
-                <button id="next-button" class="hidden">Next Question</button>
+            <div id="progress-text">
+                <p>Score: <span id="score">0</span></p>
+                <p>Tree Level: <span id="tree-level">1</span></p>
             </div>
         </div>
 
-        <div id="end-screen" class="screen">
-            <h2>Quest Complete!</h2>
-            <p>You've done a fantastic job!</p>
-            <p>Your final score: <span id="final-score">0</span> / <span id="final-total-questions">0</span></p>
-            <p>Keep practicing, and you'll master these concepts in no time!</p>
-            <button id="play-again-button">Play Again</button>
+        <div class="quiz-container">
+            <div id="question-area">
+                <p id="question-text">Loading question...</p>
+            </div>
+            <div id="answer-area">
+                <input type="text" id="answer-input" placeholder="Type your answer here">
+                <button id="submit-btn">Submit</button>
+            </div>
+            <p id="feedback-text"></p>
         </div>
+
+        <div id="completion-screen" class="hidden">
+            <h2>Congratulations!</h2>
+            <p>Your tree is fully grown! You've mastered this set of problems.</p>
+            <button id="restart-btn">Play Again</button>
+        </div>
+
     </div>
 
     <script src="script.js"></script>
