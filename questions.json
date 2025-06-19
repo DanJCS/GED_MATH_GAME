@@ -1,0 +1,30 @@
+{
+  "easy": [
+    { "question": "What is the opposite of -5, simplified?", "answers": ["-(-5)", "$\\frac{1}{5}$", "$-\\frac{1}{5}$", "5"], "correct": "5" },
+    { "question": "What is the simplified form of the opposite of the opposite of 12?", "answers": ["-(-12)", "12", "$\\frac{1}{12}$", "-12"], "correct": "12" },
+    { "question": "Compute $3 - 7$.", "answers": ["-10", "-4", "4", "10"], "correct": "-4" },
+    { "question": "Which is the same as $5 \\times 5 \\times 5 \\times 5 \\times 5 \\times 5 \\times 5 \\times 5 \\times 5$?", "answers": ["$9 \\times 5$", "$5 \\times 9$", "$5^9$", "$9^5$"], "correct": "$5^9$" },
+    { "question": "Compute $4^3$.", "answers": ["12", "81", "64", "256"], "correct": "64" },
+    { "question": "Simplify $5^{-2}$.", "answers": ["$\\frac{1}{25}$", "-10", "-25", "$\\frac{1}{10}$"], "correct": "$\\frac{1}{25}$" },
+    { "question": "Simplify $\\frac{3^7}{3^5}$", "answers": ["9", "$\\frac{1}{9}$", "6", "$\\frac{1}{6}$"], "correct": "9" },
+    { "question": "Evaluate $100^{\\frac{1}{2}}$", "answers": ["50", "10", "$\\frac{1}{200}$", "$\\frac{1}{10000}$"], "correct": "10" },
+    { "question": "Write $\\sqrt{7}$ as an expression with an exponent.", "answers": ["$7/2$", "$3 \\frac{1}{2}$", "$7^{\\frac{1}{2}}$", "$\\sqrt{7}^1$"], "correct": "$7^{\\frac{1}{2}}$" }
+  ],
+  "medium": [
+    { "question": "Which point is the reflection of $(-4, 7)$ in the x-axis?", "answers": ["(-4,-7)", "(4,-7)", "(7,-4)", "(-7, 4)"], "correct": "(-4,-7)" },
+    { "question": "Compute $-3-(-8)+(-4)-5$.", "answers": ["-15", "-10", "-4", "4"], "correct": "-4" },
+    { "question": "Simplify $6^5 \\times (6^2)^3$.", "answers": ["$6^{11}$", "$6^{10}$", "$36^{10}$", "$36^{11}$"], "correct": "$6^{11}$" },
+    { "question": "Evaluate $25^{-\\frac{1}{2}}$.", "answers": ["$-\\frac{25}{2}$", "$\\frac{1}{625}$", "$\\frac{1}{5}$", "-625"], "correct": "$\\frac{1}{5}$" },
+    { "question": "The scale on a map of Ohio says that on the map, 2 inches equals 35 miles. What is the distance between Cleveland and Cincinnati, which are 14 inches apart on the map?", "answers": ["140 miles", "175 miles", "210 miles", "245 miles"], "correct": "210 miles" },
+    { "question": "Multiply $(3x+4)(2x-5)$.", "answers": ["$5x^2-1$", "$6x^2-20$", "$5x^2-7x-1$", "$6x^2-7x-20$"], "correct": "$6x^2-7x-20$" },
+    { "question": "Evaluate $2x^2-4xy+3y^2$ for $x=5$ and $y=-1$.", "answers": ["129", "73", "33", "27"], "correct": "73" },
+    { "question": "Add $\\frac{2}{3x^2} + \\frac{5}{6x}$.", "answers": ["$\\frac{4x+5x^2}{6x^3}$", "$\\frac{12+15x}{18x^2}$", "$\\frac{4+5x}{6x^2}$", "$\\frac{7}{9x^3}$"], "correct": "$\\frac{4+5x}{6x^2}$" }
+  ],
+  "hard": [
+    { "question": "Compute $-7(-5)-4(-8-6) \\div (-2)$", "answers": ["-217", "63", "31", "7"], "correct": "7" },
+    { "question": "Which expression is equivalent to $2^5 \\times 3^5 \\times 6^7$?", "answers": ["$6^{12}$", "$36^{12}$", "$36^{175}$", "$11^{12}$"], "correct": "$6^{12}$" },
+    { "question": "The average distance from Earth to Mars is $2.25 \\times 10^8$ kilometers. Radio waves travel at approximately $3.0 \\times 10^5$ kilometers per second. On average, how many seconds does it take for a radio signal to go from Mars to Earth?", "answers": ["75,000 seconds", "7,500 seconds", "750 seconds", "75 seconds"], "correct": "750 seconds" },
+    { "question": "Divide $\\frac{12p^3q-16p^5q^2+10p^4q^4}{8p^2q^3}$", "answers": ["$\\frac{3p}{2q^2}-\\frac{2p^3}{q}+\\frac{5p^2q}{4}$", "$\\frac{3p}{q^2}-\\frac{p^3}{q}+\\frac{5p^2q}{2}$", "$\\frac{3p}{2q^2}+\\frac{2p^3}{q}+\\frac{5p^2q}{4}$", "$\\frac{3p^2}{2q}-\\frac{2p^2}{q}+\\frac{5pq}{4}$"], "correct": "$\\frac{3p}{2q^2}-\\frac{2p^3}{q}+\\frac{5p^2q}{4}$" },
+    { "question": "Simplify $\\frac{x^2-5x}{4x^2} \\times \\frac{x^2-7x+12}{x^2-16} \\div \\frac{2x-10}{x^2+2x-8}$", "answers": ["$\\frac{(x+3)(x+2)}{8x}$", "$\\frac{(x-3)(x+2)}{8x}$", "$\\frac{(x+3)(x-2)}{8x}$", "$\\frac{(x-3)(x-2)}{8x}$"], "correct": "$\\frac{(x-3)(x-2)}{8x}$" }
+  ]
+}
