@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon Math Adventure - GED Algebra</title>
+    <!-- NEW: MathJax Configuration -->
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
@@ -40,8 +54,55 @@
             color: #f1c40f;
             text-shadow: 1px 1px 1px #000;
         }
+        
+        /* UPDATED: Specific font for math content */
+        #question, .answers button {
+            font-family: Arial, sans-serif;
+            font-size: 1.2em; /* Make it slightly larger for readability */
+        }
 
-        /* --- VIEWS --- */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #player-stats {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px solid #7f8c8d;
+        }
+        #player-stats-info {
+             text-align: left;
+             flex-grow: 1;
+             padding-left: 15px;
+        }
+        #player-level-name {
+            font-size: 1.1em;
+            color: #f1c40f;
+        }
+        #player-points {
+            font-size: 0.8em;
+            color: #bdc3c7;
+        }
+        #player-level-img {
+            width: 50px;
+            height: 50px;
+            image-rendering: pixelated;
+        }
+
         #encounter-view, #quiz-view {
             padding: 15px;
             border: 2px solid #7f8c8d;
@@ -80,10 +141,8 @@
             border: none;
             background-color: #e67e22;
             color: white;
-            font-family: 'Press Start 2P', cursive;
             cursor: pointer;
             border-radius: 10px;
-            font-size: 1em;
             transition: background-color 0.2s, transform 0.2s;
         }
 
@@ -107,7 +166,6 @@
             font-family: 'Press Start 2P', cursive;
         }
 
-        /* --- MODALS --- */
         .modal {
             display: none;
             position: fixed;
@@ -175,9 +233,10 @@
             cursor: pointer;
         }
         
-        #catch-modal-img, #swap-new-pokemon-img {
+        #catch-modal-img, #swap-new-pokemon-img, #level-up-modal-img {
             width: 120px;
             height: 120px;
+            image-rendering: pixelated;
         }
         
         .modal button {
@@ -190,19 +249,30 @@
             font-size: 0.8em;
         }
 
-        /* --- VISUAL EFFECTS --- */
         .correct-flash { animation: flash-green 0.5s ease-out; }
         .incorrect-flash { animation: flash-red 0.5s ease-out; }
 
         @keyframes flash-green { 50% { background-color: var(--correct-color); } }
         @keyframes flash-red { 50% { background-color: var(--incorrect-color); } }
-
     </style>
 </head>
 <body>
 
+<div id="loading-screen">
+    <h2>Loading Pokémon data...</h2>
+</div>
+
 <div id="game-container">
     <h1>Pokémon Math Adventure</h1>
+
+    <div id="player-stats">
+        <img id="player-level-img" src="" alt="Player Level">
+        <div id="player-stats-info">
+            <div id="player-level-name"></div>
+            <div id="player-points"></div>
+        </div>
+    </div>
+    
     <div id="encounter-view">
         <h3>A wild Pokémon appears!</h3>
         <img id="pokemon-to-catch-img" src="" alt="Wild Pokémon">
@@ -224,506 +294,325 @@
 <div id="catch-modal" class="modal"><div class="modal-content"><h2 id="catch-modal-title">Gotcha!</h2><img id="catch-modal-img" src=""><p id="catch-modal-text"></p><button id="catch-ok-btn">Awesome!</button></div></div>
 <div id="message-modal" class="modal"><div class="modal-content"><h2 id="message-title">Oh no!</h2><p id="message-text"></p><button id="message-ok-btn">Try Again</button></div></div>
 <div id="swap-modal" class="modal"><div class="modal-content"><h2>Team Full!</h2><p>Swap the newly caught Pokémon or let it go.</p><div><h3>Newly Caught</h3><img id="swap-new-pokemon-img" src=""><p id="swap-new-pokemon-name"></p><button id="let-go-btn">Let It Go</button></div><hr><h3>Your Team (Click to Swap)</h3><div id="swap-team-grid"></div></div></div>
+<div id="level-up-modal" class="modal"><div class="modal-content"><h2>LEVEL UP!</h2><img id="level-up-modal-img" src=""><p id="level-up-modal-text"></p><button id="level-up-ok-btn">Great!</button></div></div>
 
 <script>
-const easyQuestions = [
-    { question: "What is the opposite of -5, simplified?", answers: ["-(-5)", "1/5", "-1/5", "5"], correct: "5" },
-    { question: "What is the simplified form of the opposite of the opposite of 12?", answers: ["-(-12)", "12", "1/12", "-1/12"], correct: "12" },
-    { question: "What is -42, simplified?", answers: ["42", "(-42)", "-42", "42"], correct: "42" },
-    { question: "What is the absolute value of 7?", answers: ["17", "-7", "(7)", "7"], correct: "7" },
-    { question: "Which quadrant has positive x values and negative y values?", answers: ["QI", "QII", "QIII", "QIV"], correct: "QIV" },
-    { question: "Which quadrant has negative x values and negative y values?", answers: ["QI", "QII", "QIII", "QIV"], correct: "QIII" },
-    { question: "Which statement is true?", answers: ["-3 < -7", "3 is to the right of -7 of the number line.", "|-3| > |-7|", "-3 is to the left of -7 on the number line."], correct: "3 is to the right of -7 of the number line." },
-    { question: "What is the absolute value expression -7 represents", answers: ["the distance from 7 to -7.", "the distance from 7 to 0.", "the distance from -7 to 7.", "the distance from -7 to 0."], correct: "the distance from -7 to 0." },
-    { question: "What is the geometric meaning of -5 < -2?", answers: ["-2 is not as negative as -5.", "-5 is to the left of -2 on the number line.", "-5 is smaller than -2.", "-2 is to the right of -5 on the number line."], correct: "-5 is to the left of -2 on the number line." },
-    { question: "Who owes more money to the bank?", answers: ["Albert", "George", "Zoe", "Pat"], correct: "Pat" },
-    { question: "What is the least common multiple of 6 and 9?", answers: ["9", "18", "36", "54"], correct: "18" },
-    { question: "Compute 3 - 7.", answers: ["-10", "-4", "4", "10"], correct: "-4" },
-    { question: "Compute 5 - (-6).", answers: ["-11", "-1", "1", "11"], correct: "11" },
-    { question: "Multiply -7(-9).", answers: ["-16", "-63", "63", "16"], correct: "63" },
-    { question: "Multiply 2(-4)(-1).", answers: ["-8", "8", "7", "-3"], correct: "8" },
-    { question: "Divide -32 ÷ 8", answers: ["-2", "4", "-4", "2"], correct: "-4" },
-    { question: "Divide 42 ÷ (-6).", answers: ["-7", "36", "-36", "7"], correct: "-7" },
-    { question: "Divide -72 ÷ (-9)", answers: ["8", "-63", "-81", "-8"], correct: "8" },
-    { question: "Which is the same as 5 * 5 * 5 * 5 * 5 * 5 * 5 * 5 * 5?", answers: ["9 * 5", "5 * 9", "5^9", "9^5"], correct: "5^9" },
-    { question: "Rewrite 7^3 as repeated multiplication.", answers: ["3 * 3 * 3 * 3 * 3 * 3 * 3", "7 * 7 * 7", "2187", "343"], correct: "7 * 7 * 7" },
-    { question: "Rewrite 2 * 2 * 2 * 2 * 2 with an exponent.", answers: ["2^5", "5^2", "32", "10"], correct: "2^5" },
-    { question: "Compute 4^3.", answers: ["12", "81", "64", "256"], correct: "64" },
-    { question: "Which number is the base in the expression 8 * 3^6?", answers: ["3", "6", "8", "3^6"], correct: "3" },
-    { question: "Which expression is equivalent to 9^5 * 9^3?", answers: ["9^15", "81^8", "81^15", "9^8"], correct: "9^8" },
-    { question: "What is 12^0?", answers: ["0", "1", "12", "120"], correct: "1" },
-    { question: "Simplify (5^3)^4.", answers: ["5^7", "5^64", "5^81", "5^12"], correct: "5^12" },
-    { question: "What is 12^1?", answers: ["0", "1", "12", "121"], correct: "12" },
-    { question: "Simplify 3 * 3^3.", answers: ["9^3", "3^4", "3^3", "9^4"], correct: "3^4" },
-    { question: "Simplify 5^-2.", answers: ["1/25", "-10", "-25", "1/10"], correct: "1/25" },
-    { question: "Rewrite (5^-2)^-4.", answers: ["1/5^8", "5^8", "400", "10,000"], correct: "5^8" },
-    { question: "What is 1^7?", answers: ["7", "-7", "0", "1"], correct: "1" },
-    { question: "Simplify 3^7 / 3^5", answers: ["9", "1/9", "6", "1/6"], correct: "9" },
-    { question: "What is 0^19?", answers: ["0", "1", "19", "-19"], correct: "0" },
-    { question: "Simplify (7/8)^5.", answers: ["35/40", "7^5/8", "7/8^5", "7^5/8^5"], correct: "7^5/8^5" },
-    { question: "Evaluate (2/3)^4.", answers: ["16/12", "16/81", "8/12", "32/243"], correct: "16/81" },
-    { question: "Evaluate 100^(1/2)", answers: ["50", "10", "1/200", "1/10,000"], correct: "10" },
-    { question: "Evaluate 8^(1/3)", answers: ["2", "8/3", "1/24", "512"], correct: "2" },
-    { question: "Write 7^(1/2) as a radical.", answers: ["7/2", "3 1/2", "7sqrt(2)", "sqrt(7)"], correct: "sqrt(7)" },
-    { question: "Write the cube root of 9 as an expression with an exponent.", answers: ["(cube root of 9)^1", "9^(1/3)", "3^1", "9^3"], correct: "9^(1/3)" },
-    { question: "Write sqrt(6) as an expression with an exponent.", answers: ["3^(1/2)", "3^1", "6^(1/2)", "sqrt(6)^1"], correct: "6^(1/2)" },
-    { question: "Write 4^(1/3) as a radical.", answers: ["cube root of 4", "2", "sqrt(4)", "4th root of 3"], correct: "cube root of 4" },
-    { question: "What is sqrt(81)?", answers: ["18", "3", "9", "11"], correct: "9" },
-    { question: "What is the cube root of 64?", answers: ["21", "8", "6", "4"], correct: "4" },
-    { question: "What is the cube root of 27?", answers: ["3", "9", "6", "2"], correct: "3" },
-    { question: "Which expression is the same as 5(7+2)?", answers: ["35+10", "12+7", "35-10", "12-7"], correct: "35+10" },
-    { question: "What is 4^(1/3)?", answers: ["4", "8", "21 1/3", "192"], correct: "4" },
-    { question: "Calculate: (2/5)^3", answers: ["6/5", "8/5", "6/15", "8/125"], correct: "8/125" },
-    { question: "Which answer expresses the ratio 10 feet to 12 feet as a fraction in lowest terms?", answers: ["10/12", "12/10", "5/6", "6/5"], correct: "5/6" },
-    { question: "Which answer expresses the rate 24 miles per 36 minutes as a fraction in lowest terms?", answers: ["24/36", "2/3", "3 minutes/2 miles", "2 miles/3 minutes"], correct: "2 miles/3 minutes" },
-    { question: "Write the rate 20 leaves to 8 twigs as a fraction in lowest terms.", answers: ["20/8", "5/2", "8/20", "2/5"], correct: "5/2" },
-    { question: "Which answer expresses the rate 200 miles per 4 hours as a unit rate?", answers: ["200 miles/4 hours", "50 miles/hours", "1 hour/50 miles", "4 hours/200 miles"], correct: "50 miles/hours" },
-    { question: "Bud earned $750 for a 40-hour week. What is Bud's rate of pay?", answers: ["$16.00 per hour", "$18.75 per hour", "$24.00 per hour", "$30.00 per hour"], correct: "$18.75 per hour" },
-    { question: "What is the population density of Tinytown in persons per square mile?", answers: ["3.1 persons per square mile", "3.2 persons per square mile", "3.3 persons per square mile", "3.4 persons per square mile"], correct: "3.3 persons per square mile" },
-    { question: "A piece of wood has a mass of 20 grams and a volume of 25 cm^3. What is the density of the wood in grams per cm^3?", answers: ["0.8 g/cm^3", "0.9 g/cm^3", "1.2 g/cm^3", "1.3 g/cm^3"], correct: "0.8 g/cm^3" },
-    { question: "Celia bought 24 bottles of orange juice for her daughter's birthday party for a total price of $30. What was the unit price of each bottle of orange juice?", answers: ["$1.25", "$1.08", "$0.80", "$0.54"], correct: "$1.25" },
-    { question: "Henri put 12.4 gallons of gas in his car to fill it up. Having reset his trip odometer on his previous visit to the gas station, during which he filled up the tank, he noticed that he has driven 298.9 miles. What is his mileage?", answers: ["23.9 miles per gallon", "24.1 miles per gallon", "24.3 miles per gallon", "24.5 miles per gallon"], correct: "24.1 miles per gallon" },
-    { question: "A box of a dozen granola bars costs $3.60. What is the unit cost?", answers: ["$0.27 per bar", "$0.30 per bar", "$0.32 per bar", "$0.33 per bar"], correct: "$0.30 per bar" },
-    { question: "Gasoline costs $3.15 per gallon. Which equation shows the total cost C of buying g gallons of gasoline?", answers: ["C = g/3.15", "g = 3.15C", "g = 3.15/C", "C = 3.15g"], correct: "C = 3.15g" },
-    { question: "What is the unit rate in the table?", answers: ["40 crates per pound", "40 pounds per crate", "1/40 pounds per crate", "1/80 crates per pound"], correct: "40 pounds per crate" },
-    { question: "Which of the following best describes the expression 7(y-1)?", answers: ["sum", "difference", "product", "quotient"], correct: "product" },
-    { question: "In the expression 4x^2+6, which quantity is a coefficient?", answers: ["4", "x", "2", "6"], correct: "4" },
-    { question: "Combine like terms: (2a+5b-7)+(a-9b-6).", answers: ["2a-4b-13", "2a-4b+13", "3a-4b-13", "3a-4b+13"], correct: "3a-4b-13" },
-    { question: "Write 5(3x-2y+4) in an equivalent form without parentheses.", answers: ["15x-2y+4", "15x-10y+20", "53x-2y+4", "53x-52y+54"], correct: "15x-10y+20" },
-    { question: "Subtract (2x+5)-(5x-7).", answers: ["-3x+12", "3x-2", "-3x-2", "3x+12"], correct: "-3x+12" },
-    { question: "Which of the following best describes the expression 6x+9y?", answers: ["sum", "difference", "product", "quotient"], correct: "sum" },
-    { question: "Add (3x^2+x-2)+(x^2-4x+7).", answers: ["3x^2-4x+5", "4x^2-3x+5", "4x^4-3x^2+5", "3x^4-4x^2+5"], correct: "4x^2-3x+5" },
-    { question: "Subtract (3x+2y)-(2x+3y).", answers: ["x-y", "5x-y", "x-5y", "5x-5y"], correct: "x-y" },
-    { question: "Use the properties of exponents to rewrite x^3 * x^6 * x^2.", answers: ["x^11", "x^36", "3x^11", "3x^36"], correct: "x^11" },
-    { question: "Multiply 2x^4 * 4x^5.", answers: ["6x^9", "8x^9", "6x^20", "8x^20"], correct: "8x^9" },
-    { question: "Simplify x^8 / x^2.", answers: ["8/2", "4", "x^4", "x^6"], correct: "x^6" },
-    { question: "What is the leading coefficient of 5x^4-6x^2+2x^6+1+7x^3-x?", answers: ["2", "4", "5", "7"], correct: "2" },
-    { question: "What is the degree of the polynomial 3x+7x^3-2x^2+5+8x^4-6x^5?", answers: ["5", "6", "7", "8"], correct: "5" }
+// --- DATA VARIABLES (to be loaded from JSON files) ---
+let pokemonTiers = null;
+let easyQuestions = null;
+let mediumQuestions = null;
+let hardQuestions = null;
+
+// --- LOAD EXTERNAL DATA ---
+async function loadGameData() {
+    try {
+        const [pokemonResponse, questionsResponse] = await Promise.all([
+            fetch('./pokemon-tiers.json'),
+            fetch('./questions.json')
+        ]);
+        
+        if (!pokemonResponse.ok || !questionsResponse.ok) {
+            throw new Error('Failed to fetch data files');
+        }
+        
+        pokemonTiers = await pokemonResponse.json();
+        const questionsData = await questionsResponse.json();
+        
+        easyQuestions = questionsData.easy;
+        mediumQuestions = questionsData.medium;
+        hardQuestions = questionsData.hard;
+        
+        return true;
+    } catch (error) {
+        console.error('Error loading game data:', error);
+        return false;
+    }
+}
+
+// --- CONSTANTS ---
+const levels = [
+    { name: 'Poke Ball', points: 0, img: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png' },
+    { name: 'Great Ball', points: 1000, img: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/great-ball.png' },
+    { name: 'Ultra Ball', points: 2000, img: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/ultra-ball.png' },
+    { name: 'Premier Ball', points: 4000, img: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/premier-ball.png' },
+    { name: 'Beast Ball', points: 6000, img: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/beast-ball.png' },
+    { name: 'Master Ball', points: 10000, img: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png' }
 ];
+const levelBonuses = {
+    'Poke Ball':    { tier1: 0.05, tier2: 0.20, tier3: 0.55 },
+    'Great Ball':   { tier1: 0.07, tier2: 0.25, tier3: 0.60 },
+    'Ultra Ball':   { tier1: 0.10, tier2: 0.30, tier3: 0.65 },
+    'Premier Ball': { tier1: 0.12, tier2: 0.35, tier3: 0.70 },
+    'Beast Ball':   { tier1: 0.15, tier2: 0.40, tier3: 0.70 },
+    'Master Ball':  { tier1: 0.20, tier2: 0.45, tier3: 0.70 }
+};
+const pointValues = { 4: 100, 3: 150, 2: 200, 1: 200 };
 
-const mediumQuestions = [
-    { question: "Which point is the reflection of (-4, 7) in the x-axis?", answers: ["(-4,-7)", "(4,-7)", "(7,-4)", "(-7, 4)"], correct: "(-4,-7)" },
-    { question: "Which point is the reflection of (0, -2) in the x-axis?", answers: ["(2,0)", "(0, 2)", "(-2, 0)", "(0,-2)"], correct: "(0, 2)" },
-    { question: "Which point is the reflection of (2,-5) on the y-axis?", answers: ["(-2,5)", "(5,-2)", "(-5, 2)", "(-2,-5)"], correct: "(-2,-5)" },
-    { question: "Which point is the reflection of (0,-3) on the y-axis?", answers: ["(-3,0)", "(3,0)", "(0,-3)", "(0,3)"], correct: "(0,-3)" },
-    { question: "Death Valley in California has an elevation of -282 feet. The Dead Sea in the Middle East has an elevation of -1360 feet. Which of the following must be true?", answers: ["The Dead Sea is drier than Death Valley.", "Death Valley is closer to sea level.", "There are heavier rocks in the Dead Sea.", "Death Valley is hotter than the Dead Sea."], correct: "Death Valley is closer to sea level." },
-    { question: "Which situation describes quantities combining to make 0?", answers: ["An account overdrawn by $1367 receives a payroll deposit of $756 and a tax refund deposit of $621.", "5 people chip in $17 each to help settle a friend's $85 electricity bill.", "A person contributes $15 to pay for his share of a $60 dinner bill; his 4 companions all generously do the same.", "Oil leaks out of a full 75,000-gallon tank at the rate of 1500 gallons each day for 7 weeks before someone notices."], correct: "5 people chip in $17 each to help settle a friend's $85 electricity bill." },
-    { question: "On a number line, where is the number -2+(-7)?", answers: ["7 units to the right of -2", "-7 units to the left of -2", "-7 units to the right of -2", "7 units to the left of -2"], correct: "7 units to the left of -2" },
-    { question: "Compute -3-(-8)+(-4)-5.", answers: ["-15", "-10", "-4", "4"], correct: "-4" },
-    { question: "Add -9+3+(-4).", answers: ["2", "-2", "-10", "-16"], correct: "-10" },
-    { question: "Compute -8-(-10)-5.", answers: ["-3", "-23", "-7", "3"], correct: "-3" },
-    { question: "Which of the following is NOT equal to -5?", answers: ["-20 ÷ 4", "20 ÷ (-4)", "-20 ÷ (-4)", "-(20 ÷ 4)"], correct: "-20 ÷ (-4)" },
-    { question: "Which expression represents the distance between -5 and 6?", answers: ["|-5|+|6|", "|-5+6|", "|-5|-|6|", "|-5-6|"], correct: "|-5-6|" },
-    { question: "A rocket is about to launch. At T:-52 seconds the guidance system starts its final automatic test. The test is over at T:-17 seconds. How long did the test take?", answers: ["49 seconds", "45 seconds", "35 seconds", "39 seconds"], correct: "35 seconds" },
-    { question: "Which of the following is undefined?", answers: ["(-2+2)/(8+(-4))", "(5+(-2))/(-7+7)", "(4-(-1))/(6-3)", "(-3+(-1))/(4-(-6))"], correct: "(5+(-2))/(-7+7)" },
-    { question: "What is the distance between -7 and 6 on the number line?", answers: ["-13", "-1", "1", "13"], correct: "13" },
-    { question: "Frank hears that the average temperature at a science station in Antarctica one winter is -40 degrees C. He knows he can change the Celsius temperature into Fahrenheit by multiplying the given temperature by 9, adding 160, and then dividing by 5. What temperature should Frank come up with?", answers: ["-104 degrees F", "-40 degrees F", "40 degrees F", "104 degrees F"], correct: "-40 degrees F" },
-    { question: "Which expression is equivalent to 4^6 * 2^6?", answers: ["6^36", "8^12", "6^12", "8^6"], correct: "8^6" },
-    { question: "Simplify 7^3 * 7^2 * 7^5.", answers: ["7^30", "7^10", "343^30", "343^10"], correct: "7^10" },
-    { question: "Simplify 6^5 * (6^2)^3.", answers: ["6^11", "6^10", "36^10", "36^11"], correct: "6^11" },
-    { question: "Simplify (2^-3)^2.", answers: ["36", "1/32", "1/64", "-12"], correct: "1/64" },
-    { question: "Simplify 2^4 * 2^-9", answers: ["1/32", "1/10", "-10", "-32"], correct: "1/32" },
-    { question: "Simplify 5^3 / 5^6", answers: ["1/2", "1/15", "1/125", "1/243"], correct: "1/125" },
-    { question: "Compute 2^6 * 5^6.", answers: ["360", "60", "1,000,000", "420"], correct: "1,000,000" },
-    { question: "Evaluate 25^(-1/2).", answers: ["-25/2", "1/625", "1/5", "-625"], correct: "1/5" },
-    { question: "Evaluate 1000^(-1/3).", answers: ["-3000", "1/10", "-1000/3", "3000"], correct: "1/10" },
-    { question: "Compute 4^(2^-1).", answers: ["2", "16", "-16", "-2"], correct: "2" },
-    { question: "Which expression is the same as 54-30?", answers: ["6(9-6)", "6(9+6)", "6(9+5)", "6(9-5)"], correct: "6(9-5)" },
-    { question: "Which expression is the same as 64+28?", answers: ["20(44+8)", "4(16+7)", "14(40+14)", "8(8+3)"], correct: "4(16+7)" },
-    { question: "Select the expression equivalent to 2(3+5-4).", answers: ["5+1", "6+1", "5+7-6", "6+10-8"], correct: "6+10-8" },
-    { question: "Which expression is the same as -6(8+3)?", answers: ["-48-18", "-48+18", "48-18", "48+18"], correct: "-48-18" },
-    { question: "Laura runs a food bank. On Monday she gave away 1/4 of her stock of flour. On Tuesday she gave away 1/3 of what was left from Monday. On Wednesday she gave away 1/2 of what was left from Tuesday. If she started with 1000 pounds of flour, how much was left by the end of Wednesday?", answers: ["0 pounds", "250 pounds", "333 pounds", "500 pounds"], correct: "250 pounds" },
-    { question: "3 1/3 ÷ 5/3 = ?", answers: ["5/9", "5", "9/5", "1/5"], correct: "1/5" },
-    { question: "Toni had a backlog of work to do. On Monday she did 1/4 of the backlog. If on Tuesday she does the same amount of work (e.g., processes the exact same number of files), what part of the backlog will be left?", answers: ["1/8", "1/4", "1/2", "2/3"], correct: "1/2" },
-    { question: "Add 1 5/8 and 4 4/5", answers: ["3 1/3", "3 7/40", "5 9/13", "6 17/40"], correct: "6 17/40" },
-    { question: "Saul the butcher mixes 15 3/4 pounds of beef and 12 3/8 pounds of pork together to make sausage. How many pounds of sausage will he get from these two meats?", answers: ["3 3/8 pounds", "27 3/4 pounds", "28 1/8 pounds", "28 3/8 pounds"], correct: "28 1/8 pounds" },
-    { question: "Julie usually puts 23 1/4 pounds of flour in her cookie recipe, but this time she is short of another ingredient and must cut her flour by 7 3/5 pounds. How much flour will she put in the recipe?", answers: ["15 13/20 pounds", "16 1/2 pounds", "16 4/9 pounds", "30 4/9 pounds"], correct: "15 13/20 pounds" },
-    { question: "Aram has 6 1/2 pounds of dry grout for tiling his shower floor. If he takes away 3 7/8 pounds for the first batch of grout, how much does he have left?", answers: ["2 5/8 pounds", "3 4/5 pounds", "4 pounds", "9 4/5 pounds"], correct: "2 5/8 pounds" },
-    { question: "Sandi has brewed 55 ounces of iced tea. How many full glasses of tea can be filled if it takes 7 3/4 ounces of tea to fill each glass?", answers: ["47 glasses", "8 glasses", "7 glasses", "6 glasses"], correct: "7 glasses" },
-    { question: "Recently, the number of Americans under age 18 with student loans has increased from 14/100 to 1/5. Express the difference as a fraction reduced to its lowest terms.", answers: ["3/50", "6/100", "7/50", "11/45"], correct: "3/50" },
-    { question: "What is the lowest common denominator of 2, 3/8, 21/24, and 5/36?", answers: ["36", "68", "70", "72"], correct: "72" },
-    { question: "Gabriele has three 1-gallon cans of the same paint. One gallon is 1/3 full. The second gallon is 1/5 full, and the third is 3/8 full. How much paint is there in total, expressed as gallons?", answers: ["5/16 gallons", "53/60 gallons", "109/120 gallons", "119/120 gallons"], correct: "109/120 gallons" },
-    { question: "Subtract 45 3/4 from 92 5/10.", answers: ["-46 3/4", "46 3/4", "47 1/4", "138 1/4"], correct: "46 3/4" },
-    { question: "1/7 + 3/5 + 2/10 =", answers: ["3/35", "66/70", "33/35", "1/7"], correct: "33/35" },
-    { question: "Tony fills his car with gas. His tank holds 14.0 gallons of gas. He pumps 8.37 gallons into the tank. If his car averages 27.6 miles per gallon, how far could he have driven before running out of gas had he not stopped to fill up? Give your answer to the nearest whole mile.", answers: ["155 miles", "386 miles", "462 miles", "617 miles"], correct: "155 miles" },
-    { question: "Juniata pays $132.50 a month in car payments and $675.00 for rent. She spends an average of $512.50 a month for utilities, food, and other necessities. She has savings of $3300. How many months of expenses does she have saved?", answers: ["2", "2.5", "3", "3.5"], correct: "2.5" },
-    { question: "On the number line, what is the distance between -1.45 and -8.34?", answers: ["-9.79", "-6.89", "6.89", "9.79"], correct: "6.89" },
-    { question: "On the number line, what is the distance between -1.989 and 2.735?", answers: ["4.724", "0.746", "-0.746", "-4.724"], correct: "4.724" },
-    { question: "In the number 123.4556, the value of the underlined number is expressed in", answers: ["tenths.", "hundredths.", "thousandths.", "hundreds."], correct: "hundredths." },
-    { question: "In which number below does the digit 5 represent the greatest value?", answers: ["12.354", "0.543", "1.2354", "15.2534"], correct: "15.2534" },
-    { question: "Illya bought 0.460 pounds of meat at $5.50 per pound. How much did the meat cost?", answers: ["$2.53", "$5.04", "$5.96", "$11.96"], correct: "$2.53" },
-    { question: "Svetlana bought 4 cans of soup for $1.35 each, a pound of hamburger for $3.29, and a loaf of bread for $2.10. There is no sales tax on food in her state. She gave the cashier a $20.00 bill. How much change should she receive?", answers: ["$9.21", "$6.74", "$10.79", "$13.26"], correct: "$9.21" },
-    { question: "Alan needs 7 quarters to do his laundry. What is the most he could spend from a $20.00 bill and still have enough left to wash his clothes?", answers: ["$1.75", "$2.86", "$16.75", "$18.25"], correct: "$18.25" },
-    { question: "One week Sam worked 32.75 hours at his job, which pays $17.50 per hour. How much did he earn that week before taxes and other deductions? Round to the nearest cent.", answers: ["$50.25", "$560.00", "$573.13", "$5,731.25"], correct: "$573.13" },
-    { question: "A seamstress receives $0.95 for every shirt sleeve she sews. If she sews an average of 15 sleeves an hour, how much will she make per hour?", answers: ["$14.25", "$15.79", "$15.95", "$16.25"], correct: "$14.25" },
-    { question: "Sammie put 11.74 gallons of gasoline in her car at a cost of $3.459 per gallon. How much did she pay for the gasoline, rounded to the nearest cent?", answers: ["$3.39", "$8.28", "$40.61", "$42.00"], correct: "$40.61" },
-    { question: "If gasoline costs $4.599 a gallon, how many gallons can one buy for $20.00?", answers: ["2.70 gallons", "4.34 gallons", "4.35 gallons", "4.50 gallons"], correct: "4.34 gallons" },
-    { question: "The cost of electricity in Sara's town is $0.265 per kilowatt-hour. If she uses 1050 kilowatt-hours of electricity in July, what will her electric bill be for that month?", answers: ["$27.83", "$278.25", "$1,049.74", "$3,962.26"], correct: "$278.25" },
-    { question: "The area of an oriental rug is calculated by multiplying its length by its width. What is the area of a rug that is 9.45 feet wide by 12.15 feet long? Round to two decimal places.", answers: ["11.48 ft^2", "21.60 ft^2", "114.82 ft^2", "216.00 ft^2"], correct: "114.82 ft^2" },
-    { question: "Al's commission for selling homes works out so he gets $0.0125 out of every dollar of the sales price. What is Al's commission on a $150,000 house?", answers: ["$187.50", "$1,687.50", "$1,875.00", "$18,750.00"], correct: "$1,875.00" },
-    { question: "Maribel pays $3.98 a yard for cloth. She buys 3.45 yards. How much does she pay? Round to the nearest cent.", answers: ["$14.00", "$13.73", "$11.54", "$7.43"], correct: "$13.73" },
-    { question: "It is roughly 93,000,000 miles from Earth to the sun. A scientist would express this number as", answers: ["93,000,000 miles.", "93 x 10^6 miles.", "9.3 x 10^7 miles.", "0.0093 x 10^9 miles."], correct: "9.3 x 10^7 miles." },
-    { question: "Michelle has a $421.55 per month car payment. If she needs to pay a total of $19,500, including interest, how many months from now will she make her last payment?", answers: ["45 months", "46 months", "47 months", "48 months"], correct: "47 months" },
-    { question: "Peter has a job that pays $17.50 per hour for 40 hours per week, and he is paid each Friday. This week the company deducted $44.94 for Social Security, $10.50 for Medicare, $7.00 for State Disability Insurance, and $79.50 for Income Tax Withholding. What is Peter's take-home pay this week if he has no other deductions?", answers: ["$141.94", "$558.06", "$700.00", "$841.94"], correct: "$558.06" },
-    { question: "An irregular piece of property that Kerry wants to fence has sides that measure 12.35 meters, 123.56 meters, 111.23 meters, 73.4 meters, and 45.65 meters. How many meters of fencing will Kerry use, assuming a gap of 7.50 meters is needed for a gate?", answers: ["320.54 meters", "358.69 meters", "366.19 meters", "373.69 meters"], correct: "358.69 meters" },
-    { question: "Ken Johnson's place is located 17.35 kilometers due west of the center of town on Route 17. Willy Hester's place is located 11.23 kilometers due west of the center of town, also on Route 17. How far from each other do the two neighbors live?", answers: ["6.12 kilometers", "14.28 kilometers", "28.58 kilometers", "45.58 kilometers"], correct: "6.12 kilometers" },
-    { question: "In the first paragraph of an essay, Carmen wrote 70 words in 6 sentences. Which answer expresses this as a unit rate?", answers: ["11 2/3 words/sentence", "35 words/3 sentences", "3 sentences/35 words", "11 2/3 sentences/word"], correct: "11 2/3 words/sentence" },
-    { question: "Maria takes 7 minutes to clear a stack of 12 books for resale at the student bookstore. How long will it take her to clear a stack of 28 books?", answers: ["15 2/3 minutes", "16 1/3 minutes", "16 2/3 minutes", "17 1/3 minutes"], correct: "16 1/3 minutes" },
-    { question: "Marty, a letter carrier, has noticed that the time it takes him to complete his route is proportional to the weight of his mailbag when he leaves the post office. If it takes him 3 hours to deliver 8 pounds of mail, how long does it take him to deliver 10 pounds of mail?", answers: ["3 1/4 hours", "3 1/3 hours", "3 2/3 hours", "3 3/4 hours"], correct: "3 3/4 hours" },
-    { question: "Sergio drove 240 miles from Dallas to Houston in 3.5 hours. What was his rate of speed to the nearest mile per hour?", answers: ["60 mph", "64 mph", "69 mph", "80 mph"], correct: "69 mph" },
-    { question: "127 millimeters is exactly 5 inches. How many millimeters is 8 inches?", answers: ["203 millimeters", "203.2 millimeters", "2.6 millimeters", "206.4 millimeters"], correct: "203.2 millimeters" },
-    { question: "Kim drew 5/8 of a picture in 5/12 of an hour. What is her picture-drawing rate in pictures/hour?", answers: ["2/3 picture/hour", "3/4 picture/hour", "1 1/2 pictures/hour", "1 3/4 pictures/hour"], correct: "1 1/2 pictures/hour" },
-    { question: "The scale on a map of Ohio says that on the map, 2 inches equals 35 miles. What is the distance between Cleveland and Cincinnati, which are 14 inches apart on the map?", answers: ["140 miles", "175 miles", "210 miles", "245 miles"], correct: "245 miles" },
-    { question: "A large-screen television has an aspect ratio of 16:9. How tall is the screen if it is 96 centimeters wide?", answers: ["48 centimeters", "54 centimeters", "56 centimeters", "60 centimeters"], correct: "54 centimeters" },
-    { question: "Dosage information for a drug specifies that 2.5 milliliters should be administered for every 20 kilograms of a patient's mass. How much of the drug should be given to a patient whose mass is 90 kilograms?", answers: ["11.25 milliliters", "11.5 milliliters", "11.75 milliliters", "12 milliliters"], correct: "11.25 milliliters" },
-    { question: "A recipe that serves 4 people calls for 3 1/2 cups of flour. Brie plans to serve this dish to 10 friends and relatives at Thanksgiving. How much flour does she need?", answers: ["8 cups", "8 1/4 cups", "8 1/2 cups", "8 3/4 cups"], correct: "8 3/4 cups" },
-    { question: "A plastic model company sells a model of a battleship at a 1/288 scale. The battleship is 864 feet long. How long is the model?", answers: ["2 feet", "2.5 feet", "3 feet", "3.5 feet"], correct: "3 feet" },
-    { question: "A photo that measures 2 inches wide by 3 inches tall is blown up so that it is 8 inches wide. How tall is the new photo?", answers: ["11 inches", "12 inches", "13 inches", "14 inches"], correct: "12 inches" },
-    { question: "Brad burns 4.5 gallons of gas driving 99 miles. How far can he drive with a full tank of 16 gallons?", answers: ["340 miles", "348 miles", "352 miles", "360 miles"], correct: "352 miles" },
-    { question: "The chef at a restaurant gets 20 bowls of soup from a 5-quart pot. How much more soup could he get from a 9-quart pot?", answers: ["36 bowls", "20 bowls", "16 bowls", "4 bowls"], correct: "16 bowls" },
-    { question: "What is the total discount?", answers: ["1/9 of the original price", "2/3 of the original price", "5/9 of the original price", "4/9 of the original price"], correct: "5/9 of the original price" },
-    { question: "Add (3x^2+x-2)+(x^2-4x+7).", answers: ["3x^2-4x+5", "4x^2-3x+5", "4x^4-3x^2+5", "3x^4-4x^2+5"], correct: "4x^2-3x+5" },
-    { question: "Subtract (3x+2y)-(2x+3y).", answers: ["x-y", "5x-y", "x-5y", "5x-5y"], correct: "x-y" },
-    { question: "Subtract (6x^2+2x-4)-(2x^2-5x+1).", answers: ["4x^2-3x-3", "4x^2-3x-5", "4x^2+7x-5", "4x^2+7x-3"], correct: "4x^2+7x-5" },
-    { question: "Simplify (25x^9 y^4) / (15x^6 y^12).", answers: ["(10x^3 y)/(x^2 y^3)", "(10x^3)/(y^8)", "(5x^3 y)/(3x^2 y^3)", "(5x^3)/(3y^8)"], correct: "(5x^3)/(3y^8)" },
-    { question: "Multiply 5x^3 y(3xy^2+2x^2 y^3).", answers: ["15x^3 y^2+10x^5 y^3", "15x^3 y^2+10x^6 y^3", "15x^4 y^3+10x^5 y^4", "15x^4 y^3+10x^6 y^4"], correct: "15x^4 y^3+10x^5 y^4" },
-    { question: "Multiply (3x+4)(2x-5).", answers: ["5x^2-1", "6x^2-20", "5x^2-7x-1", "6x^2-7x-20"], correct: "6x^2-7x-20" },
-    { question: "Multiply (x-2y)(2x-y).", answers: ["2x^2+2y^2", "2x^2-5xy+2y^2", "2x^2-2y^2", "2x^2+5xy-2y^2"], correct: "2x^2-5xy+2y^2" },
-    { question: "Divide (2x^2+x-6)/(x+2).", answers: ["2x^2-3", "2x^2-2", "2x-3", "2b+5"], correct: "2x-3" },
-    { question: "Evaluate 2x^2-4xy+3y^2 for x=5 and y=-1.", answers: ["129", "73", "33", "27"], correct: "73" },
-    { question: "Working for the census, Nicholle interviews seven fewer households than Val, who interviews twice as many households as Kai. If Kai interviews s households, how many households does Nicholle interview?", answers: ["25-75", "2(5-7)", "2-75", "25-7"], correct: "25-7" },
-    { question: "Factor 12x^4 y+9x^3 y^2-6x^2 y^2.", answers: ["3x^2(4x^2 y+3xy^2-2y^2)", "3x^2 y(4x^2+3xy-2y)", "3y(4x^4+3x^3 y-2x^2 y)", "3xy(4x^3+3x^2 y-2xy)"], correct: "3x^2 y(4x^2+3xy-2y)" },
-    { question: "Factor 3x^2-8x+4.", answers: ["(x-4)(3x-1)", "(x-1)(3x-4)", "(3x-1)(3x-4)", "(x-2)(3x-2)"], correct: "(x-2)(3x-2)" },
-    { question: "Factor 2x^2-xy-y^2.", answers: ["(x+y)(2x+y)", "(x-y)(2x-y)", "(x-y)(2x+y)", "(x+y)(2x-y)"], correct: "(x-y)(2x+y)" },
-    { question: "Denny leaves on a drive across the state at 8:00 a.m. In the afternoon, his average speed in miles per hour is given by d/(t+4), where t is the number of hours past noon and d is the distance driven. Find Denny's average speed at 2:00 p.m, when he has driven 390 miles.", answers: ["70 miles per hour", "60 miles per hour", "75 miles per hour", "65 miles per hour"], correct: "65 miles per hour" },
-    { question: "Add 2/(3x^2) + 5/(6x).", answers: ["(4x+5x^2)/(6x^3)", "(12+15x)/(18x^2)", "(12x+51x^2)/(18x^3)", "(4+5x)/(6x^2)"], correct: "(4+5x)/(6x^2)" },
-    { question: "Subtract (3x)/(10y) - (4y)/(15x).", answers: ["(9x-8y)/(15xy)", "(9x^2-8y^2)/(15xy)", "(9x-8y)/(30xy)", "(9x^2-8y^2)/(30xy)"], correct: "(9x^2-8y^2)/(30xy)" },
-    { question: "Multiply (3ax^4)/(8b^3 y) * (6b^3 x^5)/(9a^6 y^3).", answers: ["x^9/(4a^5 y^4)", "x^20/(4a^6 y^3)", "(18x^20)/(72a^6 y^3)", "(18x^9)/(72a^5 y^4)"], correct: "x^9/(4a^5 y^4)" },
-    { question: "Translate into an algebraic expression using x as the variable: 'the quotient of 5 more than a number and 5 less than the number.'", answers: ["(x+5)/(x-5)", "(x-5)/(x+5)", "(5+x)(5-x)", "(5+x)(x-5)"], correct: "(x+5)/(x-5)" },
-    { question: "After winning p dollars in a contest, Vivian decides to donate $1000 to charity and split the rest evenly with her brother and sister. Write an expression that represents the amount Vivian will finally have.", answers: ["1000 - p/3", "p - 1000/3", "p/3 - 1000", "p - 1000/2"], correct: "p - 1000/3" },
-    { question: "A pair of gloves retails for $17.89. If the sales tax is 8 1/2%, what is the total cost of the gloves?", answers: ["$19.32", "$19.41", "$26.39", "$32.20"], correct: "$19.41" },
-    { question: "Susan unloaded 168 boxes of books from a shipment of 1052. What percentage of the shipment is left to unload? (Round to a whole number.)", answers: ["16%", "48%", "84%", "86%"], correct: "84%" },
-    { question: "Rufus owes $9250 in no-interest student loans. After paying off 32% of what he owes, how much will he still have to pay?", answers: ["$6290", "$2960", "$7215", "$3046"], correct: "$6290" },
-    { question: "Sydney buys her textbooks online and spends $1147. The sales tax in her town is 5 3/4%, but the bookseller does not charge tax on Internet sales. Before she pays for shipping, how much has she saved by not paying sales tax? (Round to the nearest cent.)", answers: ["$6.60", "$57.35", "$65.95", "$68.82"], correct: "$65.95" },
-    { question: "The number of traffic accidents in our city has dropped by 17% this year. If last year's total was 475, what is this year's total?", answers: ["281", "394", "400", "600"], correct: "394" },
-    { question: "A fully fueled AeroTrans 474 passenger jet airplane weighs 987,000 pounds at takeoff. It carries 422,000 pounds of fuel. What percent of the aircraft's takeoff weight is fuel?", answers: ["23%", "43%", "57%", "77%"], correct: "43%" },
-    { question: "Levi paid $180.00 for a set of dishes listed at $225.00. What was the discount, to the nearest percent?", answers: ["80%", "53%", "20%", "12.5%"], correct: "20%" },
-    { question: "Federal tax on airline tickets is 7.5%. How much does a ticket for a round trip to Orlando from Chicago, listed at $269, cost after taxes?", answers: ["$289.18", "$299.22", "$314.29", "$370.75"], correct: "$289.18" },
-    { question: "Last year 1,320,000 people visited the state fair. This year 1,544,400 visited. What percentage increase or decrease was this, to the nearest whole percent?", answers: ["15", "16", "17", "18"], correct: "17" },
-    { question: "Yaakov paid one month's interest of $76.00 on a $5000 loan. What was the interest rate on the loan, expressed as a percentage, per year?", answers: ["1.52%", "15.2%", "1.82%", "18.2%"], correct: "18.2%" },
-    { question: "Elita bought a scarf on sale for $14.49 after a 16% discount. What was the scarf's original price?", answers: ["$17.25", "$17.34", "$12.88", "$14.95"], correct: "$17.25" },
-    { question: "Tara makes a batch of tortilla dough with 100 pounds flour, 9 pounds of shortening, and 3 pounds of baking soda. What percent of the batch is shortening?", answers: ["8%", "9%", "3%", "12%"], correct: "8%" },
-    { question: "Evaluate 9/5 C + 32 for C = -40", answers: ["-72", "-40", "0", "40"], correct: "-40" },
-    { question: "A rock dropped from a cliff has an altitude in feet given by -16t^2+350, where t is the time in seconds after the rock is released. How high is the rock 4 seconds after it is dropped?", answers: ["256 feet", "128 feet", "94 feet", "54 feet"], correct: "94 feet" },
-    { question: "Denny leaves on a drive across the state at 8:00 a.m. In the afternoon, his average speed in miles per hour is given by d/(t+4), where t is the number of hours past noon and d is the distance driven. Find Denny's average speed at 2:00 p.m, when he has driven 390 miles.", answers: ["70 miles per hour", "60 miles per hour", "75 miles per hour", "65 miles per hour"], correct: "65 miles per hour" },
-    { question: "Add 2/(3x^2) + 5/(6x).", answers: ["(4x+5x^2)/(6x^3)", "(12+15x)/(18x^2)", "(12x+51x^2)/(18x^3)", "(4+5x)/(6x^2)"], correct: "(4+5x)/(6x^2)" },
-    { question: "Subtract 3x/(10y) - 4y/(15x).", answers: ["(9x-8y)/(15xy)", "(9x^2-8y^2)/(15xy)", "(9x-8y)/(30xy)", "(9x^2-8y^2)/(30xy)"], correct: "(9x^2-8y^2)/(30xy)" },
-    { question: "Multiply (3ax^4)/(8b^3 y) * (6b^3 x^5)/(9a^6 y^3).", answers: ["x^9/(4a^5 y^4)", "x^20/(4a^6 y^3)", "(18x^20)/(72a^6 y^3)", "(18x^9)/(72a^5 y^4)"], correct: "x^9/(4a^5 y^4)" },
-    { question: "Translate into an algebraic expression using x as the variable: 'the quotient of 5 more than a number and 5 less than the number.'", answers: ["(x+5)/(x-5)", "(x-5)/(x+5)", "(5+x)(5-x)", "(5+x)(x-5)"], correct: "(x+5)/(x-5)" },
-    { question: "After winning p dollars in a contest, Vivian decides to donate $1000 to charity and split the rest evenly with her brother and sister. Write an expression that represents the amount Vivian will finally have.", answers: ["1000 - p/3", "p - 1000/3", "p/3 - 1000", "p - 1000/2"], correct: "p - 1000/3" }
-];
+let playerTeam = [];
+const TEAM_CAPACITY = 6;
+let gameState = {
+    currentEncounter: null, currentTier: 4, requiredStreak: 0, currentStreak: 0,
+    lastEasyIndex: -1, lastMediumIndex: -1, lastHardIndex: -1,
+    totalPoints: 0, currentLevel: 'Poke Ball'
+};
 
-const hardQuestions = [
-    { question: "Compute -7(-5)-4(-8-6) ÷ (-2)", answers: ["-217", "63", "31", "7"], correct: "7" },
-    { question: "Which expression is equivalent to 2^5 * 3^5 * 6^7", answers: ["6^12", "36^12", "36^175", "11^12"], correct: "6^12" },
-    { question: "Simplify 2^3 * 4^3 * 5^3.", answers: ["40^9", "11^27", "40^3", "11^9"], correct: "40^3" },
-    { question: "Simplify (3^5)^2 * (3^4)^3.", answers: ["3^120", "3^14", "3^49", "3^22"], correct: "3^22" },
-    { question: "Which expression is equivalent to (5^4 * 7^9)^3?", answers: ["15^7 * 21^12", "15^4 * 21^9", "5^7 * 7^12", "5^12 * 7^27"], correct: "5^12 * 7^27" },
-    { question: "Lonnie announces a sale of 1/3 off all merchandise and puts special sale tags on every item. Toward the end of the sale, she decides to give customers an additional 1/3 off the marked-down prices. What is the total discount?", answers: ["1/9 of the original price", "2/3 of the original price", "5/9 of the original price", "4/9 of the original price"], correct: "5/9 of the original price" },
-    { question: "Cal must cut 5 pieces of lumber, each measuring 11 9/16 inches, from an 8-foot board. If Cal's saw blade is 1/8 inch wide (i.e., 1/8 inch of wood is lost on every cut), how much of the board will be left after Cal gets his five pieces?", answers: ["37 9/16 inches", "42 5/16 inches", "57 13/16 inches", "58 7/16 inches"], correct: "37 9/16 inches" },
-    { question: "Terrance pays school taxes at the rate of 63.55 cents per $1000 dollars of assessed value of his family's home. His family home has an assessed value of $235,500. What is his school tax bill for the year, to the nearest penny?", answers: ["$14.97", "$149.66", "$1,496.60", "$14,966.03"], correct: "$149.66" },
-    { question: "The average distance from Earth to Mars is 2.25 x 10^8 kilometers. Radio waves travel at approximately 3.0 x 10^5 kilometers per second. On average, how many seconds does it take for a radio signal to go from Mars to Earth?", answers: ["75,000 seconds", "7,500 seconds", "750 seconds", "75 seconds"], correct: "750 seconds" },
-    { question: "If a rocket uses 150 kilograms of fuel to orbit 1 kilogram of matter, how many kilograms of fuel will be needed to orbit 6 x 10^4 kilograms of matter?", answers: ["900 x 10^5 kilograms", "2.5 x 10^6 kilograms", "4.0 x 10^4 kilograms", "9.0 x 10^6 kilograms"], correct: "9.0 x 10^6 kilograms" },
-    { question: "Cal installs new tires and gets paid $1.17 per tire or gets paid $10.50 per hour for 8 hours, whichever is greater. How much more does he make on a day when he installs 85 tires than he would make if he received just his hourly wage?", answers: ["$9.36", "$10.50", "$12.43", "$15.45"], correct: "$15.45" },
-    { question: "The distance from Earth to the sun is 1 astronomical unit (AU) or 1.496 x 10^9 kilometers. If Mercury is 0.39 AU from the sun, how many kilometers from the sun is it?", answers: ["10.79 x 10^6 kilometers", "5.8 x 10^9 kilometers", "1.079 x 10^7 kilometers", "5.8 x 10^8 kilometers"], correct: "5.8 x 10^8 kilometers" },
-    { question: "An excellent 1-carat diamond sells for $1025. If 1 carat is 7.05 x 10^-3 ounces, how much would an ounce of excellent diamonds cost, to the nearest dollar?", answers: ["$145,390", "$141,800", "$102,500", "$14,539"], correct: "$145,390" },
-    { question: "The Earth's mass is 5.9742 x 10^24 kilograms, while the moon's mass is 7.36 x 10^22 kilograms. What is an estimate of the sum of the masses, expressed in scientific notation?", answers: ["1.33 x 10^24", "1.39 x 10^24", "6.05 x 10^24", "1.33 x 10^24"], correct: "6.05 x 10^24" },
-    { question: "On the plans for a building, the drawing of a wall measures 3 1/3 inches tall by 9 1/2 inches wide. The scale says that 1 inch equals 6 feet. What will be the dimensions of the wall once it is built?", answers: ["19 feet tall by 55 feet wide", "19 feet tall by 57 feet wide", "20 feet tall by 55 feet wide", "20 feet tall by 57 feet wide"], correct: "20 feet tall by 57 feet wide" },
-    { question: "Fran drives 27 miles on her paper route in 45 minutes. It takes her 2 hours to drive the entire route at the same rate. How long is Fran's paper route?", answers: ["72 miles", "74 miles", "76 miles", "78 miles"], correct: "72 miles" },
-    { question: "A scale drawing with a scale of 1 inch = 3 feet is redrawn so that 1 inch = 5 feet. What is the new length of the side of a square that was 2 inches on the old drawing?", answers: ["0.8 inch", "0.9 inch", "1.1 inches", "1.2 inches"], correct: "1.2 inches" },
-    { question: "A parade starts in a stadium with a lap around a football field, then continues through the city for an additional 3 miles. If a marching band takes 12 minutes to march the 1/4 mile track around the field, how long will it take to march the entire route, at the same rate?", answers: ["2 hours 12 minutes", "2 hours 24 minutes", "2 hours 36 minutes", "2 hours 48 minutes"], correct: "2 hours 36 minutes" },
-    { question: "Julio walks 264 feet per minute. What is his rate in miles per hour? (Hint: 1 mile = 5280 feet.)", answers: ["3 miles per hour", "3.5 miles per hour", "4 miles per hour", "4.5 miles per hour"], correct: "3 miles per hour" },
-    { question: "A bookstore is having a sale, offering a discount on all books in the store. A book with a regular price of $12.95 is on sale for $7.77. At the same discount rate, what is the selling price of a book with a regular price of $18.50?", answers: ["$5.18", "$5.55", "$10.73", "$11.10"], correct: "$11.10" },
-    { question: "A game console that lists for $159.95 is on sale at a discount of 15%. If there is a 5 1/4% sales tax, how much will Jane pay for the console? (Round up to a whole cent.)", answers: ["$143.10", "$168.35", "$180.20", "$183.94"], correct: "$143.10" },
-    { question: "A bag of Spot's dog food usually costs $36.99. It is on sale today at 20% off. In addition, his owner has a coupon good for 10% off any purchase. What is the cost of the dog food before sales tax?", answers: ["$33.29", "$29.59", "$26.63", "$25.89"], correct: "$26.63" },
-    { question: "Imelda bought a guitar with no money down and has a loan for $1150 at 6% per year. If she pays off the loan after 4 months, what is the total cost of the guitar?", answers: ["$1,167.25", "$1,173.00", "$1,219.00", "$1,840.00"], correct: "$1,173.00" },
-    { question: "Ashanti's Bike Store makes a profit of 17.5% on sales. If this month's profit is $2175, how much did the store sell this month? (Round to the nearest cent.)", answers: ["$38,062.50", "$12,428.57", "$3,806.25", "$2,192.50"], correct: "$12,428.57" },
-    { question: "After paying a 6 1/4% sales tax, Jerome paid $135.20 for a set of Blu-ray discs that listed for $149.70 but was on sale at a discount. To the nearest whole percent, what was the discount on the set before sales tax?", answers: ["6%", "7%", "14%", "15%"], correct: "15%" },
-    { question: "To be considered a periodical under the post office's rules, a magazine must have no more than 25% advertising content. The present issue of the magazine that Aram manages has 172 pages but is 28.5% ads. How many pages must Aram convert from ads to non-advertising content to meet the post office's requirement?", answers: ["4", "5", "6", "7"], correct: "6" },
-    { question: "Bill's Bikes has sold $3036.00 worth of merchandise this month. That is a 15% increase over last month. And last month saw a 10% increase over the month before. How much merchandise did Bill's Bikes sell two months ago?", answers: ["$3021", "$3011", "$2640", "$2400"], correct: "$2400" },
-    { question: "There are 207,634,000 Americans who are eligible to vote, but only 150 million are registered to vote. In the 2012 presidential election, only 57% of registered voters participated. What percentage of eligible voters does this represent?", answers: ["40", "41", "43", "45"], correct: "41" },
-    { question: "For telephone and Internet service, Jenna pays $63.70 a month, including 7.95% in various taxes. What is the cost of the telephone and Internet service before tax?", answers: ["$68.76", "$61.95", "$59.00", "$35.48"], correct: "$59.00" },
-    { question: "Tom buys an investment. Its value drops by 50% one month. The next month, though, its value increases by 50%. What is the result at the end of the second month?", answers: ["The value has not changed.", "The value has increased by 50%.", "The value has decreased by 25%.", "The value has decreased by 50%."], correct: "The value has decreased by 25%." },
-    { question: "Marisa pays 6.2% Social Security tax, 1.45% Medicare, and 14% federal income tax withholding each pay period. How much is left after taxes from a paycheck of $718.15?", answers: ["$707.74", "$670.81", "$617.61", "$562.67"], correct: "$562.67" },
-    { question: "Zane, a plumber, buys a part on sale at 25% off. In addition, he gets 15% off his entire order. If the part's list price is $555.00, what is its cost after the discounts?", answers: ["$194.25", "$208.13", "$333.00", "$353.81"], correct: "$353.81" },
-    { question: "Ishmael sells yachts and sold $90,000 worth of yachts this month. That is an increase of 20% over last month's sales. But last month was 20% less than the month before. What were Ishmael's sales two months ago?", answers: ["$50,000", "$75,000", "$90,200", "$93,750"], correct: "$93,750" },
-    { question: "Divide (12p^3 q-16p^5 q^2+10p^4 q^4)/(8p^2 q^3).", answers: ["(4p)/(q^2)-(8p^3)/q+2p^2 q", "(4pq)/(pq^2)-(8p^3 q)/pq+(2p^2 q)/pq", "(3p)/(2q^2)-(2p^3)/q+(5p^2 q)/4", "(3pq)/(2pq^2)-(2p^3 q)/pq+(5p^2 q)/(4pq)"], correct: "(3p)/(2q^2)-(2p^3)/q+(5p^2 q)/4" },
-    { question: "Divide (21x^3-14x^2)/(14x^3+21x^2).", answers: ["(3x-2)/(2x+3)", "(21x-14)/(14x+12)", "(3x^2-2x)/(2x^2+3x)", "(21x^2-14x)/(14x^2+12x)"], correct: "(3x-2)/(2x+3)" },
-    { question: "Divide (9s^3 t+6st^2)/(6s^3 t+4st^2).", answers: ["3/2", "9/4", "(9s^2+t)/(s^2+4t)", "(9s^2+6t)/(6s^2+4t)"], correct: "3/2" },
-    { question: "Factor 12x^2 y+40xy-32y completely.", answers: ["4y(3x-2)(x+4)", "4(3xy-2y)(x+4)", "4(3x-2)(xy+4y)", "(3xy-2y)(4x+16)"], correct: "4y(3x-2)(x+4)" },
-    { question: "Add (2x-5)/(5x+10) + (x+1)/(3x+6)", answers: ["(11x-10)/(15(x+2)^2)", "(11x-10)/(15(x+2))", "(11x^2+12x-20)/((5x+10)(3x+6))", "(11x^2+12x-20)/(15(x+2)^2)"], correct: "(11x-10)/(15(x+2))" },
-    { question: "Subtract (3x)/(2x-10) - x/(2x+6).", answers: ["(4x^2+28x)/((2x-10)(2x+6))", "(x^2+14x)/((x-5)(x+3))", "(2x^2+14x)/(2(x-5)(x+3))", "(x(x+7))/((x-5)(x+3))"], correct: "(x(x+7))/((x-5)(x+3))" },
-    { question: "Simplify (x+1)/(2x-4) + (x-1)/(2x+4) - (2x)/(x^2-4).", answers: ["(x^2-x+1)/(2(x-1)(x+1))", "(2x^2-4x+4)/(2(x-2)(x+2))", "(x^2-2x+2)/((x-2)(x+2))", "(x^2-x+1)/((x-1)(x+1))"], correct: "(x^2-2x+2)/((x-2)(x+2))" },
-    { question: "Multiply (x^2-2x-3)/(x^2+3x) * (x^2-9)/(x^2+2x+1).", answers: ["(2(x-1)(x-3))/(x(x+1)^2)", "(x-3)^2/(x(x+1))", "(2(x-3))/(x(x+1))", "(x-1)(x-3)^2/(x(x+1)^2)"], correct: "(x-3)^2/(x(x+1))" },
-    { question: "Divide (20x^2 y^5)/(27a^6 b) ÷ (10b^2 x^6)/(9a^8 y^3).", answers: ["(18ay^15)/(27b^2 x^3)", "(2ay^15)/(30^2 x^3)", "(18a^2 y^8)/(27b^3 x^4)", "(2a^2 y^8)/(3b^3 x^4)"], correct: "(2a^2 y^8)/(3b^3 x^4)" },
-    { question: "Divide (4x+8)/(x^2+3x) ÷ (x^2-4)/(x^2+x-6).", answers: ["4/x", "(4(x+2))/(x(x-2))", "(4(x+2)(x-3))/(x(x+3)(x-2))", "(4(x+2)(x^2+x-6))/(x(x+3)(x^2-4))"], correct: "4/x" },
-    { question: "Simplify (x^2-5x)/(4x^2) * (x^2-7x+12)/(x^2-16) ÷ (2x-10)/(x^2+2x-8).", answers: ["((x+3)(x+2))/(8x)", "((x-3)(x+2))/(8x)", "((x+3)(x-2))/(8x)", "((x-3)(x-2))/(8x)"], correct: "((x-3)(x-2))/(8x)" },
-    { question: "Evaluate (3x^2+7x-2)/(2x^2-7x+3) for x=-4.", answers: ["74/7", "18/7", "2/7", "78"], correct: "2/7" }
-];
+const gameContainer = document.getElementById('game-container');
+const loadingScreen = document.getElementById('loading-screen');
+const encounterImg = document.getElementById('pokemon-to-catch-img');
+const encounterName = document.getElementById('pokemon-to-catch-name');
+const catchRequirementText = document.getElementById('catch-requirement');
+const streakInfoText = document.getElementById('streak-info');
+const questionText = document.getElementById('question');
+const answersContainer = document.getElementById('answers');
+const teamModal = document.getElementById('team-modal');
+const catchModal = document.getElementById('catch-modal');
+const messageModal = document.getElementById('message-modal');
+const swapModal = document.getElementById('swap-modal');
+const teamGrid = document.getElementById('team-grid');
+const catchModalImg = document.getElementById('catch-modal-img');
+const catchModalText = document.getElementById('catch-modal-text');
+const messageText = document.getElementById('message-text');
+const swapNewPokemonImg = document.getElementById('swap-new-pokemon-img');
+const swapNewPokemonName = document.getElementById('swap-new-pokemon-name');
+const swapTeamGrid = document.getElementById('swap-team-grid');
+const viewTeamBtn = document.getElementById('view-team-btn');
+const teamCloseBtn = document.getElementById('team-close-btn');
+const catchOkBtn = document.getElementById('catch-ok-btn');
+const messageOkBtn = document.getElementById('message-ok-btn');
+const letGoBtn = document.getElementById('let-go-btn');
+const playerLevelImg = document.getElementById('player-level-img');
+const playerLevelName = document.getElementById('player-level-name');
+const playerPoints = document.getElementById('player-points');
+const levelUpModal = document.getElementById('level-up-modal');
+const levelUpModalImg = document.getElementById('level-up-modal-img');
+const levelUpModalText = document.getElementById('level-up-modal-text');
+const levelUpOkBtn = document.getElementById('level-up-ok-btn');
 
-    const pokemonTiers = {
-        tier1: [ // Legendary
-            {id: 144, name: 'Articuno'}, {id: 145, name: 'Zapdos'}, {id: 146, name: 'Moltres'}, {id: 149, name: 'Dragonite'}, {id: 150, name: 'Mewtwo'}, {id: 151, name: 'Mew'}
-        ],
-        tier2: [ // Rare
-            {id: 3, name: 'Venusaur'}, {id: 6, name: 'Charizard'}, {id: 9, name: 'Blastoise'}, {id: 31, name: 'Nidoqueen'}, {id: 34, name: 'Nidoking'},
-            {id: 36, name: 'Clefable'}, {id: 38, name: 'Ninetales'}, {id: 45, name: 'Vileplume'}, {id: 59, name: 'Arcanine'}, {id: 62, name: 'Poliwrath'},
-            {id: 65, name: 'Alakazam'}, {id: 68, name: 'Machamp'}, {id: 71, name: 'Victreebel'}, {id: 73, name: 'Tentacruel'},
-            {id: 76, name: 'Golem'}, {id: 78, name: 'Rapidash'}, {id: 80, name: 'Slowbro'}, {id: 82, name: 'Magneton'}, {id: 94, name: 'Gengar'},
-            {id: 103, name: 'Exeggutor'}, {id: 106, name: 'Hitmonlee'}, {id: 107, name: 'Hitmonchan'}, {id: 110, name: 'Weezing'}, {id: 112, name: 'Rhydon'},
-            {id: 113, name: 'Chansey'}, {id: 115, name: 'Kangaskhan'}, {id: 121, name: 'Starmie'}, {id: 123, name: 'Scyther'}, {id: 124, name: 'Jynx'},
-            {id: 125, name: 'Electabuzz'}, {id: 126, name: 'Magmar'}, {id: 130, name: 'Gyarados'}, {id: 131, name: 'Lapras'}, {id: 134, name: 'Vaporeon'},
-            {id: 135, name: 'Jolteon'}, {id: 136, name: 'Flareon'}, {id: 142, name: 'Aerodactyl'}, {id: 143, name: 'Snorlax'}, {id: 148, name: 'Dragonair'}
-        ],
-        tier3: [ // Uncommon
-            {id: 2, name: 'Ivysaur'}, {id: 5, name: 'Charmeleon'}, {id: 8, name: 'Wartortle'}, {id: 12, name: 'Butterfree'}, {id: 15, name: 'Beedrill'},
-            {id: 18, name: 'Pidgeot'}, {id: 22, name: 'Fearow'}, {id: 24, name: 'Arbok'}, {id: 25, name: 'Pikachu'}, {id: 26, name: 'Raichu'},
-            {id: 28, name: 'Sandslash'}, {id: 40, name: 'Wigglytuff'}, {id: 42, name: 'Golbat'}, {id: 49, name: 'Venomoth'},
-            {id: 51, name: 'Dugtrio'}, {id: 53, name: 'Persian'}, {id: 55, name: 'Golduck'}, {id: 57, name: 'Primeape'}, {id: 64, name: 'Kadabra'},
-            {id: 67, name: 'Machoke'}, {id: 75, 'name': 'Graveler'}, {id: 93, name: 'Haunter'}, {id: 95, name: 'Onix'}, {id: 97, name: 'Hypno'},
-            {id: 101, name: 'Electrode'}, {id: 105, name: 'Marowak'}, {id: 108, name: 'Lickitung'}, {id: 114, name: 'Tangela'}, {id: 122, name: 'Mr. Mime'},
-            {id: 127, name: 'Pinsir'}, {id: 128, name: 'Tauros'}, {id: 137, name: 'Porygon'}
-        ],
-        tier4: [ // Common
-            {id: 1, name: 'Bulbasaur'}, {id: 4, name: 'Charmander'}, {id: 7, name: 'Squirtle'}, {id: 10, name: 'Caterpie'}, {id: 11, name: 'Metapod'},
-            {id: 13, name: 'Weedle'}, {id: 14, name: 'Kakuna'}, {id: 16, name: 'Pidgey'}, {id: 17, name: 'Pidgeotto'}, {id: 19, name: 'Rattata'},
-            {id: 20, name: 'Raticate'}, {id: 21, name: 'Spearow'}, {id: 23, name: 'Ekans'}, {id: 27, name: 'Sandshrew'}, {id: 29, name: 'Nidoran♀'},
-            {id: 32, name: 'Nidoran♂'}, {id: 39, name: 'Jigglypuff'}, {id: 41, name: 'Zubat'}, {id: 43, name: 'Oddish'}, {id: 46, name: 'Paras'},
-            {id: 48, name: 'Venonat'}, {id: 50, name: 'Diglett'}, {id: 54, name: 'Psyduck'}, {id: 56, name: 'Mankey'}, {id: 60, name: 'Poliwag'},
-            {id: 69, name: 'Bellsprout'}, {id: 72, name: 'Tentacool'}, {id: 74, name: 'Geodude'}, {id: 86, name: 'Seel'}, {id: 88, name: 'Grimer'},
-            {id: 90, name: 'Shellder'}, {id: 96, name: 'Drowzee'}, {id: 98, name: 'Krabby'}, {id: 100, name: 'Voltorb'}, {id: 118, name: 'Goldeen'},
-            {id: 129, name: 'Magikarp'}
-        ]
-    };
+function saveGame() {
+    try {
+        localStorage.setItem('pokemonMathSaveData', JSON.stringify({ gameState, playerTeam }));
+    } catch (e) { console.error("Could not save to localStorage:", e); }
+}
 
-    // --- GAME STATE ---
-    let playerTeam = [];
-    // UPDATED: Team capacity is now 6, the standard for a Pokémon team.
-    const TEAM_CAPACITY = 6;
-    const gameState = {
-        currentEncounter: null,
-        currentTier: 4,
-        requiredStreak: 0,
-        currentStreak: 0,
-        // NEW: Track last question index for each difficulty tier to avoid repeats
-        lastEasyIndex: -1,
-        lastMediumIndex: -1,
-        lastHardIndex: -1,
-    };
-
-    // --- HTML ELEMENTS ---
-    const gameContainer = document.getElementById('game-container');
-    const encounterImg = document.getElementById('pokemon-to-catch-img');
-    const encounterName = document.getElementById('pokemon-to-catch-name');
-    const catchRequirementText = document.getElementById('catch-requirement');
-    const streakInfoText = document.getElementById('streak-info');
-    const questionText = document.getElementById('question');
-    const answersContainer = document.getElementById('answers');
-    const teamModal = document.getElementById('team-modal');
-    const catchModal = document.getElementById('catch-modal');
-    const messageModal = document.getElementById('message-modal');
-    const swapModal = document.getElementById('swap-modal');
-    const teamGrid = document.getElementById('team-grid');
-    const catchModalImg = document.getElementById('catch-modal-img');
-    const catchModalText = document.getElementById('catch-modal-text');
-    const messageText = document.getElementById('message-text');
-    const swapNewPokemonImg = document.getElementById('swap-new-pokemon-img');
-    const swapNewPokemonName = document.getElementById('swap-new-pokemon-name');
-    const swapTeamGrid = document.getElementById('swap-team-grid');
-    const viewTeamBtn = document.getElementById('view-team-btn');
-    const teamCloseBtn = document.getElementById('team-close-btn');
-    const catchOkBtn = document.getElementById('catch-ok-btn');
-    const messageOkBtn = document.getElementById('message-ok-btn');
-    const letGoBtn = document.getElementById('let-go-btn');
-
-    // --- FUNCTIONS ---
-    function startEncounter(tier = null) {
-        if (tier === null) {
-            const randomChance = Math.random();
-            if (randomChance < 0.05) gameState.currentTier = 1;      // 5% chance for Legendary
-            else if (randomChance < 0.25) gameState.currentTier = 2; // 20% chance for Rare
-            else if (randomChance < 0.60) gameState.currentTier = 3; // 35% chance for Uncommon
-            else gameState.currentTier = 4;                          // 40% chance for Common
-        } else {
-            gameState.currentTier = tier; 
+function loadGame() {
+    try {
+        const savedData = localStorage.getItem('pokemonMathSaveData');
+        if (savedData) {
+            const parsedData = JSON.parse(savedData);
+            gameState = parsedData.gameState;
+            playerTeam = parsedData.playerTeam;
         }
-
-        const tierPokemons = pokemonTiers[`tier${gameState.currentTier}`];
-        gameState.currentEncounter = tierPokemons[Math.floor(Math.random() * tierPokemons.length)];
-        
-        // NEW: Set required streak based on tier difficulty rules
-        if (gameState.currentTier === 1) { // Legendary Pokémon require 2 correct Hard questions
-            gameState.requiredStreak = 2;
-        } else { // All other tiers require 1 correct question
-            gameState.requiredStreak = 1;
-        }
-        
-        gameState.currentStreak = 0; 
-        streakInfoText.innerText = `Current Streak: 0`;
-
-        updateEncounterUI();
-        loadMathQuestion();
-    }
-
-    function updateEncounterUI() {
-        const { name, id } = gameState.currentEncounter;
-        encounterImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
-        encounterImg.className = '';
-        encounterImg.classList.add(`tier-${gameState.currentTier}-border`);
-        encounterName.innerText = name;
-        
-        // NEW: Dynamic catch requirement text that specifies difficulty
-        let difficultyText = '';
-        if (gameState.currentTier === 4) difficultyText = 'Easy';
-        else if (gameState.currentTier === 3) difficultyText = 'Medium';
-        else difficultyText = 'Hard';
-    
-        const plural = gameState.requiredStreak > 1 ? 's' : '';
-        catchRequirementText.innerText = `Answer ${gameState.requiredStreak} ${difficultyText} question${plural} correctly to catch!`;
-    }
-
-    function loadMathQuestion() {
-        let questionPool;
-        let lastIndexKey;
-
-        // NEW: Select question pool and index tracker based on the Pokémon's tier
-        if (gameState.currentTier === 4) {
-            questionPool = easyQuestions;
-            lastIndexKey = 'lastEasyIndex';
-        } else if (gameState.currentTier === 3) {
-            questionPool = mediumQuestions;
-            lastIndexKey = 'lastMediumIndex';
-        } else { // Tiers 1 and 2 both use Hard questions
-            questionPool = hardQuestions;
-            lastIndexKey = 'lastHardIndex';
-        }
-
-        let questionIndex;
-        // Ensure the same question isn't asked twice in a row from the same pool
-        do {
-            questionIndex = Math.floor(Math.random() * questionPool.length);
-        } while (questionIndex === gameState[lastIndexKey] && questionPool.length > 1);
-        
-        gameState[lastIndexKey] = questionIndex; // Update the specific index tracker
-        
-        const currentQuestion = questionPool[questionIndex];
-        questionText.innerText = currentQuestion.question;
-        answersContainer.innerHTML = '';
-        
-        // Randomize the order of the answer buttons
-        const shuffledAnswers = [...currentQuestion.answers].sort(() => Math.random() - 0.5);
-        shuffledAnswers.forEach(answer => {
-            const button = document.createElement('button');
-            button.innerText = answer;
-            button.onclick = () => handleAnswer(answer, currentQuestion.correct);
-            answersContainer.appendChild(button);
-        });
-    }
-
-    function handleAnswer(selectedAnswer, correctAnswer) {
-        if (selectedAnswer === correctAnswer) {
-            gameState.currentStreak++;
-            streakInfoText.innerText = `Correct! Streak: ${gameState.currentStreak}`;
-            playVisualEffect('correct');
-            if (gameState.currentStreak >= gameState.requiredStreak) {
-                setTimeout(catchPokemon, 500);
-            } else {
-                setTimeout(loadMathQuestion, 500); // Load the next question for the streak
-            }
-        } else {
-            playVisualEffect('incorrect');
-            const fledPokemon = gameState.currentEncounter.name;
-            setTimeout(() => {
-                showGenericMessage('Wrong Answer!', `The wild ${fledPokemon} fled!`);
-                // When an answer is wrong, the encounter resets, but stays on the same tier
-                // so the user can try to catch another Pokémon of similar rarity.
-                startEncounter(gameState.currentTier);
-            }, 500);
-        }
-    }
-
-    function catchPokemon() {
-        const caughtPokemon = gameState.currentEncounter;
-        if (playerTeam.length < TEAM_CAPACITY) {
-            playerTeam.push(caughtPokemon);
-            showCatchMessage(caughtPokemon);
-            updateTeamView();
-        } else {
-            showSwapModal(caughtPokemon);
-        }
-    }
-    
-    function showCatchMessage(pokemon) {
-        catchModal.style.display = 'flex';
-        catchModalImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
-        catchModalText.innerText = `${pokemon.name} was caught and added to your team!`;
-    }
-    
-    function showGenericMessage(title, text) {
-        messageModal.style.display = 'flex';
-        document.getElementById('message-title').innerText = title;
-        messageText.innerText = text;
-    }
-
-    function showSwapModal(newPokemon) {
-        swapModal.style.display = 'flex';
-        swapNewPokemonImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${newPokemon.id}.png`;
-        swapNewPokemonName.innerText = newPokemon.name;
-        
-        swapTeamGrid.innerHTML = '';
-        playerTeam.forEach((pokemon, index) => {
-            const slot = document.createElement('div');
-            slot.className = 'team-slot swappable';
-            slot.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}"><span>${pokemon.name}</span>`;
-            slot.onclick = () => {
-                playerTeam[index] = newPokemon;
-                swapModal.style.display = 'none';
-                updateTeamView();
-                startEncounter();
-            };
-            swapTeamGrid.appendChild(slot);
-        });
-    }
-
-    function playVisualEffect(type) {
-        const className = type === 'correct' ? 'correct-flash' : 'incorrect-flash';
-        gameContainer.classList.add(className);
-        setTimeout(() => gameContainer.classList.remove(className), 500);
-    }
-
-    function updateTeamView() {
-        teamGrid.innerHTML = '';
-        for (let i = 0; i < TEAM_CAPACITY; i++) {
-            const slot = document.createElement('div');
-            slot.className = 'team-slot';
-            if (playerTeam[i]) {
-                slot.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${playerTeam[i].id}.png" alt="${playerTeam[i].name}"><span>${playerTeam[i].name}</span>`;
-            }
-            teamGrid.appendChild(slot);
-        }
-    }
-
-    // --- EVENT LISTENERS ---
-    viewTeamBtn.onclick = () => { teamModal.style.display = 'flex'; };
-    teamCloseBtn.onclick = () => { teamModal.style.display = 'none'; };
-    catchOkBtn.onclick = () => { catchModal.style.display = 'none'; startEncounter(); };
-    messageOkBtn.onclick = () => { messageModal.style.display = 'none'; };
-    letGoBtn.onclick = () => { swapModal.style.display = 'none'; startEncounter(); };
-    window.onclick = (event) => { if (event.target.classList.contains('modal')) event.target.style.display = 'none'; };
-
-    // --- INITIALIZE GAME ---
+    } catch (e) { console.error("Could not load from localStorage:", e); }
     updateTeamView();
+    updatePlayerStatsUI();
+}
+
+function updatePlayerStatsUI() {
+    const currentLevelData = levels.find(l => l.name === gameState.currentLevel) || levels[0];
+    const currentLevelIndex = levels.findIndex(l => l.name === gameState.currentLevel);
+    const nextLevelData = levels[currentLevelIndex + 1];
+    playerLevelImg.src = currentLevelData.img;
+    playerLevelName.innerText = `${currentLevelData.name} Level`;
+    if (nextLevelData) {
+        playerPoints.innerText = `Points: ${gameState.totalPoints} / ${nextLevelData.points}`;
+    } else {
+        playerPoints.innerText = `Points: ${gameState.totalPoints} (MAX LEVEL)`;
+    }
+}
+
+function awardPointsAndCheckLevelUp() {
+    const pointsEarned = pointValues[gameState.currentTier] * gameState.requiredStreak;
+    const oldLevel = gameState.currentLevel;
+    gameState.totalPoints += pointsEarned;
+    let newLevelData = levels.reduce((acc, level) => gameState.totalPoints >= level.points ? level : acc, levels[0]);
+    gameState.currentLevel = newLevelData.name;
+    if (gameState.currentLevel !== oldLevel) {
+        levelUpModal.style.display = 'flex';
+        levelUpModalImg.src = newLevelData.img;
+        levelUpModalText.innerText = `You've reached the ${newLevelData.name} level! Rarer Pokémon may now appear more often.`;
+    }
+    updatePlayerStatsUI();
+    saveGame();
+}
+
+// NEW: Function to get a random tier equal to or lower than current tier
+function getRandomTierOrLower(currentTier) {
+    const possibleTiers = [];
+    for (let i = currentTier; i <= 4; i++) {
+        possibleTiers.push(i);
+    }
+    return possibleTiers[Math.floor(Math.random() * possibleTiers.length)];
+}
+
+function startEncounter(tier = null) {
+    if (tier === null) {
+        const bonuses = levelBonuses[gameState.currentLevel] || levelBonuses['Poke Ball'];
+        const randomChance = Math.random();
+        if (randomChance < bonuses.tier1) gameState.currentTier = 1;
+        else if (randomChance < bonuses.tier2) gameState.currentTier = 2;
+        else if (randomChance < bonuses.tier3) gameState.currentTier = 3;
+        else gameState.currentTier = 4;
+    } else {
+        gameState.currentTier = tier; 
+    }
+    const tierPokemons = pokemonTiers[`tier${gameState.currentTier}`];
+    gameState.currentEncounter = tierPokemons[Math.floor(Math.random() * tierPokemons.length)];
+    gameState.requiredStreak = (gameState.currentTier === 1) ? 2 : 1;
+    gameState.currentStreak = 0; 
+    streakInfoText.innerText = `Current Streak: 0`;
+    updateEncounterUI();
+    loadMathQuestion();
+}
+
+function updateEncounterUI() {
+    const { name, id } = gameState.currentEncounter;
+    encounterImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+    encounterImg.className = `tier-${gameState.currentTier}-border`;
+    encounterName.innerText = name;
+    let difficultyText = (gameState.currentTier === 4) ? 'Easy' : (gameState.currentTier === 3) ? 'Medium' : 'Hard';
+    const plural = gameState.requiredStreak > 1 ? 's' : '';
+    catchRequirementText.innerText = `Answer ${gameState.requiredStreak} ${difficultyText} question${plural} correctly to catch!`;
+}
+
+function loadMathQuestion() {
+    let questionPool, lastIndexKey;
+    if (gameState.currentTier === 4) { [questionPool, lastIndexKey] = [easyQuestions, 'lastEasyIndex']; }
+    else if (gameState.currentTier === 3) { [questionPool, lastIndexKey] = [mediumQuestions, 'lastMediumIndex']; }
+    else { [questionPool, lastIndexKey] = [hardQuestions, 'lastHardIndex']; }
+
+    let questionIndex;
+    do { questionIndex = Math.floor(Math.random() * questionPool.length); }
+    while (questionIndex === gameState[lastIndexKey] && questionPool.length > 1);
+    gameState[lastIndexKey] = questionIndex;
+    
+    const currentQuestion = questionPool[questionIndex];
+    questionText.innerText = currentQuestion.question;
+    answersContainer.innerHTML = '';
+    
+    const shuffledAnswers = [...currentQuestion.answers].sort(() => Math.random() - 0.5);
+    shuffledAnswers.forEach(answer => {
+        const button = document.createElement('button');
+        button.innerText = answer;
+        button.onclick = () => handleAnswer(answer, currentQuestion.correct);
+        answersContainer.appendChild(button);
+    });
+
+    if (window.MathJax) {
+        MathJax.typesetPromise([questionText, answersContainer]).catch(err => console.error('MathJax typesetting error:', err));
+    }
+}
+
+function handleAnswer(selectedAnswer, correctAnswer) {
+    if (selectedAnswer === correctAnswer) {
+        gameState.currentStreak++;
+        streakInfoText.innerText = `Correct! Streak: ${gameState.currentStreak}`;
+        playVisualEffect('correct');
+        if (gameState.currentStreak >= gameState.requiredStreak) {
+            setTimeout(catchPokemon, 500);
+        } else {
+            setTimeout(loadMathQuestion, 500); 
+        }
+    } else {
+        playVisualEffect('incorrect');
+        const fledPokemon = gameState.currentEncounter.name;
+        setTimeout(() => {
+            showGenericMessage('Wrong Answer!', `The wild ${fledPokemon} fled!`);
+            // UPDATED: Use the new function to encounter same tier or lower
+            startEncounter(getRandomTierOrLower(gameState.currentTier));
+        }, 500);
+    }
+}
+
+function catchPokemon() {
+    const caughtPokemon = gameState.currentEncounter;
+    awardPointsAndCheckLevelUp();
+    if (playerTeam.length < TEAM_CAPACITY) {
+        playerTeam.push(caughtPokemon);
+        showCatchMessage(caughtPokemon);
+        updateTeamView();
+    } else {
+        showSwapModal(caughtPokemon);
+    }
+    saveGame();
+}
+
+function showCatchMessage(pokemon) {
+    catchModal.style.display = 'flex';
+    catchModalImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
+    catchModalText.innerText = `${pokemon.name} was caught and added to your team!`;
+}
+    
+function showGenericMessage(title, text) {
+    messageModal.style.display = 'flex';
+    document.getElementById('message-title').innerText = title;
+    messageText.innerText = text;
+}
+
+function showSwapModal(newPokemon) {
+    swapModal.style.display = 'flex';
+    swapNewPokemonImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${newPokemon.id}.png`;
+    swapNewPokemonName.innerText = newPokemon.name;
+    swapTeamGrid.innerHTML = '';
+    playerTeam.forEach((pokemon, index) => {
+        const slot = document.createElement('div');
+        slot.className = 'team-slot swappable';
+        slot.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}"><span>${pokemon.name}</span>`;
+        slot.onclick = () => {
+            playerTeam[index] = newPokemon;
+            swapModal.style.display = 'none';
+            updateTeamView();
+            startEncounter();
+        };
+        swapTeamGrid.appendChild(slot);
+    });
+}
+
+function playVisualEffect(type) {
+    const className = type === 'correct' ? 'correct-flash' : 'incorrect-flash';
+    gameContainer.classList.add(className);
+    setTimeout(() => gameContainer.classList.remove(className), 500);
+}
+
+function updateTeamView() {
+    teamGrid.innerHTML = '';
+    for (let i = 0; i < TEAM_CAPACITY; i++) {
+        const slot = document.createElement('div');
+        slot.className = 'team-slot';
+        if (playerTeam[i]) {
+            slot.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${playerTeam[i].id}.png" alt="${playerTeam[i].name}"><span>${playerTeam[i].name}</span>`;
+        }
+        teamGrid.appendChild(slot);
+    }
+}
+
+viewTeamBtn.onclick = () => { teamModal.style.display = 'flex'; };
+teamCloseBtn.onclick = () => { teamModal.style.display = 'none'; };
+messageOkBtn.onclick = () => { messageModal.style.display = 'none'; };
+letGoBtn.onclick = () => { swapModal.style.display = 'none'; startEncounter(); };
+
+window.onclick = (event) => { 
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+        if (event.target === catchModal) { startEncounter(); }
+    }
+};
+
+catchOkBtn.onclick = () => {
+    catchModal.style.display = 'none';
     startEncounter();
+};
+levelUpOkBtn.onclick = () => { levelUpModal.style.display = 'none'; };
+
+window.onload = async function() {
+    const dataLoaded = await loadGameData();
+    if (dataLoaded) {
+        loadingScreen.style.display = 'none';
+        loadGame(); 
+        startEncounter();
+    } else {
+        loadingScreen.innerHTML = '<h2>Failed to load game data. Please refresh the page.</h2>';
+    }
+};
 </script>
 
 </body>
