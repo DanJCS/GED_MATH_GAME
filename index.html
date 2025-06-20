@@ -388,9 +388,13 @@ const pointValues = { 4: 100, 3: 150, 2: 200, 1: 200 };
 let playerTeam = [];
 const TEAM_CAPACITY = 6;
 let gameState = {
-    currentEncounter: null, currentTier: 4, requiredStreak: 0, currentStreak: 0,
-    lastEasyIndex: -1, lastMediumIndex: -1, lastHardIndex: -1,
-    totalPoints: 0, currentLevel: 'Poke Ball'
+    currentEncounter: null, 
+    currentTier: 4, 
+    requiredStreak: 0, 
+    currentStreak: 0,
+    questionDecks: { easy: [], medium: [], hard: [] },
+    totalPoints: 0, 
+    currentLevel: 'Poke Ball'
 };
 
 const gameContainer = document.getElementById('game-container');
@@ -425,6 +429,16 @@ const levelUpModalImg = document.getElementById('level-up-modal-img');
 const levelUpModalText = document.getElementById('level-up-modal-text');
 const levelUpOkBtn = document.getElementById('level-up-ok-btn');
 
+// --- SHUFFLE UTILITY ---
+function shuffleArray(array) {
+    const shuffledArray = [...array]; // Create a copy
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+}
+
 function saveGame() {
     try {
         localStorage.setItem('pokemonMathSaveData', JSON.stringify({ gameState, playerTeam }));
@@ -436,12 +450,19 @@ function loadGame() {
         const savedData = localStorage.getItem('pokemonMathSaveData');
         if (savedData) {
             const parsedData = JSON.parse(savedData);
-            gameState = parsedData.gameState;
-            playerTeam = parsedData.playerTeam;
+            // Merge saved gameState with current gameState to handle new properties
+            gameState = { ...gameState, ...parsedData.gameState };
+            playerTeam = parsedData.playerTeam || [];
+            
+            // Ensure questionDecks exists (for backwards compatibility)
+            if (!gameState.questionDecks) {
+                gameState.questionDecks = { easy: [], medium: [], hard: [] };
+            }
+            
+            return true; // Indicates that a saved game was loaded
         }
     } catch (e) { console.error("Could not load from localStorage:", e); }
-    updateTeamView();
-    updatePlayerStatsUI();
+    return false; // No saved game found
 }
 
 function updatePlayerStatsUI() {
@@ -499,6 +520,7 @@ function startEncounter(tier = null) {
     streakInfoText.innerText = `Current Streak: 0`;
     updateEncounterUI();
     loadMathQuestion();
+    saveGame(); // Save state when starting new encounter
 }
 
 function updateEncounterUI() {
@@ -521,17 +543,29 @@ function updateEncounterUI() {
 }
 
 function loadMathQuestion() {
-    let questionPool, lastIndexKey;
-    if (gameState.currentTier === 4) { [questionPool, lastIndexKey] = [easyQuestions, 'lastEasyIndex']; }
-    else if (gameState.currentTier === 3) { [questionPool, lastIndexKey] = [mediumQuestions, 'lastMediumIndex']; }
-    else { [questionPool, lastIndexKey] = [hardQuestions, 'lastHardIndex']; }
-
-    let questionIndex;
-    do { questionIndex = Math.floor(Math.random() * questionPool.length); }
-    while (questionIndex === gameState[lastIndexKey] && questionPool.length > 1);
-    gameState[lastIndexKey] = questionIndex;
+    let questionPool, deckKey;
     
-    const currentQuestion = questionPool[questionIndex];
+    // Determine which question pool and deck to use based on current tier
+    if (gameState.currentTier === 4) {
+        questionPool = easyQuestions;
+        deckKey = 'easy';
+    } else if (gameState.currentTier === 3) {
+        questionPool = mediumQuestions;
+        deckKey = 'medium';
+    } else {
+        questionPool = hardQuestions;
+        deckKey = 'hard';
+    }
+
+    // Check if the corresponding deck is empty
+    if (gameState.questionDecks[deckKey].length === 0) {
+        // Shuffle the master question list and assign to the deck
+        gameState.questionDecks[deckKey] = shuffleArray(questionPool);
+    }
+
+    // Get the next question using pop() method
+    const currentQuestion = gameState.questionDecks[deckKey].pop();
+    
     questionText.innerText = currentQuestion.question;
     answersContainer.innerHTML = '';
     
@@ -546,6 +580,8 @@ function loadMathQuestion() {
     if (window.MathJax) {
         MathJax.typesetPromise([questionText, answersContainer]).catch(err => console.error('MathJax typesetting error:', err));
     }
+    
+    saveGame(); // Save state after loading question
 }
 
 function handleAnswer(selectedAnswer, correctAnswer) {
@@ -559,14 +595,19 @@ function handleAnswer(selectedAnswer, correctAnswer) {
             setTimeout(loadMathQuestion, 500); 
         }
     } else {
+        // Reduce points by 70 for wrong answer
+        gameState.totalPoints = Math.max(0, gameState.totalPoints - 70);
+        updatePlayerStatsUI();
+        
         playVisualEffect('incorrect');
         const fledPokemon = gameState.currentEncounter.name;
         setTimeout(() => {
-            showGenericMessage('Wrong Answer!', `The wild ${fledPokemon} fled!`);
+            showGenericMessage('Wrong Answer!', `The wild ${fledPokemon} fled! You lost 70 points.`);
             // UPDATED: Use the new function to encounter same tier or lower
             startEncounter(getRandomTierOrLower(gameState.currentTier));
         }, 500);
     }
+    saveGame(); // Save state after handling answer
 }
 
 function catchPokemon() {
@@ -710,8 +751,22 @@ window.onload = async function() {
     const dataLoaded = await loadGameData();
     if (dataLoaded) {
         loadingScreen.style.display = 'none';
-        loadGame(); 
-        startEncounter();
+        
+        // Try to load saved game first
+        const hasSavedGame = loadGame();
+        
+        if (hasSavedGame && gameState.currentEncounter) {
+            // Resume from saved state - update UI to show current encounter
+            updateTeamView();
+            updatePlayerStatsUI();
+            updateEncounterUI();
+            loadMathQuestion();
+        } else {
+            // No saved game or no current encounter - start fresh
+            updateTeamView();
+            updatePlayerStatsUI();
+            startEncounter();
+        }
     } else {
         loadingScreen.innerHTML = '<h2>Failed to load game data. Please refresh the page.</h2>';
     }
