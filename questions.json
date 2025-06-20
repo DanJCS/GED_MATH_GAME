@@ -1,30 +1,4178 @@
 {
   "easy": [
-    { "question": "What is the opposite of -5, simplified?", "answers": ["-(-5)", "$\\frac{1}{5}$", "$-\\frac{1}{5}$", "5"], "correct": "5" },
-    { "question": "What is the simplified form of the opposite of the opposite of 12?", "answers": ["-(-12)", "12", "$\\frac{1}{12}$", "-12"], "correct": "12" },
-    { "question": "Compute $3 - 7$.", "answers": ["-10", "-4", "4", "10"], "correct": "-4" },
-    { "question": "Which is the same as $5 \\times 5 \\times 5 \\times 5 \\times 5 \\times 5 \\times 5 \\times 5 \\times 5$?", "answers": ["$9 \\times 5$", "$5 \\times 9$", "$5^9$", "$9^5$"], "correct": "$5^9$" },
-    { "question": "Compute $4^3$.", "answers": ["12", "81", "64", "256"], "correct": "64" },
-    { "question": "Simplify $5^{-2}$.", "answers": ["$\\frac{1}{25}$", "-10", "-25", "$\\frac{1}{10}$"], "correct": "$\\frac{1}{25}$" },
-    { "question": "Simplify $\\frac{3^7}{3^5}$", "answers": ["9", "$\\frac{1}{9}$", "6", "$\\frac{1}{6}$"], "correct": "9" },
-    { "question": "Evaluate $100^{\\frac{1}{2}}$", "answers": ["50", "10", "$\\frac{1}{200}$", "$\\frac{1}{10000}$"], "correct": "10" },
-    { "question": "Write $\\sqrt{7}$ as an expression with an exponent.", "answers": ["$7/2$", "$3 \\frac{1}{2}$", "$7^{\\frac{1}{2}}$", "$\\sqrt{7}^1$"], "correct": "$7^{\\frac{1}{2}}$" }
+    {
+      "question": "What is the result of subtracting $-9$ from $4$?",
+      "answers": [
+        "$-13$",
+        "$-5$",
+        "$5$",
+        "$13$"
+      ],
+      "correct": "$13$"
+    },
+    {
+      "question": "Which of the following expressions simplifies to a positive integer?",
+      "answers": [
+        "$-5 \\times 3$",
+        "$16 \\div (-4)$",
+        "$-8 - 2$",
+        "$-12 \\div (-6)$"
+      ],
+      "correct": "$-12 \\div (-6)$"
+    },
+    {
+      "question": "What is the absolute value of $-22$?",
+      "answers": [
+        "$-22$",
+        "$0$",
+        "$22$",
+        "$484$"
+      ],
+      "correct": "$22$"
+    },
+    {
+      "question": "Which of the following numbers is the smallest?",
+      "answers": [
+        "$-1$",
+        "$-15$",
+        "$0$",
+        "$-10$"
+      ],
+      "correct": "$-15$"
+    },
+    {
+      "question": "What is the opposite of the opposite of $-8$?",
+      "answers": [
+        "$8$",
+        "$-8$",
+        "$\\frac{1}{8}$",
+        "$0$"
+      ],
+      "correct": "$-8$"
+    },
+    {
+      "question": "Place the correct symbol, $<$ or $>$, between the numbers: $-39$ ___ $-32$.",
+      "answers": [
+        "$<$",
+        "$>$",
+        "$=$",
+        "$\\pm$"
+      ],
+      "correct": "$<$"
+    },
+    {
+      "question": "What are the coordinates of the point $(-5, 3)$ after it is reflected across the y-axis?",
+      "answers": [
+        "$(5, 3)$",
+        "$(5, -3)$",
+        "$(-5, -3)$",
+        "$(3, -5)$"
+      ],
+      "correct": "$(5, 3)$"
+    },
+    {
+      "question": "Which expression is NOT equal to $-8$?",
+      "answers": [
+        "$-16 \\div 2$",
+        "$2 \\times (-4)$",
+        "$-2 - 6$",
+        "$32 \\div (-4) \\times (-1)$"
+      ],
+      "correct": "$32 \\div (-4) \\times (-1)$"
+    },
+    {
+      "question": "What are the coordinates of the point $(2, -7)$ after it is reflected across the x-axis?",
+      "answers": [
+        "$(-2, 7)$",
+        "$(2, 7)$",
+        "$(-2, -7)$",
+        "$(-7, 2)$"
+      ],
+      "correct": "$(2, 7)$"
+    },
+    {
+      "question": "Which integer represents a bank withdrawal of $60?",
+      "answers": [
+        "$60$",
+        "$-60$",
+        "$0$",
+        "$|-60|$"
+      ],
+      "correct": "$-60$"
+    },
+    {
+      "question": "Compute: $5 \\times (-11)$.",
+      "answers": [
+        "$-55$",
+        "$55$",
+        "$-6$",
+        "$16$"
+      ],
+      "correct": "$-55$"
+    },
+    {
+      "question": "Which statement is true?",
+      "answers": [
+        "$|-9| = -9$",
+        "$|-5| > |2|$",
+        "$|-3| < |-1|$",
+        "$-7 > -2$"
+      ],
+      "correct": "$|-5| > |2|$"
+    },
+    {
+      "question": "Compute: $14 + (-20)$.",
+      "answers": [
+        "$34$",
+        "$6$",
+        "$-6$",
+        "$-34$"
+      ],
+      "correct": "$-6$"
+    },
+    {
+      "question": "What is the result of $-48 \\div 6$?",
+      "answers": [
+        "$8$",
+        "$-7$",
+        "$-8$",
+        "$42$"
+      ],
+      "correct": "$-8$"
+    },
+    {
+      "question": "Compute: $(-5) + (-5) + (-5) + (-5)$.",
+      "answers": [
+        "$0$",
+        "$-20$",
+        "$20$",
+        "$-10$"
+      ],
+      "correct": "$-20$"
+    },
+    {
+      "question": "Which number is an integer but not a whole number?",
+      "answers": [
+        "$5$",
+        "$0$",
+        "$-3$",
+        "$1.5$"
+      ],
+      "correct": "$-3$"
+    },
+    {
+      "question": "If you move 7 units to the left from the number 3 on a number line, where do you land?",
+      "answers": [
+        "$10$",
+        "$4$",
+        "$-4$",
+        "$-7$"
+      ],
+      "correct": "$-4$"
+    },
+    {
+      "question": "Which expression is equivalent to $x \\cdot x \\cdot x \\cdot x \\cdot x$?",
+      "answers": [
+        "$5x$",
+        "$x^5$",
+        "$x+5$",
+        "$5^x$"
+      ],
+      "correct": "$x^5$"
+    },
+    {
+      "question": "Compute $2^5$.",
+      "answers": [
+        "10",
+        "25",
+        "32",
+        "64"
+      ],
+      "correct": "32"
+    },
+    {
+      "question": "Simplify the expression $7^4 \\cdot 7^3$.",
+      "answers": [
+        "$7^{12}$",
+        "$49^{12}$",
+        "$7^7$",
+        "$49^7$"
+      ],
+      "correct": "$7^7$"
+    },
+    {
+      "question": "Write $\\sqrt{11}$ using a fractional exponent.",
+      "answers": [
+        "$11^2$",
+        "$11^{1/2}$",
+        "$2^{11}$",
+        "$11^{-2}$"
+      ],
+      "correct": "$11^{1/2}$"
+    },
+    {
+      "question": "What is the value of any non-zero number raised to the power of 0?",
+      "answers": [
+        "0",
+        "1",
+        "The number itself",
+        "-1"
+      ],
+      "correct": "1"
+    },
+    {
+      "question": "Which expression is equivalent to $4(x - 3)$?",
+      "answers": [
+        "$4x - 7$",
+        "$x - 12$",
+        "$4x - 12$",
+        "$4x - 3$"
+      ],
+      "correct": "$4x - 12$"
+    },
+    {
+      "question": "What is $\\sqrt[3]{64}$?",
+      "answers": [
+        "4",
+        "8",
+        "16",
+        "21.3"
+      ],
+      "correct": "4"
+    },
+    {
+      "question": "Which number is the base in the expression $7 \\cdot 2^5$?",
+      "answers": [
+        "7",
+        "2",
+        "5",
+        "$2^5$"
+      ],
+      "correct": "2"
+    },
+    {
+      "question": "Which expression shows $3 \\cdot (5+7)$ rewritten using the distributive property?",
+      "answers": [
+        "$3 \\cdot 5 + 7$",
+        "$3 \\cdot 5 \\cdot 7$",
+        "$3 \\cdot 5 + 3 \\cdot 7$",
+        "$3 + 5 + 7$"
+      ],
+      "correct": "$3 \\cdot 5 + 3 \\cdot 7$"
+    },
+    {
+      "question": "Compute $\\sqrt{49}$.",
+      "answers": [
+        "7",
+        "9",
+        "24.5",
+        "14"
+      ],
+      "correct": "7"
+    },
+    {
+      "question": "Rewrite $8 \\cdot 8 \\cdot 8 \\cdot 8$ using an exponent.",
+      "answers": [
+        "$4^8$",
+        "$8^4$",
+        "32",
+        "$8 \\times 4$"
+      ],
+      "correct": "$8^4$"
+    },
+    {
+      "question": "What is the result of subtracting $-9$ from $4$?",
+      "answers": [
+        "$-13$",
+        "$-5$",
+        "$5$",
+        "$13$"
+      ],
+      "correct": "$13$"
+    },
+    {
+      "question": "Which of the following expressions simplifies to a positive integer?",
+      "answers": [
+        "$-5 \\times 3$",
+        "$16 \\div (-4)$",
+        "$-8 - 2$",
+        "$-12 \\div (-6)$"
+      ],
+      "correct": "$-12 \\div (-6)$"
+    },
+    {
+      "question": "What is the absolute value of $-22$?",
+      "answers": [
+        "$-22$",
+        "$0$",
+        "$22$",
+        "$484$"
+      ],
+      "correct": "$22$"
+    },
+    {
+      "question": "Which of the following numbers is the smallest?",
+      "answers": [
+        "$-1$",
+        "$-15$",
+        "$0$",
+        "$-10$"
+      ],
+      "correct": "$-15$"
+    },
+    {
+      "question": "What is the opposite of the opposite of $-8$?",
+      "answers": [
+        "$8$",
+        "$-8$",
+        "$\\frac{1}{8}$",
+        "$0$"
+      ],
+      "correct": "$-8$"
+    },
+    {
+      "question": "Place the correct symbol, $<$ or $>$, between the numbers: $-39$ ___ $-32$.",
+      "answers": [
+        "$<$",
+        "$>$",
+        "$=$",
+        "$\\pm$"
+      ],
+      "correct": "$<$"
+    },
+    {
+      "question": "What are the coordinates of the point $(-5, 3)$ after it is reflected across the y-axis?",
+      "answers": [
+        "$(5, 3)$",
+        "$(5, -3)$",
+        "$(-5, -3)$",
+        "$(3, -5)$"
+      ],
+      "correct": "$(5, 3)$"
+    },
+    {
+      "question": "Which expression is NOT equal to $-8$?",
+      "answers": [
+        "$-16 \\div 2$",
+        "$2 \\times (-4)$",
+        "$-2 - 6$",
+        "$32 \\div (-4) \\times (-1)$"
+      ],
+      "correct": "$32 \\div (-4) \\times (-1)$"
+    },
+    {
+      "question": "What are the coordinates of the point $(2, -7)$ after it is reflected across the x-axis?",
+      "answers": [
+        "$(-2, 7)$",
+        "$(2, 7)$",
+        "$(-2, -7)$",
+        "$(-7, 2)$"
+      ],
+      "correct": "$(2, 7)$"
+    },
+    {
+      "question": "Which integer represents a bank withdrawal of $60?",
+      "answers": [
+        "$60$",
+        "$-60$",
+        "$0$",
+        "$|-60|$"
+      ],
+      "correct": "$-60$"
+    },
+    {
+      "question": "Compute: $5 \\times (-11)$.",
+      "answers": [
+        "$-55$",
+        "$55$",
+        "$-6$",
+        "$16$"
+      ],
+      "correct": "$-55$"
+    },
+    {
+      "question": "Which statement is true?",
+      "answers": [
+        "$|-9| = -9$",
+        "$|-5| > |2|$",
+        "$|-3| < |-1|$",
+        "$-7 > -2$"
+      ],
+      "correct": "$|-5| > |2|$"
+    },
+    {
+      "question": "Compute: $14 + (-20)$.",
+      "answers": [
+        "$34$",
+        "$6$",
+        "$-6$",
+        "$-34$"
+      ],
+      "correct": "$-6$"
+    },
+    {
+      "question": "What is the result of $-48 \\div 6$?",
+      "answers": [
+        "$8$",
+        "$-7$",
+        "$-8$",
+        "$42$"
+      ],
+      "correct": "$-8$"
+    },
+    {
+      "question": "Compute: $(-5) + (-5) + (-5) + (-5)$.",
+      "answers": [
+        "$0$",
+        "$-20$",
+        "$20$",
+        "$-10$"
+      ],
+      "correct": "$-20$"
+    },
+    {
+      "question": "Which number is an integer but not a whole number?",
+      "answers": [
+        "$5$",
+        "$0$",
+        "$-3$",
+        "$1.5$"
+      ],
+      "correct": "$-3$"
+    },
+    {
+      "question": "If you move 7 units to the left from the number 3 on a number line, where do you land?",
+      "answers": [
+        "$10$",
+        "$4$",
+        "$-4$",
+        "$-7$"
+      ],
+      "correct": "$-4$"
+    },
+    {
+      "question": "Which expression is equivalent to $x \\cdot x \\cdot x \\cdot x \\cdot x$?",
+      "answers": [
+        "$5x$",
+        "$x^5$",
+        "$x+5$",
+        "$5^x$"
+      ],
+      "correct": "$x^5$"
+    },
+    {
+      "question": "Compute $2^5$.",
+      "answers": [
+        "10",
+        "25",
+        "32",
+        "64"
+      ],
+      "correct": "32"
+    },
+    {
+      "question": "Simplify the expression $7^4 \\cdot 7^3$.",
+      "answers": [
+        "$7^{12}$",
+        "$49^{12}$",
+        "$7^7$",
+        "$49^7$"
+      ],
+      "correct": "$7^7$"
+    },
+    {
+      "question": "Write $\\sqrt{11}$ using a fractional exponent.",
+      "answers": [
+        "$11^2$",
+        "$11^{1/2}$",
+        "$2^{11}$",
+        "$11^{-2}$"
+      ],
+      "correct": "$11^{1/2}$"
+    },
+    {
+      "question": "What is the value of any non-zero number raised to the power of 0?",
+      "answers": [
+        "0",
+        "1",
+        "The number itself",
+        "-1"
+      ],
+      "correct": "1"
+    },
+    {
+      "question": "Which expression is equivalent to $4(x - 3)$?",
+      "answers": [
+        "$4x - 7$",
+        "$x - 12$",
+        "$4x - 12$",
+        "$4x - 3$"
+      ],
+      "correct": "$4x - 12$"
+    },
+    {
+      "question": "What is $\\sqrt[3]{64}$?",
+      "answers": [
+        "4",
+        "8",
+        "16",
+        "21.3"
+      ],
+      "correct": "4"
+    },
+    {
+      "question": "Which number is the base in the expression $7 \\cdot 2^5$?",
+      "answers": [
+        "7",
+        "2",
+        "5",
+        "$2^5$"
+      ],
+      "correct": "2"
+    },
+    {
+      "question": "Which expression shows $3 \\cdot (5+7)$ rewritten using the distributive property?",
+      "answers": [
+        "$3 \\cdot 5 + 7$",
+        "$3 \\cdot 5 \\cdot 7$",
+        "$3 \\cdot 5 + 3 \\cdot 7$",
+        "$3 + 5 + 7$"
+      ],
+      "correct": "$3 \\cdot 5 + 3 \\cdot 7$"
+    },
+    {
+      "question": "Compute $\\sqrt{49}$.",
+      "answers": [
+        "7",
+        "9",
+        "24.5",
+        "14"
+      ],
+      "correct": "7"
+    },
+    {
+      "question": "Rewrite $8 \\cdot 8 \\cdot 8 \\cdot 8$ using an exponent.",
+      "answers": [
+        "$4^8$",
+        "$8^4$",
+        "32",
+        "$8 \\times 4$"
+      ],
+      "correct": "$8^4$"
+    },
+    {
+      "question": "Combine like terms: $(5x - 3y + 2) + (2x + 5y - 8)$.",
+      "answers": [
+        "$7x + 2y - 6$",
+        "$7x - 2y - 6$",
+        "$3x + 2y - 10$",
+        "$7x + 8y + 6$"
+      ],
+      "correct": "$7x + 2y - 6$"
+    },
+    {
+      "question": "What is the degree of the polynomial $8x^3 - 2x^5 + x - 9$?",
+      "answers": [
+        "8",
+        "3",
+        "5",
+        "1"
+      ],
+      "correct": "5"
+    },
+    {
+      "question": "Subtract: $(8a + 4) - (3a - 1)$.",
+      "answers": [
+        "$5a + 3$",
+        "$5a - 5$",
+        "$11a + 3$",
+        "$5a + 5$"
+      ],
+      "correct": "$5a + 5$"
+    },
+    {
+      "question": "Translate into an algebraic expression: \"Ten less than the product of a number and four\".",
+      "answers": [
+        "$10 - 4x$",
+        "$4(x-10)$",
+        "$4x - 10$",
+        "$x(4-10)$"
+      ],
+      "correct": "$4x - 10$"
+    },
+    {
+      "question": "Simplify using exponent rules: $(4a^3b^2)(5a^2b^5)$.",
+      "answers": [
+        "$9a^5b^7$",
+        "$20a^6b^{10}$",
+        "$20a^5b^7$",
+        "$9a^6b^{10}$"
+      ],
+      "correct": "$20a^5b^7$"
+    },
+    {
+      "question": "What is the GCF of the terms in the polynomial $12a^3b^2 - 18a^2b^4$?",
+      "answers": [
+        "$6ab$",
+        "$6a^2b^2$",
+        "$3a^2b^2$",
+        "$12a^3b^4$"
+      ],
+      "correct": "$6a^2b^2$"
+    },
+    {
+      "question": "Write the polynomial $4x - 9 + 7x^3 - x^2$ in descending order.",
+      "answers": [
+        "$-9 + 4x - x^2 + 7x^3$",
+        "$4x - x^2 + 7x^3 - 9$",
+        "$7x^3 - x^2 + 4x - 9$",
+        "$x^2 - 4x + 7x^3 - 9$"
+      ],
+      "correct": "$7x^3 - x^2 + 4x - 9$"
+    },
+    {
+      "question": "Which expression represents \"the square of a number, increased by five\"?",
+      "answers": [
+        "$2x+5$",
+        "$x+5^2$",
+        "$(x+5)^2$",
+        "$x^2+5$"
+      ],
+      "correct": "$x^2+5$"
+    },
+    {
+      "question": "Which of the following is a trinomial?",
+      "answers": [
+        "$5x^2y$",
+        "$x^3 - 8$",
+        "$a+b+c$",
+        "$4x^2 - 2x + 1$"
+      ],
+      "correct": "$4x^2 - 2x + 1$"
+    },
+    {
+      "question": "Evaluate the expression $10 - 2x^2$ for $x = -3$.",
+      "answers": [
+        "-8",
+        "28",
+        "46",
+        "-26"
+      ],
+      "correct": "-8"
+    },
+    {
+      "question": "Combine like terms: $(a^2 - 3a) + (4a^2 + 2a - 5)$.",
+      "answers": [
+        "$5a^2 - a - 5$",
+        "$5a^4 - a^2 - 5$",
+        "$4a^2 - a - 5$",
+        "$5a^2 + a - 5$"
+      ],
+      "correct": "$5a^2 - a - 5$"
+    },
+    {
+      "question": "What is the result of distributing the expression $-4(a - 2b + 3)$?",
+      "answers": [
+        "$-4a - 8b - 12$",
+        "$-4a + 8b + 12$",
+        "$-4a - 2b + 3$",
+        "$-4a + 8b - 12$"
+      ],
+      "correct": "$-4a + 8b - 12$"
+    },
+    {
+      "question": "Evaluate $\\frac{3x-y}{y+1}$ for $x=4$ and $y=5$.",
+      "answers": [
+        "$\\frac{7}{6}$",
+        "$\\frac{11}{6}$",
+        "$\\frac{7}{5}$",
+        "1"
+      ],
+      "correct": "$\\frac{7}{6}$"
+    },
+    {
+      "question": "Which expression is equivalent to $(2x)^3$?",
+      "answers": [
+        "$2x^3$",
+        "$6x$",
+        "$6x^3$",
+        "$8x^3$"
+      ],
+      "correct": "$8x^3$"
+    },
+    {
+      "question": "Simplify: $\\frac{24a^5b^2}{8a^2b}$.",
+      "answers": [
+        "$3a^3b$",
+        "$3a^7b^3$",
+        "$16a^3b$",
+        "$3a^3b^2$"
+      ],
+      "correct": "$3a^3b$"
+    },
+    {
+      "question": "Combine like terms: $x^2 + 2y - 3x^2 + 4y - 1$.",
+      "answers": [
+        "$-2x^2 + 6y - 1$",
+        "$4x^2+6y-1$",
+        "$-3x^2+6y-1$",
+        "$-2x^4+6y^2-1$"
+      ],
+      "correct": "$-2x^2 + 6y - 1$"
+    },
+    {
+      "question": "Which answer expresses the ratio of 15 wins to 25 games as a fraction in lowest terms?",
+      "answers": [
+        "$\\frac{15}{25}$",
+        "$\\frac{3}{5}$",
+        "$\\frac{5}{3}$",
+        "$\\frac{25}{15}$"
+      ],
+      "correct": "$\\frac{3}{5}$"
+    },
+    {
+      "question": "A recipe calls for 2 cups of sugar for every 5 cups of flour. What is the ratio of flour to sugar?",
+      "answers": [
+        "2:5",
+        "5:2",
+        "2:7",
+        "5:7"
+      ],
+      "correct": "5:2"
+    },
+    {
+      "question": "Which of the following is a unit rate?",
+      "answers": [
+        "100 miles in 2 hours",
+        "5 apples for $2.00",
+        "50 miles per hour",
+        "3 boys for every 4 girls"
+      ],
+      "correct": "50 miles per hour"
+    },
+    {
+      "question": "Are the ratios 3:4 and 9:12 proportional?",
+      "answers": [
+        "Yes",
+        "No",
+        "Only if the numbers are larger",
+        "Cannot be determined"
+      ],
+      "correct": "Yes"
+    },
+    {
+      "question": "Write the rate 150 words in 3 minutes as a unit rate.",
+      "answers": [
+        "30 words per minute",
+        "45 words per minute",
+        "50 words per minute",
+        "150 words per minute"
+      ],
+      "correct": "50 words per minute"
+    },
+    {
+      "question": "Which ratio is NOT proportional to 16:24?",
+      "answers": [
+        "2:3",
+        "8:12",
+        "32:48",
+        "4:8"
+      ],
+      "correct": "4:8"
+    },
+    {
+      "question": "A bag contains 8 red marbles and 12 blue marbles. What is the ratio of red marbles to the total number of marbles?",
+      "answers": [
+        "8:12",
+        "2:3",
+        "2:5",
+        "3:5"
+      ],
+      "correct": "2:5"
+    },
+    {
+      "question": "Solve for y: $\\frac{y}{10} = \\frac{15}{25}$.",
+      "answers": [
+        "4",
+        "5",
+        "6",
+        "7.5"
+      ],
+      "correct": "6"
+    },
+    {
+      "question": "A box of 24 pencils costs $4.80. What is the unit cost per pencil?",
+      "answers": [
+        "$0.15",
+        "$0.20",
+        "$0.24",
+        "$0.50"
+      ],
+      "correct": "$0.20"
+    },
+    {
+      "question": "Which rate is faster: 25 miles in 30 minutes or 45 miles in 1 hour?",
+      "answers": [
+        "25 miles in 30 minutes",
+        "45 miles in 1 hour",
+        "They are the same rate",
+        "Cannot be determined"
+      ],
+      "correct": "25 miles in 30 minutes"
+    },
+    {
+      "question": "A survey found that 3 out of 5 people prefer coffee over tea. If 150 people were surveyed, how many prefer coffee?",
+      "answers": [
+        "50",
+        "75",
+        "90",
+        "100"
+      ],
+      "correct": "90"
+    },
+    {
+      "question": "The ratio of teachers to students in a school is 1:22. If there are 660 students, how many teachers are there?",
+      "answers": [
+        "22",
+        "25",
+        "30",
+        "33"
+      ],
+      "correct": "30"
+    },
+    {
+      "question": "A basketball player makes 6 out of 10 free throws. What is the ratio of shots made to shots missed?",
+      "answers": [
+        "6:10",
+        "3:5",
+        "3:2",
+        "2:3"
+      ],
+      "correct": "3:2"
+    },
+    {
+      "question": "Solve for n: $\\frac{5}{n} = \\frac{2}{8}$.",
+      "answers": [
+        "10",
+        "16",
+        "20",
+        "40"
+      ],
+      "correct": "20"
+    },
+    {
+      "question": "If a team wins 14 games and loses 6 games, what is the ratio of wins to total games played?",
+      "answers": [
+        "14:6",
+        "7:3",
+        "7:10",
+        "3:10"
+      ],
+      "correct": "7:10"
+    },
+    {
+      "question": "Express 0.45 as a percent.",
+      "answers": [
+        "0.45%",
+        "4.5%",
+        "45%",
+        "450%"
+      ],
+      "correct": "45%"
+    },
+    {
+      "question": "Express 8% as a decimal.",
+      "answers": [
+        "8.0",
+        "0.8",
+        "0.08",
+        "0.008"
+      ],
+      "correct": "0.08"
+    },
+    {
+      "question": "Express 75% as a fraction reduced to its lowest terms.",
+      "answers": [
+        "$\\frac{75}{100}$",
+        "$\\frac{15}{20}$",
+        "$\\frac{3}{4}$",
+        "$\\frac{7}{5}$"
+      ],
+      "correct": "$\\frac{3}{4}$"
+    },
+    {
+      "question": "What is 25% of 200?",
+      "answers": [
+        "25",
+        "50",
+        "75",
+        "100"
+      ],
+      "correct": "50"
+    },
+    {
+      "question": "Express the fraction $\\frac{2}{5}$ as a percent.",
+      "answers": [
+        "20%",
+        "25%",
+        "40%",
+        "50%"
+      ],
+      "correct": "40%"
+    },
+    {
+      "question": "Express 1.25 as a percent.",
+      "answers": [
+        "1.25%",
+        "12.5%",
+        "125%",
+        "1250%"
+      ],
+      "correct": "125%"
+    },
+    {
+      "question": "Express 150% as a mixed number.",
+      "answers": [
+        "$1\\frac{1}{2}$",
+        "$1\\frac{5}{10}$",
+        "$15\\frac{0}{100}$",
+        "$1\\frac{1}{4}$"
+      ],
+      "correct": "$1\\frac{1}{2}$"
+    },
+    {
+      "question": "What is 0.5% of 1000?",
+      "answers": [
+        "0.5",
+        "5",
+        "50",
+        "500"
+      ],
+      "correct": "5"
+    },
+    {
+      "question": "Convert 0.007 to a percent.",
+      "answers": [
+        "7%",
+        "0.7%",
+        "0.07%",
+        "70%"
+      ],
+      "correct": "0.7%"
+    },
+    {
+      "question": "Express 12.5% as a decimal.",
+      "answers": [
+        "1.25",
+        "0.125",
+        "0.0125",
+        "125.0"
+      ],
+      "correct": "0.125"
+    },
+    {
+      "question": "What percentage is $\\frac{1}{8}$?",
+      "answers": [
+        "1.25%",
+        "8%",
+        "12.5%",
+        "18%"
+      ],
+      "correct": "12.5%"
+    },
+    {
+      "question": "Express $2\\frac{1}{4}$ as a percent.",
+      "answers": [
+        "2.25%",
+        "21.4%",
+        "22.5%",
+        "225%"
+      ],
+      "correct": "225%"
+    },
+    {
+      "question": "30 is what percent of 120?",
+      "answers": [
+        "20%",
+        "25%",
+        "30%",
+        "40%"
+      ],
+      "correct": "25%"
+    },
+    {
+      "question": "What is 100% of 42?",
+      "answers": [
+        "0.42",
+        "4.2",
+        "42",
+        "420"
+      ],
+      "correct": "42"
+    },
+    {
+      "question": "Convert 2% to a decimal.",
+      "answers": [
+        "2.0",
+        "0.2",
+        "0.02",
+        "0.002"
+      ],
+      "correct": "0.02"
+    },
+    {
+      "question": "12 is what percent of 60?",
+      "answers": [
+        "12%",
+        "15%",
+        "20%",
+        "50%"
+      ],
+      "correct": "20%"
+    },
+    {
+      "question": "Convert $\\frac{9}{10}$ to a percent.",
+      "answers": [
+        "9%",
+        "0.9%",
+        "90%",
+        "900%"
+      ],
+      "correct": "90%"
+    },
+    {
+      "question": "Express 0.25% as a decimal.",
+      "answers": [
+        "0.25",
+        "0.025",
+        "0.0025",
+        "25.0"
+      ],
+      "correct": "0.0025"
+    },
+    {
+      "question": "What is 5% of 500?",
+      "answers": [
+        "2.5",
+        "5",
+        "25",
+        "50"
+      ],
+      "correct": "25"
+    }
   ],
   "medium": [
-    { "question": "Which point is the reflection of $(-4, 7)$ in the x-axis?", "answers": ["(-4,-7)", "(4,-7)", "(7,-4)", "(-7, 4)"], "correct": "(-4,-7)" },
-    { "question": "Compute $-3-(-8)+(-4)-5$.", "answers": ["-15", "-10", "-4", "4"], "correct": "-4" },
-    { "question": "Simplify $6^5 \\times (6^2)^3$.", "answers": ["$6^{11}$", "$6^{10}$", "$36^{10}$", "$36^{11}$"], "correct": "$6^{11}$" },
-    { "question": "Evaluate $25^{-\\frac{1}{2}}$.", "answers": ["$-\\frac{25}{2}$", "$\\frac{1}{625}$", "$\\frac{1}{5}$", "-625"], "correct": "$\\frac{1}{5}$" },
-    { "question": "The scale on a map of Ohio says that on the map, 2 inches equals 35 miles. What is the distance between Cleveland and Cincinnati, which are 14 inches apart on the map?", "answers": ["140 miles", "175 miles", "210 miles", "245 miles"], "correct": "210 miles" },
-    { "question": "Multiply $(3x+4)(2x-5)$.", "answers": ["$5x^2-1$", "$6x^2-20$", "$5x^2-7x-1$", "$6x^2-7x-20$"], "correct": "$6x^2-7x-20$" },
-    { "question": "Evaluate $2x^2-4xy+3y^2$ for $x=5$ and $y=-1$.", "answers": ["129", "73", "33", "27"], "correct": "73" },
-    { "question": "Add $\\frac{2}{3x^2} + \\frac{5}{6x}$.", "answers": ["$\\frac{4x+5x^2}{6x^3}$", "$\\frac{12+15x}{18x^2}$", "$\\frac{4+5x}{6x^2}$", "$\\frac{7}{9x^3}$"], "correct": "$\\frac{4+5x}{6x^2}$" }
+    {
+      "question": "Compute: $5 - (-10) + (-3)$.",
+      "answers": [
+        "$-8$",
+        "$2$",
+        "$12$",
+        "$18$"
+      ],
+      "correct": "$12$"
+    },
+    {
+      "question": "Which expression represents the distance between $-8$ and $5$ on a number line?",
+      "answers": [
+        "$|-8 + 5|$",
+        "$|-8| - |5|$",
+        "$|5 - 8|$",
+        "$|5 - (-8)|$"
+      ],
+      "correct": "$|5 - (-8)|$"
+    },
+    {
+      "question": "Find the greatest common factor (GCF) of 24 and 54.",
+      "answers": [
+        "$4$",
+        "$6$",
+        "$12$",
+        "$216$"
+      ],
+      "correct": "$6$"
+    },
+    {
+      "question": "A point $(x, y)$ is in Quadrant II. Which of the following must be true?",
+      "answers": [
+        "$x > 0, y > 0$",
+        "$x < 0, y > 0$",
+        "$x < 0, y < 0$",
+        "$x > 0, y < 0$"
+      ],
+      "correct": "$x < 0, y > 0$"
+    },
+    {
+      "question": "Compute: $-4 \\times (5 - 11)$.",
+      "answers": [
+        "$-24$",
+        "$24$",
+        "$-44$",
+        "$44$"
+      ],
+      "correct": "$24$"
+    },
+    {
+      "question": "Find the least common multiple (LCM) of 12 and 15.",
+      "answers": [
+        "$3$",
+        "$30$",
+        "$60$",
+        "$180$"
+      ],
+      "correct": "$60$"
+    },
+    {
+      "question": "The temperature at noon was $7^\\circ$F. By midnight, it had dropped by $15^\\circ$F. What was the temperature at midnight?",
+      "answers": [
+        "$22^\\circ$F",
+        "$8^\\circ$F",
+        "$-8^\\circ$F",
+        "$-22^\\circ$F"
+      ],
+      "correct": "$-8^\\circ$F"
+    },
+    {
+      "question": "Simplify the expression: $|-20| \\div 4 + (-3)$.",
+      "answers": [
+        "$-8$",
+        "$-2$",
+        "$2$",
+        "$8$"
+      ],
+      "correct": "$2$"
+    },
+    {
+      "question": "Which of the following situations describes quantities combining to make 0?",
+      "answers": [
+        "Gaining 5 pounds and then losing 5 pounds.",
+        "Withdrawing $50 and then depositing $25.",
+        "A $10 discount on a $100 item.",
+        "Ascending 1,000 feet and then ascending another 1,000 feet."
+      ],
+      "correct": "Gaining 5 pounds and then losing 5 pounds."
+    },
+    {
+      "question": "Compute: $-72 \\div (-9) + 5$.",
+      "answers": [
+        "$-13$",
+        "$-3$",
+        "$3$",
+        "$13$"
+      ],
+      "correct": "$13$"
+    },
+    {
+      "question": "Arrange the numbers in order from least to greatest: $0, -12, 5, -8, 2$.",
+      "answers": [
+        "$0, 2, 5, -8, -12$",
+        "$-8, -12, 0, 2, 5$",
+        "$-12, -8, 0, 2, 5$",
+        "$5, 2, 0, -8, -12$"
+      ],
+      "correct": "$-12, -8, 0, 2, 5$"
+    },
+    {
+      "question": "Evaluate the expression $-x - y$ if $x = -4$ and $y = 5$.",
+      "answers": [
+        "$-9$",
+        "$-1$",
+        "$1$",
+        "$9$"
+      ],
+      "correct": "$-1$"
+    },
+    {
+      "question": "What is the product of $-3$, $-4$, and $-5$?",
+      "answers": [
+        "$60$",
+        "$-60$",
+        "$12$",
+        "$-12$"
+      ],
+      "correct": "$-60$"
+    },
+    {
+      "question": "Which expression is undefined?",
+      "answers": [
+        "$\\frac{0}{5}$",
+        "$\\frac{5-5}{2}$",
+        "$\\frac{8}{4-4}$",
+        "$\\frac{-1}{1}$"
+      ],
+      "correct": "$\\frac{8}{4-4}$"
+    },
+    {
+      "question": "What is the sum of all integers from $-2$ to $3$, inclusive?",
+      "answers": [
+        "$0$",
+        "$1$",
+        "$3$",
+        "$5$"
+      ],
+      "correct": "$3$"
+    },
+    {
+      "question": "Evaluate the expression $a(b-c)$ if $a=-2, b=5, c=8$.",
+      "answers": [
+        "$-26$",
+        "$-6$",
+        "$6$",
+        "$26$"
+      ],
+      "correct": "$6$"
+    },
+    {
+      "question": "A point has a negative x-coordinate and a negative y-coordinate. In which quadrant is it located?",
+      "answers": [
+        "Quadrant I",
+        "Quadrant II",
+        "Quadrant III",
+        "Quadrant IV"
+      ],
+      "correct": "Quadrant III"
+    },
+    {
+      "question": "Simplify: $10 - 2 \\times 3 + (-4)$.",
+      "answers": [
+        "$20$",
+        "$0$",
+        "$18$",
+        "$-2$"
+      ],
+      "correct": "$0$"
+    },
+    {
+      "question": "What is the distance on the number line between the result of $3-7$ and the result of $-2 \\times 5$?",
+      "answers": [
+        "$6$",
+        "$14$",
+        "$-6$",
+        "$-14$"
+      ],
+      "correct": "$6$"
+    },
+    {
+      "question": "Which of the following describes the geometric meaning of $|-4|$?",
+      "answers": [
+        "The point 4 units to the left of 0.",
+        "The distance from -4 to 4.",
+        "The opposite of 4.",
+        "The distance from -4 to 0."
+      ],
+      "correct": "The distance from -4 to 0."
+    },
+    {
+      "question": "Compute: $(-5 - 3) \\div (-2) - 1$.",
+      "answers": [
+        "$3$",
+        "$-3$",
+        "$5$",
+        "$-5$"
+      ],
+      "correct": "$3$"
+    },
+    {
+      "question": "What is the sign of the product of five negative integers and two positive integers?",
+      "answers": [
+        "Positive",
+        "Negative",
+        "Zero",
+        "Cannot be determined"
+      ],
+      "correct": "Negative"
+    },
+    {
+      "question": "Which expression correctly represents the statement \"the opposite of the sum of -7 and 4\"?",
+      "answers": [
+        "$-7 + 4$",
+        "$|-7 + 4|$",
+        "$-(7+4)$",
+        "$-(-7+4)$"
+      ],
+      "correct": "$-(-7+4)$"
+    },
+    {
+      "question": "Simplify the expression $(3^4)^2$.",
+      "answers": [
+        "$3^6$",
+        "$3^8$",
+        "$9^6$",
+        "$9^8$"
+      ],
+      "correct": "$3^8$"
+    },
+    {
+      "question": "Evaluate $81^{1/2}$.",
+      "answers": [
+        "9",
+        "40.5",
+        "$1/9$",
+        "$1/81$"
+      ],
+      "correct": "9"
+    },
+    {
+      "question": "Simplify the expression $\\frac{x^8}{x^2}$.",
+      "answers": [
+        "$x^4$",
+        "$x^6$",
+        "$x^{10}$",
+        "$x^{16}$"
+      ],
+      "correct": "$x^6$"
+    },
+    {
+      "question": "Evaluate $27^{1/3}$.",
+      "answers": [
+        "3",
+        "9",
+        "$1/3$",
+        "$1/9$"
+      ],
+      "correct": "3"
+    },
+    {
+      "question": "Simplify $5^{-3}$.",
+      "answers": [
+        "-15",
+        "-125",
+        "$1/15$",
+        "$1/125$"
+      ],
+      "correct": "$1/125$"
+    },
+    {
+      "question": "Which expression is equivalent to $2^5 \\cdot 3^5$?",
+      "answers": [
+        "$5^{10}$",
+        "$6^{10}$",
+        "$5^{25}$",
+        "$6^5$"
+      ],
+      "correct": "$6^5$"
+    },
+    {
+      "question": "Evaluate $16^{-1/2}$.",
+      "answers": [
+        "8",
+        "4",
+        "$1/4$",
+        "-8"
+      ],
+      "correct": "$1/4$"
+    },
+    {
+      "question": "Simplify $\\frac{10^7}{10^9}$.",
+      "answers": [
+        "$100$",
+        "$1/100$",
+        "$-100$",
+        "$10^{16}$"
+      ],
+      "correct": "$1/100$"
+    },
+    {
+      "question": "Which expression is the same as $4(x+y-z)$?",
+      "answers": [
+        "$4x+y-z$",
+        "$4x+4y-z$",
+        "$4x+4y-4z$",
+        "$4xyz$"
+      ],
+      "correct": "$4x+4y-4z$"
+    },
+    {
+      "question": "Simplify $(x^{-3})^2 \\cdot x^8$.",
+      "answers": [
+        "$x^2$",
+        "$x^3$",
+        "$x^{13}$",
+        "$x^{-48}$"
+      ],
+      "correct": "$x^2$"
+    },
+    {
+      "question": "Select the expression equivalent to $50 + 20$.",
+      "answers": [
+        "$5(10+4)$",
+        "$2(25+15)$",
+        "$10(5+2)$",
+        "$20(30+1)$"
+      ],
+      "correct": "$10(5+2)$"
+    },
+    {
+      "question": "Write $5\\sqrt[3]{x^2}$ using exponents.",
+      "answers": [
+        "$5x^{3/2}$",
+        "$5x^{2/3}$",
+        "$(5x)^{2/3}$",
+        "$5x^{-2/3}$"
+      ],
+      "correct": "$5x^{2/3}$"
+    },
+    {
+      "question": "Simplify $-(3^2) + (-2)^3$.",
+      "answers": [
+        "-17",
+        "-1",
+        "1",
+        "17"
+      ],
+      "correct": "-17"
+    },
+    {
+      "question": "Write $y^{3/4}$ in radical form.",
+      "answers": [
+        "$\\sqrt[3]{y^4}$",
+        "$\\sqrt[4]{y^3}$",
+        "$3\\sqrt{y^4}$",
+        "$4\\sqrt{y^3}$"
+      ],
+      "correct": "$\\sqrt[4]{y^3}$"
+    },
+    {
+      "question": "Which expression is equivalent to $3x^{-4}$?",
+      "answers": [
+        "$\\frac{1}{3x^4}$",
+        "$-12x$",
+        "$\\frac{3}{x^4}$",
+        "$(3x)^{-4}$"
+      ],
+      "correct": "$\\frac{3}{x^4}$"
+    },
+    {
+      "question": "Simplify the expression $5(x+2) - 3x$.",
+      "answers": [
+        "$2x+2$",
+        "$2x+10$",
+        "$8x+10$",
+        "$2x-10$"
+      ],
+      "correct": "$2x+10$"
+    },
+    {
+      "question": "Evaluate $1000^{2/3}$.",
+      "answers": [
+        "10",
+        "100",
+        "10000",
+        "$2000/3$"
+      ],
+      "correct": "100"
+    },
+    {
+      "question": "Find the value of $x$ in the equation $2^x \\cdot 2^4 = 2^7$.",
+      "answers": [
+        "3",
+        "11",
+        "$7/4$",
+        "28"
+      ],
+      "correct": "3"
+    },
+    {
+      "question": "Simplify $(2^3 \\cdot 3^2)^2$.",
+      "answers": [
+        "$2^5 \\cdot 3^4$",
+        "$2^6 \\cdot 3^4$",
+        "$6^7$",
+        "$6^{12}$"
+      ],
+      "correct": "$2^6 \\cdot 3^4$"
+    },
+    {
+      "question": "Evaluate $(-4)^3$.",
+      "answers": [
+        "12",
+        "-12",
+        "64",
+        "-64"
+      ],
+      "correct": "-64"
+    },
+    {
+      "question": "Compute: $5 - (-10) + (-3)$.",
+      "answers": [
+        "$-8$",
+        "$2$",
+        "$12$",
+        "$18$"
+      ],
+      "correct": "$12$"
+    },
+    {
+      "question": "Which expression represents the distance between $-8$ and $5$ on a number line?",
+      "answers": [
+        "$|-8 + 5|$",
+        "$|-8| - |5|$",
+        "$|5 - 8|$",
+        "$|5 - (-8)|$"
+      ],
+      "correct": "$|5 - (-8)|$"
+    },
+    {
+      "question": "Find the greatest common factor (GCF) of 24 and 54.",
+      "answers": [
+        "$4$",
+        "$6$",
+        "$12$",
+        "$216$"
+      ],
+      "correct": "$6$"
+    },
+    {
+      "question": "A point $(x, y)$ is in Quadrant II. Which of the following must be true?",
+      "answers": [
+        "$x > 0, y > 0$",
+        "$x < 0, y > 0$",
+        "$x < 0, y < 0$",
+        "$x > 0, y < 0$"
+      ],
+      "correct": "$x < 0, y > 0$"
+    },
+    {
+      "question": "Compute: $-4 \\times (5 - 11)$.",
+      "answers": [
+        "$-24$",
+        "$24$",
+        "$-44$",
+        "$44$"
+      ],
+      "correct": "$24$"
+    },
+    {
+      "question": "Find the least common multiple (LCM) of 12 and 15.",
+      "answers": [
+        "$3$",
+        "$30$",
+        "$60$",
+        "$180$"
+      ],
+      "correct": "$60$"
+    },
+    {
+      "question": "The temperature at noon was $7^\\circ$F. By midnight, it had dropped by $15^\\circ$F. What was the temperature at midnight?",
+      "answers": [
+        "$22^\\circ$F",
+        "$8^\\circ$F",
+        "$-8^\\circ$F",
+        "$-22^\\circ$F"
+      ],
+      "correct": "$-8^\\circ$F"
+    },
+    {
+      "question": "Simplify the expression: $|-20| \\div 4 + (-3)$.",
+      "answers": [
+        "$-8$",
+        "$-2$",
+        "$2$",
+        "$8$"
+      ],
+      "correct": "$2$"
+    },
+    {
+      "question": "Which of the following situations describes quantities combining to make 0?",
+      "answers": [
+        "Gaining 5 pounds and then losing 5 pounds.",
+        "Withdrawing $50 and then depositing $25.",
+        "A $10 discount on a $100 item.",
+        "Ascending 1,000 feet and then ascending another 1,000 feet."
+      ],
+      "correct": "Gaining 5 pounds and then losing 5 pounds."
+    },
+    {
+      "question": "Compute: $-72 \\div (-9) + 5$.",
+      "answers": [
+        "$-13$",
+        "$-3$",
+        "$3$",
+        "$13$"
+      ],
+      "correct": "$13$"
+    },
+    {
+      "question": "Arrange the numbers in order from least to greatest: $0, -12, 5, -8, 2$.",
+      "answers": [
+        "$0, 2, 5, -8, -12$",
+        "$-8, -12, 0, 2, 5$",
+        "$-12, -8, 0, 2, 5$",
+        "$5, 2, 0, -8, -12$"
+      ],
+      "correct": "$-12, -8, 0, 2, 5$"
+    },
+    {
+      "question": "Evaluate the expression $-x - y$ if $x = -4$ and $y = 5$.",
+      "answers": [
+        "$-9$",
+        "$-1$",
+        "$1$",
+        "$9$"
+      ],
+      "correct": "$-1$"
+    },
+    {
+      "question": "What is the product of $-3$, $-4$, and $-5$?",
+      "answers": [
+        "$60$",
+        "$-60$",
+        "$12$",
+        "$-12$"
+      ],
+      "correct": "$-60$"
+    },
+    {
+      "question": "Which expression is undefined?",
+      "answers": [
+        "$\\frac{0}{5}$",
+        "$\\frac{5-5}{2}$",
+        "$\\frac{8}{4-4}$",
+        "$\\frac{-1}{1}$"
+      ],
+      "correct": "$\\frac{8}{4-4}$"
+    },
+    {
+      "question": "What is the sum of all integers from $-2$ to $3$, inclusive?",
+      "answers": [
+        "$0$",
+        "$1$",
+        "$3$",
+        "$5$"
+      ],
+      "correct": "$3$"
+    },
+    {
+      "question": "Evaluate the expression $a(b-c)$ if $a=-2, b=5, c=8$.",
+      "answers": [
+        "$-26$",
+        "$-6$",
+        "$6$",
+        "$26$"
+      ],
+      "correct": "$6$"
+    },
+    {
+      "question": "A point has a negative x-coordinate and a negative y-coordinate. In which quadrant is it located?",
+      "answers": [
+        "Quadrant I",
+        "Quadrant II",
+        "Quadrant III",
+        "Quadrant IV"
+      ],
+      "correct": "Quadrant III"
+    },
+    {
+      "question": "Simplify: $10 - 2 \\times 3 + (-4)$.",
+      "answers": [
+        "$20$",
+        "$0$",
+        "$18$",
+        "$-2$"
+      ],
+      "correct": "$0$"
+    },
+    {
+      "question": "What is the distance on the number line between the result of $3-7$ and the result of $-2 \\times 5$?",
+      "answers": [
+        "$6$",
+        "$14$",
+        "$-6$",
+        "$-14$"
+      ],
+      "correct": "$6$"
+    },
+    {
+      "question": "Which of the following describes the geometric meaning of $|-4|$?",
+      "answers": [
+        "The point 4 units to the left of 0.",
+        "The distance from -4 to 4.",
+        "The opposite of 4.",
+        "The distance from -4 to 0."
+      ],
+      "correct": "The distance from -4 to 0."
+    },
+    {
+      "question": "Compute: $(-5 - 3) \\div (-2) - 1$.",
+      "answers": [
+        "$3$",
+        "$-3$",
+        "$5$",
+        "$-5$"
+      ],
+      "correct": "$3$"
+    },
+    {
+      "question": "What is the sign of the product of five negative integers and two positive integers?",
+      "answers": [
+        "Positive",
+        "Negative",
+        "Zero",
+        "Cannot be determined"
+      ],
+      "correct": "Negative"
+    },
+    {
+      "question": "Which expression correctly represents the statement \"the opposite of the sum of -7 and 4\"?",
+      "answers": [
+        "$-7 + 4$",
+        "$|-7 + 4|$",
+        "$-(7+4)$",
+        "$-(-7+4)$"
+      ],
+      "correct": "$-(-7+4)$"
+    },
+    {
+      "question": "Simplify the expression $(3^4)^2$.",
+      "answers": [
+        "$3^6$",
+        "$3^8$",
+        "$9^6$",
+        "$9^8$"
+      ],
+      "correct": "$3^8$"
+    },
+    {
+      "question": "Evaluate $81^{1/2}$.",
+      "answers": [
+        "9",
+        "40.5",
+        "$1/9$",
+        "$1/81$"
+      ],
+      "correct": "9"
+    },
+    {
+      "question": "Simplify the expression $\\frac{x^8}{x^2}$.",
+      "answers": [
+        "$x^4$",
+        "$x^6$",
+        "$x^{10}$",
+        "$x^{16}$"
+      ],
+      "correct": "$x^6$"
+    },
+    {
+      "question": "Evaluate $27^{1/3}$.",
+      "answers": [
+        "3",
+        "9",
+        "$1/3$",
+        "$1/9$"
+      ],
+      "correct": "3"
+    },
+    {
+      "question": "Simplify $5^{-3}$.",
+      "answers": [
+        "-15",
+        "-125",
+        "$1/15$",
+        "$1/125$"
+      ],
+      "correct": "$1/125$"
+    },
+    {
+      "question": "Which expression is equivalent to $2^5 \\cdot 3^5$?",
+      "answers": [
+        "$5^{10}$",
+        "$6^{10}$",
+        "$5^{25}$",
+        "$6^5$"
+      ],
+      "correct": "$6^5$"
+    },
+    {
+      "question": "Evaluate $16^{-1/2}$.",
+      "answers": [
+        "8",
+        "4",
+        "$1/4$",
+        "-8"
+      ],
+      "correct": "$1/4$"
+    },
+    {
+      "question": "Simplify $\\frac{10^7}{10^9}$.",
+      "answers": [
+        "$100$",
+        "$1/100$",
+        "$-100$",
+        "$10^{16}$"
+      ],
+      "correct": "$1/100$"
+    },
+    {
+      "question": "Which expression is the same as $4(x+y-z)$?",
+      "answers": [
+        "$4x+y-z$",
+        "$4x+4y-z$",
+        "$4x+4y-4z$",
+        "$4xyz$"
+      ],
+      "correct": "$4x+4y-4z$"
+    },
+    {
+      "question": "Simplify $(x^{-3})^2 \\cdot x^8$.",
+      "answers": [
+        "$x^2$",
+        "$x^3$",
+        "$x^{13}$",
+        "$x^{-48}$"
+      ],
+      "correct": "$x^2$"
+    },
+    {
+      "question": "Select the expression equivalent to $50 + 20$.",
+      "answers": [
+        "$5(10+4)$",
+        "$2(25+15)$",
+        "$10(5+2)$",
+        "$20(30+1)$"
+      ],
+      "correct": "$10(5+2)$"
+    },
+    {
+      "question": "Write $5\\sqrt[3]{x^2}$ using exponents.",
+      "answers": [
+        "$5x^{3/2}$",
+        "$5x^{2/3}$",
+        "$(5x)^{2/3}$",
+        "$5x^{-2/3}$"
+      ],
+      "correct": "$5x^{2/3}$"
+    },
+    {
+      "question": "Simplify $-(3^2) + (-2)^3$.",
+      "answers": [
+        "-17",
+        "-1",
+        "1",
+        "17"
+      ],
+      "correct": "-17"
+    },
+    {
+      "question": "Write $y^{3/4}$ in radical form.",
+      "answers": [
+        "$\\sqrt[3]{y^4}$",
+        "$\\sqrt[4]{y^3}$",
+        "$3\\sqrt{y^4}$",
+        "$4\\sqrt{y^3}$"
+      ],
+      "correct": "$\\sqrt[4]{y^3}$"
+    },
+    {
+      "question": "Which expression is equivalent to $3x^{-4}$?",
+      "answers": [
+        "$\\frac{1}{3x^4}$",
+        "$-12x$",
+        "$\\frac{3}{x^4}$",
+        "$(3x)^{-4}$"
+      ],
+      "correct": "$\\frac{3}{x^4}$"
+    },
+    {
+      "question": "Simplify the expression $5(x+2) - 3x$.",
+      "answers": [
+        "$2x+2$",
+        "$2x+10$",
+        "$8x+10$",
+        "$2x-10$"
+      ],
+      "correct": "$2x+10$"
+    },
+    {
+      "question": "Evaluate $1000^{2/3}$.",
+      "answers": [
+        "10",
+        "100",
+        "10000",
+        "$2000/3$"
+      ],
+      "correct": "100"
+    },
+    {
+      "question": "Find the value of $x$ in the equation $2^x \\cdot 2^4 = 2^7$.",
+      "answers": [
+        "3",
+        "11",
+        "$7/4$",
+        "28"
+      ],
+      "correct": "3"
+    },
+    {
+      "question": "Simplify $(2^3 \\cdot 3^2)^2$.",
+      "answers": [
+        "$2^5 \\cdot 3^4$",
+        "$2^6 \\cdot 3^4$",
+        "$6^7$",
+        "$6^{12}$"
+      ],
+      "correct": "$2^6 \\cdot 3^4$"
+    },
+    {
+      "question": "Evaluate $(-4)^3$.",
+      "answers": [
+        "12",
+        "-12",
+        "64",
+        "-64"
+      ],
+      "correct": "-64"
+    },
+    {
+      "question": "Multiply: $(x + 6)(x - 4)$.",
+      "answers": [
+        "$x^2 + 2x - 24$",
+        "$x^2 - 2x - 24$",
+        "$x^2 + 10x - 24$",
+        "$x^2 - 24$"
+      ],
+      "correct": "$x^2 + 2x - 24$"
+    },
+    {
+      "question": "Factor the expression $x^2 - 49$.",
+      "answers": [
+        "$(x - 7)(x - 7)$",
+        "$(x + 7)(x + 7)$",
+        "$(x - 7)(x + 7)$",
+        "$(x - 49)(x + 1)$"
+      ],
+      "correct": "$(x - 7)(x + 7)$"
+    },
+    {
+      "question": "Evaluate the polynomial $3a^2 - 2ab + b^2$ for $a=2$ and $b=-3$.",
+      "answers": [
+        "15",
+        "24",
+        "33",
+        "-9"
+      ],
+      "correct": "33"
+    },
+    {
+      "question": "Factor the trinomial: $x^2 - 10x + 21$.",
+      "answers": [
+        "$(x-3)(x-7)$",
+        "$(x+3)(x-7)$",
+        "$(x-3)(x+7)$",
+        "$(x-10)(x-11)$"
+      ],
+      "correct": "$(x-3)(x-7)$"
+    },
+    {
+      "question": "Subtract the polynomials: $(4w^2 - 3w + 8) - (5w^2 + 2w - 3)$.",
+      "answers": [
+        "$-w^2 - 5w + 11$",
+        "$-w^2 - w + 5$",
+        "$9w^2 - w + 5$",
+        "$-w^2 - 5w + 5$"
+      ],
+      "correct": "$-w^2 - 5w + 11$"
+    },
+    {
+      "question": "Multiply: $3x^2(4x^3 - 2x + 5)$.",
+      "answers": [
+        "$12x^5 - 6x^3 + 15x^2$",
+        "$7x^5 - 5x^3 + 8x^2$",
+        "$12x^6 - 6x^2 + 15$",
+        "$12x^5 + x + 8$"
+      ],
+      "correct": "$12x^5 - 6x^3 + 15x^2$"
+    },
+    {
+      "question": "What is the leading coefficient of the polynomial $12 + 3x^4 - 6x^2 - x^5$?",
+      "answers": [
+        "12",
+        "3",
+        "-6",
+        "-1"
+      ],
+      "correct": "-1"
+    },
+    {
+      "question": "The length of a box is 5 inches more than its width, w. The height is twice the width. Which expression represents the volume of the box?",
+      "answers": [
+        "$w(w+5)(2w)$",
+        "$w+(w+5)+2w$",
+        "$2(w(w+5))$",
+        "$2w^2 + 5w$"
+      ],
+      "correct": "$w(w+5)(2w)$"
+    },
+    {
+      "question": "Multiply: $(2y - 3)^2$.",
+      "answers": [
+        "$4y^2 - 9$",
+        "$4y^2 + 9$",
+        "$4y^2 - 12y + 9$",
+        "$2y^2 - 12y + 9$"
+      ],
+      "correct": "$4y^2 - 12y + 9$"
+    },
+    {
+      "question": "Simplify the expression $\\frac{18x^5y^3}{6x^2y^7}$.",
+      "answers": [
+        "$3x^3y^4$",
+        "$\\frac{3x^3}{y^4}$",
+        "$12x^3y^{-4}$",
+        "$\\frac{3x^7}{y^{10}}$"
+      ],
+      "correct": "$\\frac{3x^3}{y^4}$"
+    },
+    {
+      "question": "Factor by grouping: $xy + 3x + 2y + 6$.",
+      "answers": [
+        "$(x+2)(y+3)$",
+        "$(x+3)(y+2)$",
+        "$x(y+3) + 2(y+3)$",
+        "$y(x+2) + 3(x+2)$"
+      ],
+      "correct": "$(x+2)(y+3)$"
+    },
+    {
+      "question": "What is the value of $\\frac{a^2-b^2}{a-b}$ when $a=10$ and $b=7$?",
+      "answers": [
+        "3",
+        "17",
+        "51",
+        "Undefined"
+      ],
+      "correct": "17"
+    },
+    {
+      "question": "Which of the following is a factor of $x^2 + x - 30$?",
+      "answers": [
+        "$x+5$",
+        "$x-6$",
+        "$x-5$",
+        "$x-30$"
+      ],
+      "correct": "$x-5$"
+    },
+    {
+      "question": "Multiply: $(3x - 2y)(x + 4y)$.",
+      "answers": [
+        "$3x^2 - 8y^2$",
+        "$3x^2 + 10xy - 8y^2$",
+        "$3x^2 + 14xy - 8y^2$",
+        "$3x^2 - 10xy - 8y^2$"
+      ],
+      "correct": "$3x^2 + 10xy - 8y^2$"
+    },
+    {
+      "question": "Factor the trinomial: $a^2 + 5a - 24$.",
+      "answers": [
+        "$(a+6)(a-4)$",
+        "$(a-8)(a+3)$",
+        "$(a+8)(a-3)$",
+        "$(a-6)(a+4)$"
+      ],
+      "correct": "$(a+8)(a-3)$"
+    },
+    {
+      "question": "Simplify using exponent rules: $\\left(\\frac{12x^4}{4x}\\right)^2$.",
+      "answers": [
+        "$9x^6$",
+        "$3x^6$",
+        "$9x^8$",
+        "$6x^3$"
+      ],
+      "correct": "$9x^6$"
+    },
+    {
+      "question": "Subtract the rational expressions: $\\frac{2x}{x-4} - \\frac{x+4}{x-4}$.",
+      "answers": [
+        "$\\frac{x-4}{x-4}$",
+        "1",
+        "$\\frac{x+4}{x-4}$",
+        "$\\frac{3x+4}{x-4}$"
+      ],
+      "correct": "1"
+    },
+    {
+      "question": "Which expression represents \"the cube of a number, decreased by the sum of that number and five\"?",
+      "answers": [
+        "$x^3 - x + 5$",
+        "$x^3 - (x+5)$",
+        "$x^3 + x - 5$",
+        "$(x-5)^3$"
+      ],
+      "correct": "$x^3 - (x+5)$"
+    },
+    {
+      "question": "Subtract: $(9 - 2x) - (5x^2 - 4x + 1)$.",
+      "answers": [
+        "$-5x^2 + 2x + 8$",
+        "$5x^2 - 6x + 8$",
+        "$-5x^2 - 6x + 10$",
+        "$-5x^2 + 2x + 10$"
+      ],
+      "correct": "$-5x^2 + 2x + 8$"
+    },
+    {
+      "question": "Factor the expression: $9x^2 - 16y^2$.",
+      "answers": [
+        "$(3x - 4y)(3x - 4y)$",
+        "$(9x - 16y)(x+y)$",
+        "$(3x-4y)(3x+4y)$",
+        "$(3x+4y)^2$"
+      ],
+      "correct": "$(3x-4y)(3x+4y)$"
+    },
+    {
+      "question": "The product of two consecutive positive integers is 56. If x is the smaller integer, which equation models this situation?",
+      "answers": [
+        "$x + (x+1) = 56$",
+        "$x(x+2) = 56$",
+        "$2x+1 = 56$",
+        "$x(x+1) = 56$"
+      ],
+      "correct": "$x(x+1) = 56$"
+    },
+    {
+      "question": "Multiply $(x+3)(x^2-x+1)$.",
+      "answers": [
+        "$x^3+2x^2-2x+3$",
+        "$x^3-x^2-2x+3$",
+        "$x^3+3x^2-x+1$",
+        "$x^3+2x^2+4x+3$"
+      ],
+      "correct": "$x^3+2x^2-2x+3$"
+    },
+    {
+      "question": "What is the greatest common factor (GCF) of the polynomial $15x^4y^2 - 25x^2y^3 + 5x^3y$?",
+      "answers": [
+        "$5x^2y$",
+        "$5x^2y^2$",
+        "$5xy$",
+        "$5x^3y$"
+      ],
+      "correct": "$5x^2y$"
+    },
+    {
+      "question": "Factor completely: $10x^2 - 13x - 3$.",
+      "answers": [
+        "$(10x+1)(x-3)$",
+        "$(2x-3)(5x+1)$",
+        "$(10x-3)(x+1)$",
+        "$(2x+3)(5x-1)$"
+      ],
+      "correct": "$(2x-3)(5x+1)$"
+    },
+    {
+      "question": "What is the degree of the polynomial $5x^2y^3 - 2x^4y^2 + 9xy$?",
+      "answers": [
+        "4",
+        "5",
+        "6",
+        "11"
+      ],
+      "correct": "6"
+    },
+    {
+      "question": "Which of the following is NOT a factor of $x^3 - 9x$?",
+      "answers": [
+        "$x$",
+        "$x-3$",
+        "$x+3$",
+        "$x-9$"
+      ],
+      "correct": "$x-9$"
+    },
+    {
+      "question": "Multiply: $(4m-1)(4m+1)$.",
+      "answers": [
+        "$16m^2 - 1$",
+        "$16m^2 + 1$",
+        "$16m^2 - 8m - 1$",
+        "$8m^2 - 1$"
+      ],
+      "correct": "$16m^2 - 1$"
+    },
+    {
+      "question": "Evaluate $\\frac{4x^2}{x-1}$ for $x = -2$.",
+      "answers": [
+        "$-\\frac{16}{3}$",
+        "$\\frac{16}{3}$",
+        "-16",
+        "16"
+      ],
+      "correct": "$-\\frac{16}{3}$"
+    },
+    {
+      "question": "Which of the following is a factor of $2x^2 + 7x + 3$?",
+      "answers": [
+        "$x+1$",
+        "$2x+3$",
+        "$x+3$",
+        "$2x-1$"
+      ],
+      "correct": "$x+3$"
+    },
+    {
+      "question": "A car travels 210 miles on 7 gallons of gasoline. What is the car's fuel efficiency as a unit rate?",
+      "answers": [
+        "21 miles per gallon",
+        "30 miles per gallon",
+        "35 miles per gallon",
+        "1470 miles per gallon"
+      ],
+      "correct": "30 miles per gallon"
+    },
+    {
+      "question": "Solve the proportion: $\\frac{4}{9} = \\frac{x}{54}$.",
+      "answers": [
+        "6",
+        "12",
+        "24",
+        "36"
+      ],
+      "correct": "24"
+    },
+    {
+      "question": "If 5 pounds of apples cost $6.25, what is the cost per pound?",
+      "answers": [
+        "$1.00",
+        "$1.15",
+        "$1.25",
+        "$1.50"
+      ],
+      "correct": "$1.25"
+    },
+    {
+      "question": "A baker uses 8 cups of flour to make 3 loaves of bread. How many cups of flour will she need to make 15 loaves of bread?",
+      "answers": [
+        "24 cups",
+        "30 cups",
+        "40 cups",
+        "45 cups"
+      ],
+      "correct": "40 cups"
+    },
+    {
+      "question": "Which of the two is a better buy: a 12-ounce bottle of shampoo for $3.00 or an 18-ounce bottle for $4.14?",
+      "answers": [
+        "The 12-ounce bottle",
+        "The 18-ounce bottle",
+        "They are the same price per ounce",
+        "Cannot be determined"
+      ],
+      "correct": "The 18-ounce bottle"
+    },
+    {
+      "question": "The population density of a city is 1,200 people per square mile. If the city has an area of 25 square miles, what is its population?",
+      "answers": [
+        "3,000",
+        "4,800",
+        "30,000",
+        "48,000"
+      ],
+      "correct": "30,000"
+    },
+    {
+      "question": "Which equation represents the relationship where the total cost, C, is proportional to the number of items, n, at a price of $3.50 per item?",
+      "answers": [
+        "C = 3.50 + n",
+        "n = 3.50C",
+        "C = 3.50n",
+        "C = n / 3.50"
+      ],
+      "correct": "C = 3.50n"
+    },
+    {
+      "question": "A contractor can lay 120 square feet of tile in 3 hours. At this rate, how long will it take to lay 400 square feet of tile?",
+      "answers": [
+        "8 hours",
+        "10 hours",
+        "12 hours",
+        "15 hours"
+      ],
+      "correct": "10 hours"
+    },
+    {
+      "question": "A car uses 5 gallons of gasoline to travel 140 miles. How many gallons are needed to travel 350 miles?",
+      "answers": [
+        "10 gallons",
+        "12.5 gallons",
+        "14 gallons",
+        "15 gallons"
+      ],
+      "correct": "12.5 gallons"
+    },
+    {
+      "question": "A medication's dosage is 15 mg for every 50 pounds of body weight. How much medication should be given to a person who weighs 180 pounds?",
+      "answers": [
+        "45 mg",
+        "54 mg",
+        "60 mg",
+        "65 mg"
+      ],
+      "correct": "54 mg"
+    },
+    {
+      "question": "A company's profit to revenue ratio is 2:7. If the company's revenue for the year was $350,000, what was its profit?",
+      "answers": [
+        "$50,000",
+        "$70,000",
+        "$100,000",
+        "$140,000"
+      ],
+      "correct": "$100,000"
+    },
+    {
+      "question": "If 1 inch is approximately 2.54 centimeters, how many centimeters are in 15 inches?",
+      "answers": [
+        "5.9",
+        "30.8",
+        "38.1",
+        "45.4"
+      ],
+      "correct": "38.1"
+    },
+    {
+      "question": "The ratio of the length to the width of a rectangle is 8:5. If the width is 40 cm, what is the length?",
+      "answers": [
+        "25 cm",
+        "50 cm",
+        "64 cm",
+        "80 cm"
+      ],
+      "correct": "64 cm"
+    },
+    {
+      "question": "An investment of $500 earns $25 in a year. At the same rate, how much would a $1200 investment earn?",
+      "answers": [
+        "$50",
+        "$60",
+        "$75",
+        "$100"
+      ],
+      "correct": "$60"
+    },
+    {
+      "question": "A printer can print 15 pages in 45 seconds. What is its printing rate in pages per minute?",
+      "answers": [
+        "15 pages/min",
+        "20 pages/min",
+        "30 pages/min",
+        "45 pages/min"
+      ],
+      "correct": "20 pages/min"
+    },
+    {
+      "question": "If a 24-foot tree casts a 15-foot shadow, how long is the shadow cast by a nearby 32-foot building at the same time?",
+      "answers": [
+        "18 feet",
+        "20 feet",
+        "22 feet",
+        "25 feet"
+      ],
+      "correct": "20 feet"
+    },
+    {
+      "question": "A heart beats 240 times in 3 minutes. What is its rate in beats per minute?",
+      "answers": [
+        "60 bpm",
+        "70 bpm",
+        "80 bpm",
+        "90 bpm"
+      ],
+      "correct": "80 bpm"
+    },
+    {
+      "question": "If 3 kilograms is approximately 6.6 pounds, how many kilograms are in 55 pounds?",
+      "answers": [
+        "18 kg",
+        "22 kg",
+        "25 kg",
+        "30 kg"
+      ],
+      "correct": "25 kg"
+    },
+    {
+      "question": "A factory produces 150 cars in a 40-hour work week. What is the production rate in cars per hour?",
+      "answers": [
+        "3.0 cars/hr",
+        "3.25 cars/hr",
+        "3.5 cars/hr",
+        "3.75 cars/hr"
+      ],
+      "correct": "3.75 cars/hr"
+    },
+    {
+      "question": "An architect's blueprint has a scale of 1 inch = 4 feet. A room on the blueprint is 3.5 inches by 5 inches. What is the actual area of the room?",
+      "answers": [
+        "70 sq ft",
+        "140 sq ft",
+        "280 sq ft",
+        "340 sq ft"
+      ],
+      "correct": "280 sq ft"
+    },
+    {
+      "question": "A train travels 450 km in 4.5 hours. What is its average speed?",
+      "answers": [
+        "90 km/h",
+        "100 km/h",
+        "110 km/h",
+        "120 km/h"
+      ],
+      "correct": "100 km/h"
+    },
+    {
+      "question": "The ratio of fiction books to non-fiction books in a library is 4:3. If the library has 12,000 non-fiction books, how many fiction books does it have?",
+      "answers": [
+        "9,000",
+        "15,000",
+        "16,000",
+        "28,000"
+      ],
+      "correct": "16,000"
+    },
+    {
+      "question": "A pair of shoes costs $80. If the sales tax is 6%, what is the total cost?",
+      "answers": [
+        "$4.80",
+        "$84.80",
+        "$86.00",
+        "$128.00"
+      ],
+      "correct": "$84.80"
+    },
+    {
+      "question": "A student scored 42 out of 50 on a test. What percentage did the student score?",
+      "answers": [
+        "42%",
+        "80%",
+        "84%",
+        "92%"
+      ],
+      "correct": "84%"
+    },
+    {
+      "question": "A laptop that originally cost $1200 is on sale for $960. What is the percent discount?",
+      "answers": [
+        "15%",
+        "20%",
+        "24%",
+        "25%"
+      ],
+      "correct": "20%"
+    },
+    {
+      "question": "If 35 is 20% of a number, what is the number?",
+      "answers": [
+        "7",
+        "70",
+        "150",
+        "175"
+      ],
+      "correct": "175"
+    },
+    {
+      "question": "A company's sales increased from $500,000 to $540,000 in one year. What was the percent increase in sales?",
+      "answers": [
+        "4%",
+        "5.4%",
+        "8%",
+        "40%"
+      ],
+      "correct": "8%"
+    },
+    {
+      "question": "In a survey of 400 people, 140 said they prefer cats over dogs. What percentage of people surveyed prefer cats?",
+      "answers": [
+        "14%",
+        "28%",
+        "35%",
+        "40%"
+      ],
+      "correct": "35%"
+    },
+    {
+      "question": "A factory produced 1,500 widgets, but 45 of them were found to be defective. What percentage of the widgets were defective?",
+      "answers": [
+        "3%",
+        "4.5%",
+        "1.5%",
+        "30%"
+      ],
+      "correct": "3%"
+    },
+    {
+      "question": "A recipe for concrete requires a mixture of cement, sand, and gravel. If 15% of the mixture is cement and a batch requires 30 pounds of cement, what is the total weight of the batch?",
+      "answers": [
+        "4.5 pounds",
+        "150 pounds",
+        "200 pounds",
+        "300 pounds"
+      ],
+      "correct": "200 pounds"
+    },
+    {
+      "question": "What is 120% of 90?",
+      "answers": [
+        "75",
+        "100",
+        "108",
+        "120"
+      ],
+      "correct": "108"
+    },
+    {
+      "question": "A car is purchased for $20,000. Its value depreciates by 15% in the first year. What is the value of the car after the first year?",
+      "answers": [
+        "$3,000",
+        "$15,000",
+        "$17,000",
+        "$18,500"
+      ],
+      "correct": "$17,000"
+    },
+    {
+      "question": "A mixture contains 12 gallons of chemical A, 18 gallons of chemical B, and 20 gallons of water. What percentage of the mixture is chemical B?",
+      "answers": [
+        "18%",
+        "30%",
+        "36%",
+        "40%"
+      ],
+      "correct": "36%"
+    },
+    {
+      "question": "What is 350% of 50?",
+      "answers": [
+        "150",
+        "175",
+        "200",
+        "350"
+      ],
+      "correct": "175"
+    },
+    {
+      "question": "Express 6.5% as a fraction in lowest terms.",
+      "answers": [
+        "$\\frac{65}{100}$",
+        "$\\frac{13}{20}$",
+        "$\\frac{6.5}{100}$",
+        "$\\frac{13}{200}$"
+      ],
+      "correct": "$\\frac{13}{200}$"
+    },
+    {
+      "question": "A concert venue has 2,500 seats. If 2,125 seats are filled, what percentage of the venue is full?",
+      "answers": [
+        "75%",
+        "80%",
+        "85%",
+        "90%"
+      ],
+      "correct": "85%"
+    },
+    {
+      "question": "The number of students in a club increased from 25 to 32. What was the percent increase, rounded to the nearest percent?",
+      "answers": [
+        "7%",
+        "22%",
+        "28%",
+        "32%"
+      ],
+      "correct": "28%"
+    },
+    {
+      "question": "A bag contains 50 marbles. 30% are red, 50% are blue, and the rest are green. How many green marbles are in the bag?",
+      "answers": [
+        "10",
+        "15",
+        "20",
+        "25"
+      ],
+      "correct": "10"
+    },
+    {
+      "question": "A shirt that was priced at $40 is now on sale for $34. What is the percentage discount?",
+      "answers": [
+        "6%",
+        "15%",
+        "17.6%",
+        "20%"
+      ],
+      "correct": "15%"
+    },
+    {
+      "question": "What is the simple interest on a loan of $2,000 at a 6% annual rate for 3 years?",
+      "answers": [
+        "$120",
+        "$180",
+        "$360",
+        "$2,360"
+      ],
+      "correct": "$360"
+    }
   ],
   "hard": [
-    { "question": "Compute $-7(-5)-4(-8-6) \\div (-2)$", "answers": ["-217", "63", "31", "7"], "correct": "7" },
-    { "question": "Which expression is equivalent to $2^5 \\times 3^5 \\times 6^7$?", "answers": ["$6^{12}$", "$36^{12}$", "$36^{175}$", "$11^{12}$"], "correct": "$6^{12}$" },
-    { "question": "The average distance from Earth to Mars is $2.25 \\times 10^8$ kilometers. Radio waves travel at approximately $3.0 \\times 10^5$ kilometers per second. On average, how many seconds does it take for a radio signal to go from Mars to Earth?", "answers": ["75,000 seconds", "7,500 seconds", "750 seconds", "75 seconds"], "correct": "750 seconds" },
-    { "question": "Divide $\\frac{12p^3q-16p^5q^2+10p^4q^4}{8p^2q^3}$", "answers": ["$\\frac{3p}{2q^2}-\\frac{2p^3}{q}+\\frac{5p^2q}{4}$", "$\\frac{3p}{q^2}-\\frac{p^3}{q}+\\frac{5p^2q}{2}$", "$\\frac{3p}{2q^2}+\\frac{2p^3}{q}+\\frac{5p^2q}{4}$", "$\\frac{3p^2}{2q}-\\frac{2p^2}{q}+\\frac{5pq}{4}$"], "correct": "$\\frac{3p}{2q^2}-\\frac{2p^3}{q}+\\frac{5p^2q}{4}$" },
-    { "question": "Simplify $\\frac{x^2-5x}{4x^2} \\times \\frac{x^2-7x+12}{x^2-16} \\div \\frac{2x-10}{x^2+2x-8}$", "answers": ["$\\frac{(x+3)(x+2)}{8x}$", "$\\frac{(x-3)(x+2)}{8x}$", "$\\frac{(x+3)(x-2)}{8x}$", "$\\frac{(x-3)(x-2)}{8x}$"], "correct": "$\\frac{(x-3)(x-2)}{8x}$" }
+    {
+      "question": "A deep-sea explorer starts at 50 feet below sea level. The explorer descends at a rate of 5 feet per minute for 12 minutes, and then ascends at a rate of 10 feet per minute for 3 minutes. What is the explorer's final depth in feet relative to sea level? (Use negative numbers for below sea level).",
+      "answers": [
+        "$-60$ feet",
+        "$-80$ feet",
+        "$-110$ feet",
+        "$-140$ feet"
+      ],
+      "correct": "$-80$ feet"
+    },
+    {
+      "question": "If $a$ is a negative integer and $b$ is a positive integer, which of the following expressions must result in a positive integer?",
+      "answers": [
+        "$a \\times b$",
+        "$a - b$",
+        "$a \\div b$",
+        "$b - a$"
+      ],
+      "correct": "$b - a$"
+    },
+    {
+      "question": "A company reports a net income of $-1,200 for the first quarter. For the second quarter, it reports a net income of $2,500. For the third quarter, the loss is $800. What must the net income be for the fourth quarter for the company to have a total yearly net income of $3,000?",
+      "answers": [
+        "$500",
+        "$1,500",
+        "$2,500",
+        "$3,100"
+      ],
+      "correct": "$2,500"
+    },
+    {
+      "question": "The sum of two integers is $-5$. Their product is $-24$. What are the two integers?",
+      "answers": [
+        "$-6$ and $4$",
+        "$6$ and $-4$",
+        "$-8$ and $3$",
+        "$8$ and $-3$"
+      ],
+      "correct": "$-8$ and $3$"
+    },
+    {
+      "question": "A number is tripled and then decreased by 11. The result is $-20$. What is the original number?",
+      "answers": [
+        "$-10$",
+        "$-3$",
+        "$3$",
+        "$9$"
+      ],
+      "correct": "$-3$"
+    },
+    {
+      "question": "Mount Everest has an elevation of 29,029 feet. The shore of the Dead Sea is at an elevation of -1,412 feet. What is the difference in elevation between Mount Everest's peak and the Dead Sea's shore?",
+      "answers": [
+        "$27,617$ feet",
+        "$28,421$ feet",
+        "$30,441$ feet",
+        "$29,029$ feet"
+      ],
+      "correct": "$30,441$ feet"
+    },
+    {
+      "question": "The average of five integers is $-10$. Four of the integers are $2, -8, -15,$ and $-20$. What is the fifth integer?",
+      "answers": [
+        "$-41$",
+        "$-9$",
+        "$1$",
+        "$-50$"
+      ],
+      "correct": "$-9$"
+    },
+    {
+      "question": "Sara's bank account has $150. She makes 4 withdrawals of $20 each. Then, she deposits $50. Finally, she writes a check for $75. What is her final account balance?",
+      "answers": [
+        "$-55",
+        "$45",
+        "$105",
+        "$45"
+      ],
+      "correct": "$45"
+    },
+    {
+      "question": "A hot air balloon is at a height of 800 feet. It descends 50 feet, then rises 120 feet, and then descends again by 200 feet. A second balloon starts at 1,000 feet and descends 350 feet. What is the difference in the final altitude of the two balloons?",
+      "answers": [
+        "20 feet",
+        "80 feet",
+        "120 feet",
+        "200 feet"
+      ],
+      "correct": "20 feet"
+    },
+    {
+      "question": "Compute: $-4[(-3+8) - 5(2)]$.",
+      "answers": [
+        "$-20$",
+        "$20$",
+        "$60$",
+        "$-60$"
+      ],
+      "correct": "$20$"
+    },
+    {
+      "question": "Simplify the expression $(2x^4y^2)^3$.",
+      "answers": [
+        "$6x^{12}y^6$",
+        "$8x^{12}y^6$",
+        "$8x^7y^5$",
+        "$6x^7y^5$"
+      ],
+      "correct": "$8x^{12}y^6$"
+    },
+    {
+      "question": "Simplify the expression $(5^6 \\cdot 5^2)^{1/4}$.",
+      "answers": [
+        "$5^2$",
+        "$5^3$",
+        "$5^8$",
+        "$5^{12}$"
+      ],
+      "correct": "$5^2$"
+    },
+    {
+      "question": "The volume of a cube is 125 cubic inches. What is the area of one of its faces?",
+      "answers": [
+        "5 square inches",
+        "15 square inches",
+        "25 square inches",
+        "125 square inches"
+      ],
+      "correct": "25 square inches"
+    },
+    {
+      "question": "Evaluate $(8/27)^{2/3}$.",
+      "answers": [
+        "$16/81$",
+        "$4/9$",
+        "$2/3$",
+        "$16/54$"
+      ],
+      "correct": "$4/9$"
+    },
+    {
+      "question": "A culture of bacteria triples in size every hour. If the culture starts with 100 bacteria, which expression represents the number of bacteria after 5 hours?",
+      "answers": [
+        "$100 \\cdot 5^3$",
+        "$100 \\cdot 3^5$",
+        "$(100 \\cdot 3)^5$",
+        "$100 + 3^5$"
+      ],
+      "correct": "$100 \\cdot 3^5$"
+    },
+    {
+      "question": "Simplify the expression $\\left(\\frac{x^2}{y^3}\\right)^{-2}$.",
+      "answers": [
+        "$\\frac{x^4}{y^6}$",
+        "$\\frac{y^6}{x^4}$",
+        "$\\frac{y^5}{x^4}$",
+        "$\\frac{x^{-4}}{y^{-6}}$"
+      ],
+      "correct": "$\\frac{y^6}{x^4}$"
+    },
+    {
+      "question": "Which of the following values is the smallest?",
+      "answers": [
+        "$2^{-4}$",
+        "$3^{-3}$",
+        "$4^{-2}$",
+        "$1^{-10}$"
+      ],
+      "correct": "$3^{-3}$"
+    },
+    {
+      "question": "If $3^x = 1/81$, what is the value of $x$?",
+      "answers": [
+        "-4",
+        "-3",
+        "$1/4$",
+        "4"
+      ],
+      "correct": "-4"
+    },
+    {
+      "question": "Evaluate $4^{3/2}$.",
+      "answers": [
+        "6",
+        "8",
+        "12",
+        "32"
+      ],
+      "correct": "8"
+    },
+    {
+      "question": "Simplify $\\frac{3x^5 y^{-2}}{12x^2 y^3}$.",
+      "answers": [
+        "$\\frac{x^3}{4y^5}$",
+        "$\\frac{x^7}{4y}$",
+        "$\\frac{x^3 y^{-5}}{4}$",
+        "$\\frac{x^3}{4y}$"
+      ],
+      "correct": "$\\frac{x^3}{4y^5}$"
+    },
+    {
+      "question": "The side length of a square is $(2x^3)$ cm. What is the area of the square?",
+      "answers": [
+        "$2x^6$ cm$^2$",
+        "$4x^5$ cm$^2$",
+        "$4x^6$ cm$^2$",
+        "$4x^9$ cm$^2$"
+      ],
+      "correct": "$4x^6$ cm$^2$"
+    },
+    {
+      "question": "Simplify $(32^{1/5})^{-3}$.",
+      "answers": [
+        "$1/8$",
+        "8",
+        "-8",
+        "-6"
+      ],
+      "correct": "$1/8$"
+    },
+    {
+      "question": "A city's population of 500,000 is expected to decrease by half every 20 years. Which expression represents the city's population after 100 years?",
+      "answers": [
+        "$500000 \\cdot (1/2)^{100}$",
+        "$500000 \\cdot (1/2)^{5}$",
+        "$500000 \\cdot (1/2)^{20}$",
+        "$500000 \\cdot 5^{1/2}$"
+      ],
+      "correct": "$500000 \\cdot (1/2)^{5}$"
+    },
+    {
+      "question": "If $x>1$, which of the following expressions yields the largest value?",
+      "answers": [
+        "$(x^3)^2$",
+        "$x^3 \\cdot x^2$",
+        "$\\frac{x^8}{x^2}$",
+        "$(x^2)^3$"
+      ],
+      "correct": "$(x^3)^2$"
+    },
+    {
+      "question": "Simplify $\\sqrt{x^4 y^{16}}$.",
+      "answers": [
+        "$x^2 y^4$",
+        "$x^2 y^8$",
+        "$x^8 y^{32}$",
+        "$x y^4$"
+      ],
+      "correct": "$x^2 y^8$"
+    },
+    {
+      "question": "Simplify the expression $3(x^2 - y) - 2(x^2 + 3y)$.",
+      "answers": [
+        "$x^2 - 9y$",
+        "$x^2 + 2y$",
+        "$5x^2 - 9y$",
+        "$x^2 - 4y$"
+      ],
+      "correct": "$x^2 - 9y$"
+    },
+    {
+      "question": "Which of the following is equivalent to $\\sqrt[3]{8x^6 y^{-9}}$?",
+      "answers": [
+        "$2x^2 y^{-3}$",
+        "$2x^3 y^{-6}$",
+        "$\\frac{8x^2}{y^3}$",
+        "$\\frac{2x^3}{y^6}$"
+      ],
+      "correct": "$2x^2 y^{-3}$"
+    },
+    {
+      "question": "If $0 < x < 1$, which statement is true?",
+      "answers": [
+        "$x < x^2$",
+        "$x > x^2$",
+        "$x = x^2$",
+        "$x < \\sqrt{x}$"
+      ],
+      "correct": "$x > x^2$"
+    },
+    {
+      "question": "Simplify the expression $\\left(\\frac{27x^{12}}{8y^9}\\right)^{-1/3}$.",
+      "answers": [
+        "$\\frac{3x^4}{2y^3}$",
+        "$\\frac{2y^3}{3x^4}$",
+        "$\\frac{9x^4}{2y^3}$",
+        "$\\frac{-9x^4}{2.67y^3}$"
+      ],
+      "correct": "$\\frac{2y^3}{3x^4}$"
+    },
+    {
+      "question": "A deep-sea explorer starts at 50 feet below sea level. The explorer descends at a rate of 5 feet per minute for 12 minutes, and then ascends at a rate of 10 feet per minute for 3 minutes. What is the explorer's final depth in feet relative to sea level? (Use negative numbers for below sea level).",
+      "answers": [
+        "$-60$ feet",
+        "$-80$ feet",
+        "$-110$ feet",
+        "$-140$ feet"
+      ],
+      "correct": "$-80$ feet"
+    },
+    {
+      "question": "If $a$ is a negative integer and $b$ is a positive integer, which of the following expressions must result in a positive integer?",
+      "answers": [
+        "$a \\times b$",
+        "$a - b$",
+        "$a \\div b$",
+        "$b - a$"
+      ],
+      "correct": "$b - a$"
+    },
+    {
+      "question": "A company reports a net income of $-1,200 for the first quarter. For the second quarter, it reports a net income of $2,500. For the third quarter, the loss is $800. What must the net income be for the fourth quarter for the company to have a total yearly net income of $3,000?",
+      "answers": [
+        "$500",
+        "$1,500",
+        "$2,500",
+        "$3,100"
+      ],
+      "correct": "$2,500"
+    },
+    {
+      "question": "The sum of two integers is $-5$. Their product is $-24$. What are the two integers?",
+      "answers": [
+        "$-6$ and $4$",
+        "$6$ and $-4$",
+        "$-8$ and $3$",
+        "$8$ and $-3$"
+      ],
+      "correct": "$-8$ and $3$"
+    },
+    {
+      "question": "A number is tripled and then decreased by 11. The result is $-20$. What is the original number?",
+      "answers": [
+        "$-10$",
+        "$-3$",
+        "$3$",
+        "$9$"
+      ],
+      "correct": "$-3$"
+    },
+    {
+      "question": "Mount Everest has an elevation of 29,029 feet. The shore of the Dead Sea is at an elevation of -1,412 feet. What is the difference in elevation between Mount Everest's peak and the Dead Sea's shore?",
+      "answers": [
+        "$27,617$ feet",
+        "$28,421$ feet",
+        "$30,441$ feet",
+        "$29,029$ feet"
+      ],
+      "correct": "$30,441$ feet"
+    },
+    {
+      "question": "The average of five integers is $-10$. Four of the integers are $2, -8, -15,$ and $-20$. What is the fifth integer?",
+      "answers": [
+        "$-41$",
+        "$-9$",
+        "$1$",
+        "$-50$"
+      ],
+      "correct": "$-9$"
+    },
+    {
+      "question": "Sara's bank account has $150. She makes 4 withdrawals of $20 each. Then, she deposits $50. Finally, she writes a check for $75. What is her final account balance?",
+      "answers": [
+        "$-55",
+        "$45",
+        "$105",
+        "$45"
+      ],
+      "correct": "$45"
+    },
+    {
+      "question": "A hot air balloon is at a height of 800 feet. It descends 50 feet, then rises 120 feet, and then descends again by 200 feet. A second balloon starts at 1,000 feet and descends 350 feet. What is the difference in the final altitude of the two balloons?",
+      "answers": [
+        "20 feet",
+        "80 feet",
+        "120 feet",
+        "200 feet"
+      ],
+      "correct": "20 feet"
+    },
+    {
+      "question": "Compute: $-4[(-3+8) - 5(2)]$.",
+      "answers": [
+        "$-20$",
+        "$20$",
+        "$60$",
+        "$-60$"
+      ],
+      "correct": "$20$"
+    },
+    {
+      "question": "Simplify the expression $(2x^4y^2)^3$.",
+      "answers": [
+        "$6x^{12}y^6$",
+        "$8x^{12}y^6$",
+        "$8x^7y^5$",
+        "$6x^7y^5$"
+      ],
+      "correct": "$8x^{12}y^6$"
+    },
+    {
+      "question": "Simplify the expression $(5^6 \\cdot 5^2)^{1/4}$.",
+      "answers": [
+        "$5^2$",
+        "$5^3$",
+        "$5^8$",
+        "$5^{12}$"
+      ],
+      "correct": "$5^2$"
+    },
+    {
+      "question": "The volume of a cube is 125 cubic inches. What is the area of one of its faces?",
+      "answers": [
+        "5 square inches",
+        "15 square inches",
+        "25 square inches",
+        "125 square inches"
+      ],
+      "correct": "25 square inches"
+    },
+    {
+      "question": "Evaluate $(8/27)^{2/3}$.",
+      "answers": [
+        "$16/81$",
+        "$4/9$",
+        "$2/3$",
+        "$16/54$"
+      ],
+      "correct": "$4/9$"
+    },
+    {
+      "question": "A culture of bacteria triples in size every hour. If the culture starts with 100 bacteria, which expression represents the number of bacteria after 5 hours?",
+      "answers": [
+        "$100 \\cdot 5^3$",
+        "$100 \\cdot 3^5$",
+        "$(100 \\cdot 3)^5$",
+        "$100 + 3^5$"
+      ],
+      "correct": "$100 \\cdot 3^5$"
+    },
+    {
+      "question": "Simplify the expression $\\left(\\frac{x^2}{y^3}\\right)^{-2}$.",
+      "answers": [
+        "$\\frac{x^4}{y^6}$",
+        "$\\frac{y^6}{x^4}$",
+        "$\\frac{y^5}{x^4}$",
+        "$\\frac{x^{-4}}{y^{-6}}$"
+      ],
+      "correct": "$\\frac{y^6}{x^4}$"
+    },
+    {
+      "question": "Which of the following values is the smallest?",
+      "answers": [
+        "$2^{-4}$",
+        "$3^{-3}$",
+        "$4^{-2}$",
+        "$1^{-10}$"
+      ],
+      "correct": "$3^{-3}$"
+    },
+    {
+      "question": "If $3^x = 1/81$, what is the value of $x$?",
+      "answers": [
+        "-4",
+        "-3",
+        "$1/4$",
+        "4"
+      ],
+      "correct": "-4"
+    },
+    {
+      "question": "Evaluate $4^{3/2}$.",
+      "answers": [
+        "6",
+        "8",
+        "12",
+        "32"
+      ],
+      "correct": "8"
+    },
+    {
+      "question": "Simplify $\\frac{3x^5 y^{-2}}{12x^2 y^3}$.",
+      "answers": [
+        "$\\frac{x^3}{4y^5}$",
+        "$\\frac{x^7}{4y}$",
+        "$\\frac{x^3 y^{-5}}{4}$",
+        "$\\frac{x^3}{4y}$"
+      ],
+      "correct": "$\\frac{x^3}{4y^5}$"
+    },
+    {
+      "question": "The side length of a square is $(2x^3)$ cm. What is the area of the square?",
+      "answers": [
+        "$2x^6$ cm$^2$",
+        "$4x^5$ cm$^2$",
+        "$4x^6$ cm$^2$",
+        "$4x^9$ cm$^2$"
+      ],
+      "correct": "$4x^6$ cm$^2$"
+    },
+    {
+      "question": "Simplify $(32^{1/5})^{-3}$.",
+      "answers": [
+        "$1/8$",
+        "8",
+        "-8",
+        "-6"
+      ],
+      "correct": "$1/8$"
+    },
+    {
+      "question": "A city's population of 500,000 is expected to decrease by half every 20 years. Which expression represents the city's population after 100 years?",
+      "answers": [
+        "$500000 \\cdot (1/2)^{100}$",
+        "$500000 \\cdot (1/2)^{5}$",
+        "$500000 \\cdot (1/2)^{20}$",
+        "$500000 \\cdot 5^{1/2}$"
+      ],
+      "correct": "$500000 \\cdot (1/2)^{5}$"
+    },
+    {
+      "question": "If $x>1$, which of the following expressions yields the largest value?",
+      "answers": [
+        "$(x^3)^2$",
+        "$x^3 \\cdot x^2$",
+        "$\\frac{x^8}{x^2}$",
+        "$(x^2)^3$"
+      ],
+      "correct": "$(x^3)^2$"
+    },
+    {
+      "question": "Simplify $\\sqrt{x^4 y^{16}}$.",
+      "answers": [
+        "$x^2 y^4$",
+        "$x^2 y^8$",
+        "$x^8 y^{32}$",
+        "$x y^4$"
+      ],
+      "correct": "$x^2 y^8$"
+    },
+    {
+      "question": "Simplify the expression $3(x^2 - y) - 2(x^2 + 3y)$.",
+      "answers": [
+        "$x^2 - 9y$",
+        "$x^2 + 2y$",
+        "$5x^2 - 9y$",
+        "$x^2 - 4y$"
+      ],
+      "correct": "$x^2 - 9y$"
+    },
+    {
+      "question": "Which of the following is equivalent to $\\sqrt[3]{8x^6 y^{-9}}$?",
+      "answers": [
+        "$2x^2 y^{-3}$",
+        "$2x^3 y^{-6}$",
+        "$\\frac{8x^2}{y^3}$",
+        "$\\frac{2x^3}{y^6}$"
+      ],
+      "correct": "$2x^2 y^{-3}$"
+    },
+    {
+      "question": "If $0 < x < 1$, which statement is true?",
+      "answers": [
+        "$x < x^2$",
+        "$x > x^2$",
+        "$x = x^2$",
+        "$x < \\sqrt{x}$"
+      ],
+      "correct": "$x > x^2$"
+    },
+    {
+      "question": "Simplify the expression $\\left(\\frac{27x^{12}}{8y^9}\\right)^{-1/3}$.",
+      "answers": [
+        "$\\frac{3x^4}{2y^3}$",
+        "$\\frac{2y^3}{3x^4}$",
+        "$\\frac{9x^4}{2y^3}$",
+        "$\\frac{-9x^4}{2.67y^3}$"
+      ],
+      "correct": "$\\frac{2y^3}{3x^4}$"
+    },
+    {
+      "question": "The area of a rectangle is given by the polynomial $x^2 + 8x + 15$. If the width of the rectangle is $(x+3)$, what is its length?",
+      "answers": [
+        "$x+5$",
+        "$x+8$",
+        "$x+15$",
+        "$x-5$"
+      ],
+      "correct": "$x+5$"
+    },
+    {
+      "question": "Simplify the rational expression: $\\frac{x^2 - 4}{x^2 + x - 6}$.",
+      "answers": [
+        "$\\frac{x-2}{x+3}$",
+        "$\\frac{x+2}{x+3}$",
+        "$\\frac{x-2}{x-3}$",
+        "$\\frac{2}{3}$"
+      ],
+      "correct": "$\\frac{x+2}{x+3}$"
+    },
+    {
+      "question": "Add the rational expressions: $\\frac{3}{x} + \\frac{5}{x+2}$.",
+      "answers": [
+        "$\\frac{8}{2x+2}$",
+        "$\\frac{8x+6}{x(x+2)}$",
+        "$\\frac{8}{x(x+2)}$",
+        "$\\frac{3x+6}{x(x+2)}$"
+      ],
+      "correct": "$\\frac{8x+6}{x(x+2)}$"
+    },
+    {
+      "question": "Divide: $\\frac{15x^3y^2 - 10x^2y^3 + 5xy}{5xy}$.",
+      "answers": [
+        "$3x^2y - 2xy^2$",
+        "$3x^2y - 2xy^2 + 1$",
+        "$10x^2y - 5xy^2 + 1$",
+        "$3x^4y^3 - 2x^3y^4 + x^2y^2$"
+      ],
+      "correct": "$3x^2y - 2xy^2 + 1$"
+    },
+    {
+      "question": "Multiply: $\\frac{x^2-9}{x+2} \\cdot \\frac{x^2+2x}{x-3}$.",
+      "answers": [
+        "$x(x+3)$",
+        "$x(x-3)$",
+        "$x+3$",
+        "$\\frac{x+3}{x+2}$"
+      ],
+      "correct": "$x(x+3)$"
+    },
+    {
+      "question": "Factor completely: $3x^2 - 15x - 42$.",
+      "answers": [
+        "$3(x-7)(x+2)$",
+        "$(3x-21)(x+2)$",
+        "$3(x+7)(x-2)$",
+        "$(x-7)(3x+6)$"
+      ],
+      "correct": "$3(x-7)(x+2)$"
+    },
+    {
+      "question": "Divide: $\\frac{x^2 + 3x - 10}{x-2}$.",
+      "answers": [
+        "$x+5$",
+        "$x-5$",
+        "$x+3$",
+        "$x-2$"
+      ],
+      "correct": "$x+5$"
+    },
+    {
+      "question": "Subtract the rational expressions: $\\frac{x+1}{x-3} - \\frac{x-1}{x+3}$.",
+      "answers": [
+        "$\\frac{2}{x^2-9}$",
+        "$\\frac{8x}{x^2-9}$",
+        "$\\frac{2x}{x^2-9}$",
+        "$\\frac{4x+6}{x^2-9}$"
+      ],
+      "correct": "$\\frac{8x}{x^2-9}$"
+    },
+    {
+      "question": "A company's profit is modeled by the expression $P(x) = -5x^2 + 200x - 1000$, where x is the number of units sold. What is the profit when 20 units are sold?",
+      "answers": [
+        "$1000",
+        "$2000",
+        "$3000",
+        "$4000"
+      ],
+      "correct": "$1000"
+    },
+    {
+      "question": "Divide: $\\frac{2x^2 - 5x - 12}{x^2 - 16}$.",
+      "answers": [
+        "$\\frac{2x+3}{x+4}$",
+        "$\\frac{2x-3}{x-4}$",
+        "$\\frac{x-4}{x+4}$",
+        "$2x+3$"
+      ],
+      "correct": "$\\frac{2x+3}{x+4}$"
+    },
+    {
+      "question": "Factor the trinomial: $6x^2 + 11x - 10$.",
+      "answers": [
+        "$(6x+5)(x-2)$",
+        "$(3x-2)(2x+5)$",
+        "$(3x+2)(2x-5)$",
+        "$(6x-2)(x+5)$"
+      ],
+      "correct": "$(3x-2)(2x+5)$"
+    },
+    {
+      "question": "Divide: $\\frac{x^2+xy-2y^2}{x^2-y^2} \\div \\frac{x+2y}{x+y}$.",
+      "answers": [
+        "1",
+        "$x-y$",
+        "$\\frac{x-y}{x+y}$",
+        "$\\frac{1}{x-y}$"
+      ],
+      "correct": "1"
+    },
+    {
+      "question": "Find the sum: $\\frac{2}{x^2-1} + \\frac{1}{x+1}$.",
+      "answers": [
+        "$\\frac{3}{x^2+x}$",
+        "$\\frac{x+1}{x^2-1}$",
+        "$\\frac{x-1}{x^2-1}$",
+        "$\\frac{x+3}{x^2-1}$"
+      ],
+      "correct": "$\\frac{x+3}{x^2-1}$"
+    },
+    {
+      "question": "The cost in dollars to produce x items is given by $C(x) = 10x + 500$. The revenue from selling x items is $R(x) = -x^2 + 80x$. Find the profit, $P(x) = R(x) - C(x)$.",
+      "answers": [
+        "$-x^2 + 70x - 500$",
+        "$-x^2 + 90x + 500$",
+        "$x^2 + 70x + 500$",
+        "$-x^2 - 70x + 500$"
+      ],
+      "correct": "$-x^2 + 70x - 500$"
+    },
+    {
+      "question": "Simplify the complex fraction: $\\frac{\\frac{1}{x} - \\frac{1}{y}}{\\frac{1}{x^2} - \\frac{1}{y^2}}$.",
+      "answers": [
+        "$x+y$",
+        "$\\frac{x+y}{xy}$",
+        "$xy$",
+        "$\\frac{xy}{x+y}$"
+      ],
+      "correct": "$\\frac{xy}{x+y}$"
+    },
+    {
+      "question": "A projectile is fired upwards. Its height in feet after t seconds is given by $h(t) = -16t^2 + 96t$. What is the height of the projectile after 2 seconds?",
+      "answers": [
+        "96 feet",
+        "128 feet",
+        "160 feet",
+        "256 feet"
+      ],
+      "correct": "128 feet"
+    },
+    {
+      "question": "Factor completely: $5x^3 - 20x$.",
+      "answers": [
+        "$5(x^3 - 4x)$",
+        "$5x(x^2 - 4)$",
+        "$5x(x-2)(x+2)$",
+        "$x(5x-10)(x+2)$"
+      ],
+      "correct": "$5x(x-2)(x+2)$"
+    },
+    {
+      "question": "Perform the indicated operation: $\\frac{3x}{x^2+3x-4} - \\frac{2}{x+4}$.",
+      "answers": [
+        "$\\frac{x+2}{(x+4)(x-1)}$",
+        "$\\frac{x-2}{(x+4)(x-1)}$",
+        "$\\frac{3x-2}{x^2+3x-4}$",
+        "$\\frac{1}{x-1}$"
+      ],
+      "correct": "$\\frac{x+2}{(x+4)(x-1)}$"
+    },
+    {
+      "question": "The sum of the squares of two consecutive odd integers is 74. Which equation represents this situation, if x is the smaller odd integer?",
+      "answers": [
+        "$x^2 + (x+1)^2 = 74$",
+        "$x^2 + (x+2)^2 = 74$",
+        "$x + (x+2) = 74$",
+        "$(2x+1)^2 = 74$"
+      ],
+      "correct": "$x^2 + (x+2)^2 = 74$"
+    },
+    {
+      "question": "Combine and simplify: $\\frac{x}{x^2-x-12} \\cdot \\frac{x+3}{x^2}$.",
+      "answers": [
+        "$\\frac{1}{x(x-4)}$",
+        "$\\frac{1}{x-4}$",
+        "$\\frac{x(x+3)}{x^2(x-4)}$",
+        "$\\frac{1}{x^2-4x}$"
+      ],
+      "correct": "$\\frac{1}{x(x-4)}$"
+    },
+    {
+      "question": "Simplify: $\\frac{4x-8}{x+1} \\div \\frac{x^2-4}{x^2-1}$.",
+      "answers": [
+        "$\\frac{4(x-1)}{x+2}$",
+        "$\\frac{4(x+1)}{x-2}$",
+        "$\\frac{4}{1}$",
+        "$\\frac{4(x-1)}{x+1}$"
+      ],
+      "correct": "$\\frac{4(x-1)}{x+2}$"
+    },
+    {
+      "question": "The perimeter of a triangle is $10x - 5$. Two of its sides are $3x+2$ and $4x-1$. What is the length of the third side?",
+      "answers": [
+        "$3x - 6$",
+        "$3x - 4$",
+        "$17x - 4$",
+        "$7x+1$"
+      ],
+      "correct": "$3x - 6$"
+    },
+    {
+      "question": "Subtract: $\\frac{4}{x-5} - \\frac{3}{x+2}$.",
+      "answers": [
+        "$\\frac{1}{(x-5)(x+2)}$",
+        "$\\frac{x-7}{(x-5)(x+2)}$",
+        "$\\frac{x+23}{(x-5)(x+2)}$",
+        "$\\frac{7x-7}{(x-5)(x+2)}$"
+      ],
+      "correct": "$\\frac{x+23}{(x-5)(x+2)}$"
+    },
+    {
+      "question": "Factor completely: $2a^2b - 18b$.",
+      "answers": [
+        "$2(a^2b - 9b)$",
+        "$2b(a^2-9)$",
+        "$2b(a-3)(a+3)$",
+        "$2b(a-3)^2$"
+      ],
+      "correct": "$2b(a-3)(a+3)$"
+    },
+    {
+      "question": "A small business owner's weekly cost is $C=150+20n$, where n is the number of units produced. The revenue from selling n units is $R=45n$. For the business to make a profit, the revenue must be greater than the cost. Which inequality represents this situation?",
+      "answers": [
+        "$45n < 150+20n$",
+        "$45n > 150+20n$",
+        "$45n = 150+20n$",
+        "$45n - 20n - 150 > 1$"
+      ],
+      "correct": "$45n > 150+20n$"
+    },
+    {
+      "question": "Multiply: $(x-2)(x^2+2x+4)$.",
+      "answers": [
+        "$x^3+8$",
+        "$x^3-8$",
+        "$x^3-4x^2+8x-8$",
+        "$x^3 - 4x - 8$"
+      ],
+      "correct": "$x^3-8$"
+    },
+    {
+      "question": "Simplify: $(\\frac{3x^2}{y^3})^{-2}$.",
+      "answers": [
+        "$\\frac{y^6}{9x^4}$",
+        "$\\frac{-6x^4}{y^6}$",
+        "$\\frac{9y^6}{x^4}$",
+        "$\\frac{y^5}{6x^0}$"
+      ],
+      "correct": "$\\frac{y^6}{9x^4}$"
+    },
+    {
+      "question": "Add: $\\frac{y-2}{y^2+y-2} + \\frac{y}{y^2-1}$.",
+      "answers": [
+        "$\\frac{2y-2}{2y^2+y-3}$",
+        "$\\frac{y-2}{(y+2)(y-1)}$",
+        "$\\frac{2y^2+y-2}{(y+2)(y-1)(y+1)}$",
+        "$\\frac{y^2-y+2}{(y+2)(y-1)(y+1)}$"
+      ],
+      "correct": "$\\frac{2y^2+y-2}{(y+2)(y-1)(y+1)}$"
+    },
+    {
+      "question": "Simplify the rational expression: $\\frac{2x^2 + 5x - 3}{x^2 + 5x + 6}$.",
+      "answers": [
+        "$\\frac{2x-1}{x+2}$",
+        "$\\frac{x-1}{x+2}$",
+        "$\\frac{2x+1}{x+3}$",
+        "$\\frac{2x-1}{x+3}$"
+      ],
+      "correct": "$\\frac{2x-1}{x+2}$"
+    },
+    {
+      "question": "The area of a trapezoid is given by $A = \\frac{1}{2}h(b_1 + b_2)$. If a trapezoid has a height of $(x+1)$ and bases of $(x-2)$ and $(x+6)$, what is its area as a simplified polynomial?",
+      "answers": [
+        "$x^2 + 3x + 2$",
+        "$x^2 + 5x + 4$",
+        "$2x+4$",
+        "$x^2 + 4x + 3$"
+      ],
+      "correct": "$x^2 + 3x + 2$"
+    },
+    {
+      "question": "Multiply: $\\frac{x^2+2x-8}{x^2-2x-3} \\cdot \\frac{x-3}{x-2}$.",
+      "answers": [
+        "$\\frac{x+4}{x+1}$",
+        "$\\frac{x-4}{x-1}$",
+        "$\\frac{x+4}{x-3}$",
+        "1"
+      ],
+      "correct": "$\\frac{x+4}{x+1}$"
+    },
+    {
+      "question": "Factor completely: $ax^2 - 4a + 3x^2 - 12$.",
+      "answers": [
+        "$(a+3)(x^2-4)$",
+        "$(a-3)(x^2+4)$",
+        "$(a+3)(x-2)(x+2)$",
+        "$(a+4)(x-3)(x+3)$"
+      ],
+      "correct": "$(a+3)(x-2)(x+2)$"
+    },
+    {
+      "question": "Divide: $\\frac{x^3 + 8}{x+2}$.",
+      "answers": [
+        "$x^2+4$",
+        "$x^2-4$",
+        "$x^2+2x+4$",
+        "$x^2-2x+4$"
+      ],
+      "correct": "$x^2-2x+4$"
+    },
+    {
+      "question": "A company finds that its revenue, R, from selling x units of a product is given by $R(x) = 25x$ and its cost, C, is given by $C(x) = x^2 - 10x + 50$. The profit, P, is the revenue minus the cost. Which expression represents the profit?",
+      "answers": [
+        "$x^2 - 35x + 50$",
+        "$-x^2 + 35x - 50$",
+        "$-x^2 + 15x + 50$",
+        "$x^2 + 15x - 50$"
+      ],
+      "correct": "$-x^2 + 35x - 50$"
+    },
+    {
+      "question": "Add: $\\frac{5}{x^2-4} + \\frac{2}{x-2}$.",
+      "answers": [
+        "$\\frac{7}{x^2-4}$",
+        "$\\frac{2x+9}{x^2-4}$",
+        "$\\frac{2x+4}{x^2-4}$",
+        "$\\frac{2x-1}{x^2-4}$"
+      ],
+      "correct": "$\\frac{2x+9}{x^2-4}$"
+    },
+    {
+      "question": "Divide: $\\frac{3x^2+11x+6}{9x^2-4}$.",
+      "answers": [
+        "$\\frac{x+3}{3x-2}$",
+        "$\\frac{x+2}{3x+2}$",
+        "$\\frac{x+3}{3x+2}$",
+        "$\\frac{3(x+2)}{9(x-2)}$"
+      ],
+      "correct": "$\\frac{x+3}{3x-2}$"
+    },
+    {
+      "question": "A rectangular garden has a length of $(3x+4)$ meters and a width of $(x-1)$ meters. A smaller rectangular path inside the garden has dimensions of $(x-2)$ and $(x-1)$ meters. What is the area of the garden that is not covered by the path?",
+      "answers": [
+        "$2x^2+4x-2$",
+        "$2x^2+x-4$",
+        "$2x^2+4x-6$",
+        "$2x^2-2$"
+      ],
+      "correct": "$2x^2+4x-6$"
+    },
+    {
+      "question": "Subtract: $\\frac{3}{x+5} - \\frac{2}{x-1}$.",
+      "answers": [
+        "$\\frac{x-13}{(x+5)(x-1)}$",
+        "$\\frac{1}{(x+5)(x-1)}$",
+        "$\\frac{x-7}{(x+5)(x-1)}$",
+        "$\\frac{x+13}{(x+5)(x-1)}$"
+      ],
+      "correct": "$\\frac{x-13}{(x+5)(x-1)}$"
+    },
+    {
+      "question": "Factor the trinomial $8x^2 - 10x - 3$.",
+      "answers": [
+        "$(4x+1)(2x-3)$",
+        "$(4x-1)(2x+3)$",
+        "$(8x-3)(x+1)$",
+        "$(2x-1)(4x+3)$"
+      ],
+      "correct": "$(4x+1)(2x-3)$"
+    },
+    {
+      "question": "Divide: $\\frac{a^2-b^2}{2ab} \\div \\frac{a+b}{a}$.",
+      "answers": [
+        "$\\frac{a-b}{2b}$",
+        "$\\frac{a^2-b^2}{2b(a+b)}$",
+        "$\\frac{a-b}{2a}$",
+        "$a-b$"
+      ],
+      "correct": "$\\frac{a-b}{2b}$"
+    },
+    {
+      "question": "What is the result when $(2x-1)^2$ is subtracted from $(3x^2+5x-4)$?",
+      "answers": [
+        "$-x^2+9x-5$",
+        "$x^2+x-3$",
+        "$-x^2+x-3$",
+        "$-x^2+9x-3$"
+      ],
+      "correct": "$-x^2+9x-5$"
+    },
+    {
+      "question": "Simplify the expression: $\\frac{x^2 - 7x + 10}{25-x^2}$.",
+      "answers": [
+        "$\\frac{x-2}{5-x}$",
+        "$-\\frac{x-2}{x+5}$",
+        "$\\frac{x+2}{x+5}$",
+        "$\\frac{x-2}{x+5}$"
+      ],
+      "correct": "$-\\frac{x-2}{x+5}$"
+    },
+    {
+      "question": "A person's average speed on a trip is given by the formula $r = \\frac{d}{t}$, where d is distance and t is time. If the distance is $(x^2-16)$ miles and the time is $(x-4)$ hours, what is the average speed?",
+      "answers": [
+        "$x-4$ mph",
+        "$x+4$ mph",
+        "$\\frac{1}{x+4}$ mph",
+        "$x-16$ mph"
+      ],
+      "correct": "$x+4$ mph"
+    },
+    {
+      "question": "Add: $\\frac{a}{a^2-ab} + \\frac{b}{b^2-ab}$.",
+      "answers": [
+        "$\\frac{1}{a-b}$",
+        "$\\frac{a+b}{ab(a-b)}$",
+        "$\\frac{1}{ab}$",
+        "$\\frac{a-b}{ab}$"
+      ],
+      "correct": "$\\frac{1}{a-b}$"
+    },
+    {
+      "question": "Simplify the complex rational expression: $\\frac{4 - \\frac{1}{x^2}}{2 + \\frac{1}{x}}$.",
+      "answers": [
+        "$2 - \\frac{1}{x}$",
+        "$2 + \\frac{1}{x}$",
+        "$\\frac{2x-1}{x}$",
+        "$\\frac{x}{2x+1}$"
+      ],
+      "correct": "$\\frac{2x-1}{x}$"
+    },
+    {
+      "question": "Person A can complete a job in x hours. Person B can complete the same job in y hours. Which expression represents the fraction of the job they can complete in one hour if they work together?",
+      "answers": [
+        "$\\frac{1}{x+y}$",
+        "$\\frac{x+y}{xy}$",
+        "$x+y$",
+        "$\\frac{xy}{x+y}$"
+      ],
+      "correct": "$\\frac{x+y}{xy}$"
+    },
+    {
+      "question": "A box without a top has a square base with side length x. The height of the box is h. The material used for the base costs $5 per square foot, and the material for the sides costs $3 per square foot. Which expression represents the total cost of the material for the box?",
+      "answers": [
+        "$5x^2 + 3(4xh)$",
+        "$5x^2 + 3xh$",
+        "$x^2 + 4xh$",
+        "$8x^2h$"
+      ],
+      "correct": "$5x^2 + 3(4xh)$"
+    },
+    {
+      "question": "For what value(s) of x is the expression $\\frac{x+5}{x^2-x-12}$ undefined?",
+      "answers": [
+        "$x=-5$",
+        "$x=-3$ and $x=4$",
+        "$x=3$ and $x=-4$",
+        "$x=-5, x=-3,$ and $x=4$"
+      ],
+      "correct": "$x=-3$ and $x=4$"
+    },
+    {
+      "question": "A plane flies $(d^2-100)$ miles in $(d-10)$ hours. Its average speed is given by distance divided by time. If the plane then flies for an additional 5 hours at the same average speed, what is the additional distance covered?",
+      "answers": [
+        "$5d-50$",
+        "$5d+50$",
+        "$d+10$",
+        "$5d+10$"
+      ],
+      "correct": "$5d+50$"
+    },
+    {
+      "question": "Simplify: $\\frac{1}{x+h} - \\frac{1}{x}$.",
+      "answers": [
+        "$\\frac{h}{x(x+h)}$",
+        "$\\frac{-h}{x(x+h)}$",
+        "$\\frac{2x+h}{x(x+h)}$",
+        "$\\frac{-h}{x^2+h}$"
+      ],
+      "correct": "$\\frac{-h}{x(x+h)}$"
+    },
+    {
+      "question": "The sum of two numbers is 20. The product of these two numbers is given by the expression $P(x) = x(20-x)$, where x is one of the numbers. Rewrite this expression as a polynomial in standard form.",
+      "answers": [
+        "$x^2 - 20x$",
+        "$-x^2 + 20x$",
+        "$20x - x$",
+        "$20-x^2$"
+      ],
+      "correct": "$-x^2 + 20x$"
+    },
+    {
+      "question": "Factor completely: $x^4 - 81$.",
+      "answers": [
+        "$(x^2-9)(x^2+9)$",
+        "$(x-3)(x+3)(x^2+9)$",
+        "$(x-3)^2(x+3)^2$",
+        "$(x-3)(x+3)(x-3)(x+3)$"
+      ],
+      "correct": "$(x-3)(x+3)(x^2+9)$"
+    },
+    {
+      "question": "A rock is thrown from a height of 100 feet. Its height h after t seconds is modeled by $h(t) = -16t^2 - 20t + 100$. What is the height of the rock after 1.5 seconds?",
+      "answers": [
+        "34 feet",
+        "64 feet",
+        "130 feet",
+        "36 feet"
+      ],
+      "correct": "34 feet"
+    },
+    {
+      "question": "Simplify the expression $\\frac{x-y}{a-b} \\div \\frac{y-x}{b-a}$.",
+      "answers": [
+        "1",
+        "-1",
+        "$\\frac{(x-y)^2}{(a-b)^2}$",
+        "0"
+      ],
+      "correct": "1"
+    },
+    {
+      "question": "A map has a scale where 2 inches represents 75 miles. If the distance between two cities on the map is 5 inches, what is the actual distance between them?",
+      "answers": [
+        "150 miles",
+        "187.5 miles",
+        "225 miles",
+        "375 miles"
+      ],
+      "correct": "187.5 miles"
+    },
+    {
+      "question": "The ratio of boys to girls in a school is 5 to 6. If there are 240 girls in the school, how many boys are there?",
+      "answers": [
+        "200",
+        "288",
+        "300",
+        "180"
+      ],
+      "correct": "200"
+    },
+    {
+      "question": "A model airplane is built with a scale of 1:72. If the wingspan of the actual airplane is 108 feet, what is the wingspan of the model in feet?",
+      "answers": [
+        "1.25 feet",
+        "1.5 feet",
+        "2 feet",
+        "7.2 feet"
+      ],
+      "correct": "1.5 feet"
+    },
+    {
+      "question": "A photograph that is 5 inches wide and 7 inches tall is enlarged to be 20 inches wide. How tall is the enlarged photograph?",
+      "answers": [
+        "22 inches",
+        "25 inches",
+        "28 inches",
+        "35 inches"
+      ],
+      "correct": "28 inches"
+    },
+    {
+      "question": "A machine can produce 40 bolts in 5 minutes. How many hours will it take to produce 2,400 bolts?",
+      "answers": [
+        "3 hours",
+        "4 hours",
+        "5 hours",
+        "8 hours"
+      ],
+      "correct": "5 hours"
+    },
+    {
+      "question": "A car's engine runs at 2,500 revolutions per minute (RPM). How many revolutions does the engine make in a 45-minute drive?",
+      "answers": [
+        "11,250",
+        "55,555",
+        "112,500",
+        "1,125,000"
+      ],
+      "correct": "112,500"
+    },
+    {
+      "question": "A recipe requires $2\\frac{1}{2}$ cups of flour to serve 6 people. How much flour is needed to serve 15 people?",
+      "answers": [
+        "5 cups",
+        "$5\\frac{1}{2}$ cups",
+        "$6\\frac{1}{4}$ cups",
+        "$7\\frac{1}{2}$ cups"
+      ],
+      "correct": "$6\\frac{1}{4}$ cups"
+    },
+    {
+      "question": "A cyclist travels at a speed of 18 miles per hour. How many feet does the cyclist travel per second? (1 mile = 5280 feet)",
+      "answers": [
+        "22.5 ft/s",
+        "26.4 ft/s",
+        "30.0 ft/s",
+        "1584 ft/s"
+      ],
+      "correct": "26.4 ft/s"
+    },
+    {
+      "question": "A TV screen has an aspect ratio of 16:9. If the screen is 36 inches tall, how wide is it?",
+      "answers": [
+        "20.25 inches",
+        "48 inches",
+        "58 inches",
+        "64 inches"
+      ],
+      "correct": "64 inches"
+    },
+    {
+      "question": "A map has a scale of 1 cm = 25 km. A new map of the same area is drawn with a scale of 1 cm = 40 km. A distance that was 8 cm on the old map is how many cm on the new map?",
+      "answers": [
+        "5 cm",
+        "12.8 cm",
+        "10 cm",
+        "6.4 cm"
+      ],
+      "correct": "5 cm"
+    },
+    {
+      "question": "The ratio of apples to oranges to pears in a fruit basket is 5:3:2. If there are a total of 60 fruits in the basket, how many of them are oranges?",
+      "answers": [
+        "12",
+        "18",
+        "20",
+        "30"
+      ],
+      "correct": "18"
+    },
+    {
+      "question": "It takes a painter $1\\frac{1}{2}$ hours to paint $\\frac{1}{4}$ of a room. At this rate, how many hours will it take to paint the entire room?",
+      "answers": [
+        "4 hours",
+        "5 hours",
+        "6 hours",
+        "8 hours"
+      ],
+      "correct": "6 hours"
+    },
+    {
+      "question": "A bus travels 180 miles in 3 hours. A train travels 350 miles in 5 hours. What is the difference in their average speeds?",
+      "answers": [
+        "5 mph",
+        "10 mph",
+        "15 mph",
+        "20 mph"
+      ],
+      "correct": "10 mph"
+    },
+    {
+      "question": "A jacket originally costing $120 is on sale for $90. A pair of pants originally costing $80 is on sale at the same discount rate. What is the sale price of the pants?",
+      "answers": [
+        "$50",
+        "$60",
+        "$65",
+        "$70"
+      ],
+      "correct": "$60"
+    },
+    {
+      "question": "A gear ratio is 3:1, meaning the first gear makes 3 revolutions for every 1 revolution of the second gear. If the first gear is rotating at 1800 RPM, what is the RPM of the second gear?",
+      "answers": [
+        "600 RPM",
+        "1800 RPM",
+        "5400 RPM",
+        "900 RPM"
+      ],
+      "correct": "600 RPM"
+    },
+    {
+      "question": "A water tank is being filled at a rate of 20 gallons per minute but is also leaking at a rate of 2 gallons per minute. How long will it take to fill the 540-gallon tank?",
+      "answers": [
+        "27 minutes",
+        "30 minutes",
+        "24.5 minutes",
+        "32 minutes"
+      ],
+      "correct": "30 minutes"
+    },
+    {
+      "question": "Country A has a population of 15 million and an area of 60,000 square miles. Country B has a population of 40 million and an area of 100,000 square miles. Which country has a higher population density?",
+      "answers": [
+        "Country A",
+        "Country B",
+        "They have the same density",
+        "Cannot be determined"
+      ],
+      "correct": "Country B"
+    },
+    {
+      "question": "A car starts a trip with a full 16-gallon tank of gas. The car's fuel efficiency is 28 miles per gallon. After driving for 4 hours at an average speed of 56 mph, how many gallons of gas are left in the tank?",
+      "answers": [
+        "6 gallons",
+        "8 gallons",
+        "10 gallons",
+        "12 gallons"
+      ],
+      "correct": "8 gallons"
+    },
+    {
+      "question": "A computer downloads a 750-megabyte file in 2 minutes. What is the download speed in megabytes per second?",
+      "answers": [
+        "375 MB/s",
+        "12.5 MB/s",
+        "7.5 MB/s",
+        "6.25 MB/s"
+      ],
+      "correct": "6.25 MB/s"
+    },
+    {
+      "question": "The ratio of length to width to height of a box is 5:3:2. If the height of the box is 18 cm, what is the volume of the box?",
+      "answers": [
+        "7290 cm$^3$",
+        "14580 cm$^3$",
+        "21870 cm$^3$",
+        "29160 cm$^3$"
+      ],
+      "correct": "21870 cm$^3$"
+    },
+    {
+      "question": "An alloy is made by mixing metal A and metal B in a ratio of 7:3. If you have 84 grams of metal A, how much of metal B do you need to make the alloy?",
+      "answers": [
+        "12 grams",
+        "28 grams",
+        "36 grams",
+        "196 grams"
+      ],
+      "correct": "36 grams"
+    },
+    {
+      "question": "A farmer can harvest 2 acres of corn in 5 hours. He needs to harvest a total of 30 acres and can work 8 hours per day. How many days will it take him to complete the harvest?",
+      "answers": [
+        "9 days",
+        "9.375 days",
+        "10 days",
+        "12 days"
+      ],
+      "correct": "10 days"
+    },
+    {
+      "question": "An item is on sale for 20% off. The original price was $75. If the sales tax is 5% on the discounted price, what is the final cost of the item?",
+      "answers": [
+        "$60.00",
+        "$63.00",
+        "$57.00",
+        "$78.75"
+      ],
+      "correct": "$63.00"
+    },
+    {
+      "question": "A store buys a television for $300 and marks up the price by 60% to sell in the store. What is the selling price of the television?",
+      "answers": [
+        "$180",
+        "$360",
+        "$420",
+        "$480"
+      ],
+      "correct": "$480"
+    },
+    {
+      "question": "An investor's portfolio increased by 10% in the first year and then decreased by 10% in the second year. What was the net percentage change over the two years?",
+      "answers": [
+        "0% no change",
+        "1% increase",
+        "1% decrease",
+        "5% decrease"
+      ],
+      "correct": "1% decrease"
+    },
+    {
+      "question": "A restaurant bill came to $82.50. After adding a tip, the total was $99.00. What percent of the original bill was the tip?",
+      "answers": [
+        "15%",
+        "16.5%",
+        "18%",
+        "20%"
+      ],
+      "correct": "20%"
+    },
+    {
+      "question": "A phone is advertised as being \"25% off the original price.\" A customer has an additional coupon for \"10% off the sale price.\" What is the total percent discount from the original price?",
+      "answers": [
+        "35%",
+        "32.5%",
+        "30%",
+        "27.5%"
+      ],
+      "correct": "32.5%"
+    },
+    {
+      "question": "A person takes out a simple interest loan of $5,000 for 6 months at an annual interest rate of 4%. How much interest will they pay?",
+      "answers": [
+        "$100",
+        "$200",
+        "$1200",
+        "$2400"
+      ],
+      "correct": "$100"
+    },
+    {
+      "question": "After a 7% sales tax, the total cost of a purchase was $267.50. What was the price of the purchase before tax was added?",
+      "answers": [
+        "$248.78",
+        "$250.00",
+        "$260.50",
+        "$286.23"
+      ],
+      "correct": "$250.00"
+    },
+    {
+      "question": "A salesperson earns a base salary of $400 per week plus a 5% commission on all sales. If they sell $8,000 worth of goods in a week, what is their total weekly earning?",
+      "answers": [
+        "$400",
+        "$440",
+        "$800",
+        "$1200"
+      ],
+      "correct": "$800"
+    },
+    {
+      "question": "A company's stock was valued at $75 per share. The value increased by 20% and then decreased by 15%. What is the final value of the stock per share?",
+      "answers": [
+        "$76.50",
+        "$75.00",
+        "$78.00",
+        "$80.25"
+      ],
+      "correct": "$76.50"
+    },
+    {
+      "question": "An employee's gross monthly pay is $4,500. 6.2% is deducted for Social Security and 1.45% is deducted for Medicare. What is the total monthly deduction for these two taxes?",
+      "answers": [
+        "$69.75",
+        "$279.00",
+        "$344.25",
+        "$4155.75"
+      ],
+      "correct": "$344.25"
+    },
+    {
+      "question": "The population of a town was 10,000. It increased by 5% in one year, and then decreased by 5% the next year. What is the town's population after the two years?",
+      "answers": [
+        "9,975",
+        "10,000",
+        "10,025",
+        "9,500"
+      ],
+      "correct": "9,975"
+    },
+    {
+      "question": "A suit is on sale for $320 after a 20% discount. What was the original price of the suit?",
+      "answers": [
+        "$256",
+        "$340",
+        "$384",
+        "$400"
+      ],
+      "correct": "$400"
+    },
+    {
+      "question": "A loan of $8,000 accrues $600 in simple interest over 2 years. What is the annual interest rate?",
+      "answers": [
+        "3.75%",
+        "7.5%",
+        "3%",
+        "4.25%"
+      ],
+      "correct": "3.75%"
+    },
+    {
+      "question": "A store's profit on an item is 30% of the selling price. If the item costs the store $70, what is its selling price?",
+      "answers": [
+        "$91",
+        "$100",
+        "$210",
+        "$233.33"
+      ],
+      "correct": "$100"
+    },
+    {
+      "question": "Of the 1,200 students at a school, 45% are in the band and 60% are on a sports team. If 20% of the students are in both, how many students are in neither?",
+      "answers": [
+        "180",
+        "240",
+        "300",
+        "120"
+      ],
+      "correct": "180"
+    },
+    {
+      "question": "A person's monthly income is $4,000. They budget 30% for rent, 20% for food, 15% for transportation, and 10% for savings. How much money is left for other expenses after these are deducted?",
+      "answers": [
+        "$1,000",
+        "$1,200",
+        "$1,500",
+        "$3,000"
+      ],
+      "correct": "$1,000"
+    },
+    {
+      "question": "A computer is on sale for $810 after a 10% discount. The store then offers another 15% discount on the already discounted price. What was the original price of the computer?",
+      "answers": [
+        "$900",
+        "$950",
+        "$1000",
+        "$1050"
+      ],
+      "correct": "$1000"
+    },
+    {
+      "question": "A real estate agent earns a 3% commission on the first $200,000 of a home's selling price and 1.5% on any amount over $200,000. What is the total commission on a house that sells for $350,000?",
+      "answers": [
+        "$5,250",
+        "$6,000",
+        "$8,250",
+        "$10,500"
+      ],
+      "correct": "$8,250"
+    },
+    {
+      "question": "An investor puts $10,000 into an account that earns 5% simple annual interest. How much total money (principal + interest) will be in the account after 30 months?",
+      "answers": [
+        "$1,250",
+        "$1,500",
+        "$11,250",
+        "$11,500"
+      ],
+      "correct": "$11,250"
+    },
+    {
+      "question": "In an election, Candidate A received 45% of the votes, Candidate B received 35%, and the remaining 400 votes went to Candidate C. How many total votes were cast?",
+      "answers": [
+        "800",
+        "1,600",
+        "2,000",
+        "4,000"
+      ],
+      "correct": "2,000"
+    },
+    {
+      "question": "A company's profits increased by 10% from 2021 to 2022. From 2022 to 2023, profits decreased by 5%. If the profit in 2021 was $2,000,000, what was the profit in 2023?",
+      "answers": [
+        "$2,000,000",
+        "$2,090,000",
+        "$2,100,000",
+        "$2,200,000"
+      ],
+      "correct": "$2,090,000"
+    },
+    {
+      "question": "A total of $1,590 was paid for an item, which includes a 6% sales tax. The original price was discounted before the tax was applied. If the original price was $1,800, what was the discount percentage?",
+      "answers": [
+        "10%",
+        "12.5%",
+        "15%",
+        "16.67%"
+      ],
+      "correct": "16.67%"
+    }
   ]
 }
