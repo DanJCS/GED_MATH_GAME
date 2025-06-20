@@ -665,17 +665,25 @@ function playVisualEffect(type) {
 }
 
 function updateTeamView() {
-    teamGrid.innerHTML = '';
+    teamGrid.innerHTML = ''; // Clear the grid
     for (let i = 0; i < TEAM_CAPACITY; i++) {
         const slot = document.createElement('div');
         slot.className = 'team-slot';
+        
         if (playerTeam[i]) {
             const pokemon = playerTeam[i];
-            slot.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}"><span>${pokemon.name}</span>`;
             
-            // Add stars using the saved tier
-            slot.appendChild(createStarsElement(pokemon.tier)); 
+            // Generate the stars HTML first
+            const starsHTML = createStarsElement(pokemon.tier).outerHTML;
+
+            // Build the entire inner content as a single string
+            slot.innerHTML = `
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}">
+                <span>${pokemon.name}</span>
+                ${starsHTML}
+            `;
         }
+        
         teamGrid.appendChild(slot);
     }
 }
