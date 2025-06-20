@@ -28,6 +28,7 @@
             --tier4-color: #95a5a6; /* Grey for Common */
             --correct-color: #2ecc71; /* Green */
             --incorrect-color: #e74c3c; /* Red */
+            --star-color: #f1c40f;
         }
 
         body {
@@ -248,6 +249,27 @@
             border-radius: 8px;
             font-size: 0.8em;
         }
+                /* Container for the main Pokémon sprite and its stars */
+        #encounter-sprite-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        /* General styling for any stars container */
+        .stars-container {
+            font-size: 1.5em; /* Adjust size as needed */
+            color: var(--star-color);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            min-height: 1.5em; /* Prevents layout shift */
+        }
+        
+        /* For stars inside the smaller team slots */
+        .team-slot .stars-container {
+            font-size: 1em;
+            min-height: 1em;
+        }
 
         .correct-flash { animation: flash-green 0.5s ease-out; }
         .incorrect-flash { animation: flash-red 0.5s ease-out; }
@@ -275,7 +297,8 @@
     
     <div id="encounter-view">
         <h3>A wild Pokémon appears!</h3>
-        <img id="pokemon-to-catch-img" src="" alt="Wild Pokémon">
+        <div id="encounter-sprite-container"> <img id="pokemon-to-catch-img" src="" alt="Wild Pokémon">
+            <div id="encounter-stars"></div> </div>
         <h2 id="pokemon-to-catch-name"></h2>
         <p id="catch-requirement"></p>
         <p id="streak-info">Current Streak: 0</p>
@@ -293,7 +316,21 @@
 <div id="team-modal" class="modal"><div class="modal-content"><span class="close-btn" id="team-close-btn">&times;</span><h2>Your Team</h2><div id="team-grid"></div></div></div>
 <div id="catch-modal" class="modal"><div class="modal-content"><h2 id="catch-modal-title">Gotcha!</h2><img id="catch-modal-img" src=""><p id="catch-modal-text"></p><button id="catch-ok-btn">Awesome!</button></div></div>
 <div id="message-modal" class="modal"><div class="modal-content"><h2 id="message-title">Oh no!</h2><p id="message-text"></p><button id="message-ok-btn">Try Again</button></div></div>
-<div id="swap-modal" class="modal"><div class="modal-content"><h2>Team Full!</h2><p>Swap the newly caught Pokémon or let it go.</p><div><h3>Newly Caught</h3><img id="swap-new-pokemon-img" src=""><p id="swap-new-pokemon-name"></p><button id="let-go-btn">Let It Go</button></div><hr><h3>Your Team (Click to Swap)</h3><div id="swap-team-grid"></div></div></div>
+<div id="swap-modal" class="modal">
+    <div class="modal-content">
+        <h2>Team Full!</h2>
+        <p>Swap the newly caught Pokémon or let it go.</p>
+        <div>
+            <h3>Newly Caught</h3>
+            <img id="swap-new-pokemon-img" src="">
+            <div id="swap-new-pokemon-stars" class="stars-container"></div> <p id="swap-new-pokemon-name"></p>
+            <button id="let-go-btn">Let It Go</button>
+        </div>
+        <hr>
+        <h3>Your Team (Click to Swap)</h3>
+        <div id="swap-team-grid"></div>
+    </div>
+</div>
 <div id="level-up-modal" class="modal"><div class="modal-content"><h2>LEVEL UP!</h2><img id="level-up-modal-img" src=""><p id="level-up-modal-text"></p><button id="level-up-ok-btn">Great!</button></div></div>
 
 <script>
@@ -466,10 +503,19 @@ function startEncounter(tier = null) {
 
 function updateEncounterUI() {
     const { name, id } = gameState.currentEncounter;
+    const tier = gameState.currentTier; // Get the current tier
+
     encounterImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
-    encounterImg.className = `tier-${gameState.currentTier}-border`;
+    encounterImg.className = `tier-${tier}-border`;
     encounterName.innerText = name;
-    let difficultyText = (gameState.currentTier === 4) ? 'Easy' : (gameState.currentTier === 3) ? 'Medium' : 'Hard';
+    
+    // --- Add this part ---
+    const starsContainer = document.getElementById('encounter-stars');
+    starsContainer.innerHTML = ''; // Clear old stars
+    starsContainer.appendChild(createStarsElement(tier));
+    // --- End of new part ---
+
+    let difficultyText = (tier === 4) ? 'Easy' : (tier === 3) ? 'Medium' : 'Hard';
     const plural = gameState.requiredStreak > 1 ? 's' : '';
     catchRequirementText.innerText = `Answer ${gameState.requiredStreak} ${difficultyText} question${plural} correctly to catch!`;
 }
@@ -524,7 +570,10 @@ function handleAnswer(selectedAnswer, correctAnswer) {
 }
 
 function catchPokemon() {
-    const caughtPokemon = gameState.currentEncounter;
+    const caughtPokemon = {
+        gameState.currentEncounter,
+        tier: gameState.currentTier
+};
     awardPointsAndCheckLevelUp();
     if (playerTeam.length < TEAM_CAPACITY) {
         playerTeam.push(caughtPokemon);
@@ -535,7 +584,18 @@ function catchPokemon() {
     }
     saveGame();
 }
-
+    
+function createStarsElement(tier) {
+    const starsContainer = document.createElement('div');
+    starsContainer.className = 'stars-container';
+    
+    // Simple formula to map tier to star count
+    const starCount = 5 - tier;
+    
+    starsContainer.textContent = '★'.repeat(starCount);
+    return starsContainer;
+}
+    
 function showCatchMessage(pokemon) {
     catchModal.style.display = 'flex';
     catchModalImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
@@ -549,20 +609,48 @@ function showGenericMessage(title, text) {
 }
 
 function showSwapModal(newPokemon) {
+    // Show the modal
     swapModal.style.display = 'flex';
+
+    // --- Update the 'Newly Caught' Pokémon section ---
     swapNewPokemonImg.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${newPokemon.id}.png`;
     swapNewPokemonName.innerText = newPokemon.name;
-    swapTeamGrid.innerHTML = '';
+
+    // Get the new container for stars and clear it
+    const newPokemonStarsContainer = document.getElementById('swap-new-pokemon-stars');
+    newPokemonStarsContainer.innerHTML = '';
+    
+    // Create and append the stars for the new Pokémon
+    newPokemonStarsContainer.appendChild(createStarsElement(newPokemon.tier));
+
+    // --- Re-build the grid of your current team ---
+    swapTeamGrid.innerHTML = ''; // Clear the existing grid first
+
     playerTeam.forEach((pokemon, index) => {
         const slot = document.createElement('div');
         slot.className = 'team-slot swappable';
-        slot.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}"><span>${pokemon.name}</span>`;
+
+        // Create and add the image and name
+        const img = document.createElement('img');
+        img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
+        img.alt = pokemon.name;
+
+        const nameSpan = document.createElement('span');
+        nameSpan.innerText = pokemon.name;
+
+        slot.append(img, nameSpan);
+        
+        // Create and add the stars for the team member
+        slot.appendChild(createStarsElement(pokemon.tier));
+
+        // Set the click event to perform the swap
         slot.onclick = () => {
-            playerTeam[index] = newPokemon;
+            playerTeam[index] = newPokemon; // The actual swap
             swapModal.style.display = 'none';
-            updateTeamView();
-            startEncounter();
+            updateTeamView(); // Update the main team view
+            startEncounter(); // Start the next encounter
         };
+        
         swapTeamGrid.appendChild(slot);
     });
 }
@@ -579,7 +667,11 @@ function updateTeamView() {
         const slot = document.createElement('div');
         slot.className = 'team-slot';
         if (playerTeam[i]) {
-            slot.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${playerTeam[i].id}.png" alt="${playerTeam[i].name}"><span>${playerTeam[i].name}</span>`;
+            const pokemon = playerTeam[i];
+            slot.innerHTML = `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="${pokemon.name}"><span>${pokemon.name}</span>`;
+            
+            // Add stars using the saved tier
+            slot.appendChild(createStarsElement(pokemon.tier)); 
         }
         teamGrid.appendChild(slot);
     }
