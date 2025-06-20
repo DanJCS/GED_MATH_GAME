@@ -570,11 +570,14 @@ function handleAnswer(selectedAnswer, correctAnswer) {
 }
 
 function catchPokemon() {
+    // Correctly create the new pokemon object
     const caughtPokemon = {
-        gameState.currentEncounter,
-        tier: gameState.currentTier
-};
+        ...gameState.currentEncounter, // Use spread syntax to copy id and name
+        tier: gameState.currentTier     // Add the tier property
+    };
+
     awardPointsAndCheckLevelUp();
+
     if (playerTeam.length < TEAM_CAPACITY) {
         playerTeam.push(caughtPokemon);
         showCatchMessage(caughtPokemon);
